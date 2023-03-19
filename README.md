@@ -4,13 +4,17 @@
 
 This project uses the following technologies:
 
+- [Languages](#languages)
+- [Back End](#backend)
+- [Front End](#frontend)
+
 ## Languages
 
 ### HTML
 
 HTML (HyperText Markup Language) is the standard markup language for creating web pages and web applications. It provides a means to create structured documents by denoting structural semantics for text such as headings, paragraphs, lists, links, quotes and other items. HTML is used in this project to create the structure of the application's frontend.
 
-## CSS
+### CSS
 
 CSS (Cascading Style Sheets) is a style sheet language used for describing the presentation of a document written in HTML or XML (including XML dialects such as SVG, MathML or XHTML). CSS is used in this project to style the frontend of the application.
 
