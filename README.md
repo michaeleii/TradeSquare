@@ -32,10 +32,6 @@ Planetscale is a cloud-based database service that provides scalable and reliabl
 
 Prisma is an open-source ORM (Object-Relational Mapping) tool for Node.js and TypeScript that simplifies database access. It allows developers to write type-safe queries using a fluent API and provides automatic schema migrations. Prisma is used in this project to interact with the Planetscale database.
 
-### Passport.js
-
-Passport.js is a popular authentication middleware for Node.js. It provides a simple and modular way to add authentication to your application, supporting various authentication strategies such as local, social, and OAuth. Passport.js is used in this project to authenticate users.
-
 ## Frontend
 
 ### Tailwind CSS
