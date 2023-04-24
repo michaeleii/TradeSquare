@@ -9,4 +9,14 @@ squares.get("/:id", (req, res) => {
 	res.send("Square for id: " + req.params.id);
 });
 
+squares.get("/squarecomponent", (req, res) => {});
+
+squares.get("/squaretitlecomponent", (req, res) => {});
+
+squares.get("/joinsquarebtncomponent", (req, res) => {});
+
+squares.get("/postcomponent", (req, res) => {});
+
+squares.get("/subnavcomponent", (req, res) => {});
+
 export default squares;
