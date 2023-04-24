@@ -522,24 +522,12 @@ video {
   display: flex;
 }
 
-
-.w-\[\]{
-  width: ;
-}
-
-.w-\[50px\]{
-  width: 50px;
-}
-
-.w-\[34px\]{
-  width: 34px;
-
 .h-\[35px\]{
   height: 35px;
 }
 
-.w-full{
-  width: 100%;
+.w-\[34px\]{
+  width: 34px;
 }
 
 .w-\[35px\]{
@@ -550,10 +538,6 @@ video {
   align-items: center;
 }
 
-
-.justify-center{
-  justify-content: center;
-
 .justify-end{
   justify-content: flex-end;
 }
@@ -562,51 +546,33 @@ video {
   justify-content: space-between;
 }
 
-.gap-5{
-  gap: 1.25rem;
+.gap-1{
+  gap: 0.25rem;
 }
 
 .gap-2{
   gap: 0.5rem;
 }
 
-
 .gap-4{
   gap: 1rem;
-
-.gap-1{
-  gap: 0.25rem;
 }
 
-.rounded-full{
-  border-radius: 9999px;
-}
-
-.rounded-lg{
-  border-radius: 0.5rem;
-}
-
-.rounded-\[50\%\]{
-  border-radius: 50%;
+.gap-5{
+  gap: 1.25rem;
 }
 
 .rounded{
   border-radius: 0.25rem;
 }
 
-.bg-grey{
-  --tw-bg-opacity: 1;
-  background-color: rgb(126 126 126 / var(--tw-bg-opacity));
+.rounded-full{
+  border-radius: 9999px;
 }
 
 .bg-\[\#D9D9D9\]{
   --tw-bg-opacity: 1;
   background-color: rgb(217 217 217 / var(--tw-bg-opacity));
-}
-
-.object-contain{
-  -o-object-fit: contain;
-     object-fit: contain;
 }
 
 .object-cover{
@@ -618,10 +584,6 @@ video {
   padding: 2.5rem;
 }
 
-
-.p-3{
-  padding: 0.75rem;
-
 .p-2{
   padding: 0.5rem;
 }
@@ -631,20 +593,8 @@ video {
   line-height: 2.25rem;
 }
 
-
 .text-\[32px\]{
   font-size: 32px;
-}
-
-.text-\[26px\]{
-  font-size: 26px;
-
-.text-\[14px\]{
-  font-size: 14px;
-}
-
-.text-\[14pt\]{
-  font-size: 14pt;
 }
 
 .text-base{
@@ -661,44 +611,17 @@ video {
   font-weight: 700;
 }
 
-
-.text-red-500{
-  --tw-text-opacity: 1;
-  color: rgb(239 68 68 / var(--tw-text-opacity));
-}
-
-.text-red-400{
-  --tw-text-opacity: 1;
-  color: rgb(248 113 113 / var(--tw-text-opacity));
-}
-
-.text-blue-500{
-  --tw-text-opacity: 1;
-  color: rgb(59 130 246 / var(--tw-text-opacity));
-}
-
-.text-\[px\]{
-  color: px;
-
 .font-medium{
   font-weight: 500;
-}
-
-.font-\[14\]{
-  font-weight: 14;
-}
-
-.font-\[14px\]{
-  font-weight: 14px;
 }
 
 .font-normal{
   font-weight: 400;
 }
 
-.text-red-500{
+.text-blue-500{
   --tw-text-opacity: 1;
-  color: rgb(239 68 68 / var(--tw-text-opacity));
+  color: rgb(59 130 246 / var(--tw-text-opacity));
 }
 
 .text-primary{
