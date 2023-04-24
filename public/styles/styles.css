@@ -522,28 +522,84 @@ video {
   display: flex;
 }
 
+.h-\[35px\]{
+  height: 35px;
+}
+
+.w-full{
+  width: 100%;
+}
+
+.w-\[35px\]{
+  width: 35px;
+}
+
 .items-center{
   align-items: center;
+}
+
+.justify-end{
+  justify-content: flex-end;
 }
 
 .justify-between{
   justify-content: space-between;
 }
 
-.gap-10{
-  gap: 2.5rem;
+.gap-5{
+  gap: 1.25rem;
 }
 
 .gap-2{
   gap: 0.5rem;
 }
 
-.gap-5{
-  gap: 1.25rem;
+.gap-1{
+  gap: 0.25rem;
+}
+
+.rounded-full{
+  border-radius: 9999px;
+}
+
+.rounded-lg{
+  border-radius: 0.5rem;
+}
+
+.rounded-\[50\%\]{
+  border-radius: 50%;
+}
+
+.rounded{
+  border-radius: 0.25rem;
+}
+
+.bg-grey{
+  --tw-bg-opacity: 1;
+  background-color: rgb(126 126 126 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#D9D9D9\]{
+  --tw-bg-opacity: 1;
+  background-color: rgb(217 217 217 / var(--tw-bg-opacity));
+}
+
+.object-contain{
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.object-cover{
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .p-10{
   padding: 2.5rem;
+}
+
+.p-2{
+  padding: 0.5rem;
 }
 
 .text-3xl{
@@ -551,6 +607,79 @@ video {
   line-height: 2.25rem;
 }
 
+.text-\[14px\]{
+  font-size: 14px;
+}
+
+.text-\[14pt\]{
+  font-size: 14pt;
+}
+
+.text-base{
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.text-sm{
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
 .font-bold{
   font-weight: 700;
+}
+
+.font-medium{
+  font-weight: 500;
+}
+
+.font-\[14\]{
+  font-weight: 14;
+}
+
+.font-\[14px\]{
+  font-weight: 14px;
+}
+
+.font-normal{
+  font-weight: 400;
+}
+
+.text-red-500{
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity));
+}
+
+.text-primary{
+  --tw-text-opacity: 1;
+  color: rgb(80 109 246 / var(--tw-text-opacity));
+}
+
+h1{
+  font-size: 32px;
+  font-weight: 600;
+}
+
+h2{
+  font-size: 26px;
+  font-weight: 600;
+}
+
+h3{
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.btn-primary{
+  --tw-bg-opacity: 1;
+  background-color: rgb(80 109 246 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.btn-secondary{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
 }
