@@ -204,11 +204,11 @@
 	},
 	"scripts": {
 		"test": "jest",
-		"start": "npm run build && tsc && prisma generate && node app.js",
+		"start": "node app.js",
 		"dev": "npm-run-all --parallel dev:*",
 		"dev:server": "ts-node-dev --respawn --transpile-only app.ts",
 		"dev:css": "tailwindcss -i ./src/styles/input.css -o ./public/styles/styles.css --watch",
-		"build": "npm-run-all build:css",
+		"build": "npm-run-all build:css tsc prisma generate",
 		"build:css": "tailwindcss -i ./src/styles/input.css -o ./public/styles/styles.css --minify",
 		"studio": "prisma studio"
 	},
