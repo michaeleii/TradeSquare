@@ -58,6 +58,7 @@ import prisma from "../client";
 
 // -------------------------------------------------
 
+
 async function getUserById(id: number): Promise<User | null> {
   try {
     const getUser = await prisma.user.findUnique({
