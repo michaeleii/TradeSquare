@@ -4,3 +4,6 @@ interface User {
 	l_name: string;
 	rating: number;
 }
+
+export default User;
+
