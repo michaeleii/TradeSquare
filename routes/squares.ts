@@ -14,7 +14,9 @@ squares.get("/squarecomponent", (req, res) => {
   res.render("pages/squares");
 });
 
-squares.get("/squaretitlecomponent", (req, res) => {});
+squares.get("/squaretitlecomponent", (req, res) => {
+	res.render('components/Square_Title_and_Description')
+});
 
 squares.get("/joinsquarebtncomponent", (req, res) => {});
 
