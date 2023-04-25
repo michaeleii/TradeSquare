@@ -6,7 +6,7 @@ items.get("/all", (req, res) => {
 	res.send("All the items");
 });
 
-items.get("/itemcard", (req, res) => {});
+items.get("/itemcard", (req, res) => res.render("components/itemCard"));
 
 items.get("/searchbar", (req, res) => {});
 
