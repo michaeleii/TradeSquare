@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link href="/styles/styles.css" rel="stylesheet" />
 
-		<title>Item</title>
+		<title><%= item.name %></title>
 	</head>
 	<body>
 		<!-- <header class="p-10 flex justify-between">
@@ -15,19 +15,22 @@
 			</div>
 			<img src="/images/icons/Bell.svg" alt="Bell Icon" srcset="" />
 		</header> -->
-		<%- include('../components/subNavigation.ejs') %>
-		<img
-			class="md:w-[60%] w-[90%] mx-auto aspect-video rounded-lg object-cover mb-5"
-			src="/images/product/product<%= item.id %>.jpg"
-			alt="Item Img"
-			srcset=""
-		/>
-		<div class="grid gap-4 place-content-center pb-20">
-			<h4 class="text-darkgrey">Home</h4>
+		<article class="w-[90%] mx-auto md:w-[60%] mb-10">
+			<%- include('../components/subNavigation.ejs') %>
+			<img
+				class="mx-auto aspect-video rounded-lg object-cover mb-5"
+				src="/images/product/product<%= item.id %>.jpg"
+				alt="Item Img"
+				srcset=""
+			/>
+
 			<div class="flex justify-between">
-				<h1 class="font-bold mt-0 mb-2"><%= item.name %></h1>
-				<img src="/images/icons/Like.svg" alt="Backward Icon" srcset="" />
+				<h4></h4>
+				<!-- <h4 class="text-darkgrey">Home</h4> -->
+				<img src="/images/icons/Like.svg" alt="Like Icon" srcset="" />
 			</div>
+
+			<h1 class="font-bold mt-0 mb-2"><%= item.name %></h1>
 
 			<div class="flex gap-5 justify-start">
 				<img
@@ -41,25 +44,24 @@
 				</p>
 			</div>
 
-			<div class="flex gap-5 justify-start">
+			<div class="flex gap-5 justify-start pl-2 mt-2">
 				<img src="/images/icons/FullStar.svg" alt="Backward Icon" srcset="" />
 				<p><%= item.user.rating %></p>
 			</div>
 
-			<div class="mb-3">
+			<div class="my-5">
 				<h2 class="mb-2">Product Details</h2>
 				<p class="text-darkgrey"><%= item.description %></p>
 			</div>
 
-			<div class="flex gap-5 justify-between">
+			<div class="flex gap-5 justify-center">
 				<button class="btn-primary-outline rounded w-[200]">
 					More about seller
 				</button>
-				<button class="btn-primary rounded-full">+</button>
 				<button class="btn-primary rounded w-[200]">Email the seller</button>
 			</div>
 
 			<!-- <button class="bg-primary text-white border border-primary py-2 px-4 rounded-full">+</button> -->
-		</div>
+		</article>
 	</body>
 </html>
