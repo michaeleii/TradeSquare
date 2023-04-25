@@ -137,6 +137,7 @@
 		"node-int64": "^0.4.0",
 		"node-releases": "^2.0.10",
 		"normalize-path": "^3.0.0",
+		"npm-run-all": "^4.1.5",
 		"npm-run-path": "^4.0.1",
 		"once": "^1.4.0",
 		"onetime": "^5.1.2",
@@ -202,9 +203,12 @@
 	},
 	"scripts": {
 		"test": "jest",
-		"dev": "ts-node-dev --respawn --transpile-only app.ts",
-		"build-css": "tailwindcss -i ./src/styles/input.css -o ./public/styles/styles.css --watch",
-    "studio": "prisma studio"
+		"dev": "npm-run-all --parallel dev:*",
+		"dev:server": "ts-node-dev --respawn --transpile-only app.ts",
+		"dev:css": "tailwindcss -i ./src/styles/input.css -o ./public/styles/styles.css --watch",
+		"build": "npm-run-all build:css",
+		"build:css": "tailwindcss -i ./src/styles/input.css -o ./public/styles/styles.css --minify",
+		"studio": "prisma studio"
 	},
 	"repository": {
 		"type": "git",
