@@ -1,4 +1,6 @@
 interface User {
 	id: number;
-	name: string;
+	f_name: string;
+	l_name: string;
+	rating: number;
 }
