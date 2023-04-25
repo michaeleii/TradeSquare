@@ -208,7 +208,7 @@
 		"dev": "npm-run-all --parallel dev:*",
 		"dev:server": "ts-node-dev --respawn --transpile-only app.ts",
 		"dev:css": "tailwindcss -i ./src/styles/input.css -o ./public/styles/styles.css --watch",
-		"build": "npm-run-all build:css tsc prisma generate",
+		"build": "npm-run-all build:css & tsc & prisma generate",
 		"build:css": "tailwindcss -i ./src/styles/input.css -o ./public/styles/styles.css --minify",
 		"studio": "prisma studio"
 	},
