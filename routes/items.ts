@@ -1,22 +1,20 @@
 import express from "express";
+import { getAllItems, getItemByItemId } from "../models/item";
 
 const items = express.Router();
 
-const item = {
-	id: 1,
-	name: "Wall Decor for Living Room",
-	description:
-		"2 modern minimalistic paintings. I don't like the style and would like to trade it for something more flashy.",
-	user: {
-		f_name: "John",
-		l_name: "Doe",
-		rating: 4.5,
-	},
-	likes: 20,
-};
-
 items.get("/all", (req, res) => {
-	res.render("pages/itemList", { items: item });
+	const items = getAllItems();
+	res.render("pages/itemList", { items });
+});
+
+items.get("/:id", (req, res) => {
+	const item = getItemByItemId(+req.params.id);
+	if (item) {
+		res.render("pages/item", { item });
+	} else {
+		res.status(404).send("Item not found");
+	}
 });
 
 items.get("/itemcard", (req, res) => res.render("components/itemCard"));

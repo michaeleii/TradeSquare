@@ -15,17 +15,16 @@
 			</div>
 			<img src="/images/icons/Bell.svg" alt="Bell Icon" srcset="" />
 		</header>
-
+		<img
+			class="w-[70%] mx-auto aspect-video rounded-lg object-cover mb-5"
+			src="/images/product/product<%= item.id %>.jpg"
+			alt="Item Img"
+			srcset=""
+		/>
 		<div class="grid gap-4 place-content-center pb-20">
-			<img
-				class="h-auto max-w-lg rounded-lg w-90"
-				src="/images/product/product1.jpg"
-				alt="Item Img"
-				srcset=""
-			/>
 			<h4 class="text-darkgrey">Home</h4>
 			<div class="flex justify-between">
-				<h1 class="font-bold mt-0 mb-2">Wall Decor for Living Room</h1>
+				<h1 class="font-bold mt-0 mb-2"><%= item.name %></h1>
 				<img src="/images/icons/Like.svg" alt="Backward Icon" srcset="" />
 			</div>
 
@@ -36,22 +35,19 @@
 					alt="Seller Img"
 					srcset=""
 				/>
-				<p class="text-darkgrey font-bold text-2xl">Adarsha</p>
+				<p class="text-darkgrey font-bold text-2xl">
+					<%= item.user.f_name %> <%= item.user.l_name %>
+				</p>
 			</div>
 
 			<div class="flex gap-5 justify-start">
 				<img src="/images/icons/FullStar.svg" alt="Backward Icon" srcset="" />
-				<p>4.7</p>
-				<p>20 Reviews</p>
+				<p><%= item.user.rating %></p>
 			</div>
 
 			<div class="mb-3">
 				<h2 class="mb-2">Product Details</h2>
-				<p class="text-darkgrey">2 modern minimalistic paintings.</p>
-				<p class="text-darkgrey">
-					I don't like the style and would like to trade it for something more
-					flashy.
-				</p>
+				<p class="text-darkgrey"><%= item.description %></p>
 			</div>
 
 			<div class="flex gap-5 justify-between">
