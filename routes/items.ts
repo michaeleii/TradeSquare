@@ -3,7 +3,7 @@ import express from "express";
 const items = express.Router();
 
 items.get("/all", (req, res) => {
-	res.send("All the items");
+	res.render("pages/itemList");
 });
 
 items.get("/itemcard", (req, res) => res.render("components/itemCard"));
@@ -11,7 +11,7 @@ items.get("/itemcard", (req, res) => res.render("components/itemCard"));
 items.get("/searchbar", (req, res) => {});
 
 items.get("/itempage", (req, res) => {
-	res.render('components/item')
+	res.render("components/item");
 });
 
 items.get("/itembtns", (req, res) => {});
