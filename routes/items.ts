@@ -27,4 +27,8 @@ items.get("/itempage", (req, res) => {
 
 items.get("/itembtns", (req, res) => {});
 
+items.get("/createListing", (req, res) => {
+  res.render("components/createListing");
+});
+
 export default items;
