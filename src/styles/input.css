@@ -17,9 +17,15 @@ h3 {
 }
 
 .btn-primary {
-	@apply bg-primary text-white;
+	@apply bg-primary text-white py-2 px-4 transition-colors ease-in-out;
+}
+.btn-primary:hover {
+	@apply bg-primary-dark text-white py-2 px-4;
 }
 
-.btn-secondary {
-	@apply bg-white text-black;
+.btn-primary-outline {
+	@apply bg-white text-primary border border-primary py-2 px-4 transition-colors ease-in-out;
+}
+.btn-primary-outline:hover {
+	@apply bg-primary text-white border border-primary py-2 px-4;
 }
