@@ -6,6 +6,8 @@ app.set("view engine", "ejs");
 app.set("views", "views");
 app.use(express.static("public"));
 
+const PORT = process.env.PORT || 3000;
+
 app.get("/", (req, res) => res.render("pages/index"));
 
 import squaresRouter from "./routes/squares";
@@ -15,6 +17,6 @@ app.use("/squares", squaresRouter);
 
 app.use("/items", itemsRouter);
 
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
+app.listen(PORT, () => {
+	console.log(`Server running on port ${PORT}`);
 });
