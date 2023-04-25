@@ -10,7 +10,7 @@ squares.get("/all", (req, res) => {
 // });
 
 squares.get("/squarecomponent", (req, res) => {
-  res.render("components/square");
+  res.render("pages/squares");
 });
 
 squares.get("/squaretitlecomponent", (req, res) => {});
