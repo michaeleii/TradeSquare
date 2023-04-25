@@ -58,3 +58,13 @@ const items: Item[] = [
         likes: 3
     },
 ]
+
+
+
+function getItemByItemId(itemId: number): Item | null {
+    return items.find(item => item.id === itemId) || null
+}
+// console.log(getItemByItemId(1))
+
+module.exports = { items, getItemByItemId }
+
