@@ -1,3 +1,5 @@
+import User  from "../interfaces/User";
+
 const users: User[] = [
   {
     id: 1,
@@ -48,3 +50,14 @@ const users: User[] = [
     rating: 3.5,
   },
 ];
+
+
+function getUserById (id: number): User | null {
+    return users.find(user => user.id === id) || null;
+};
+
+
+
+
+export default users;
+export {getUserById};
