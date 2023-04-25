@@ -3,3 +3,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+h1 {
+  @apply font-semibold text-[32px];
+}
+
+h2 {
+  @apply font-semibold text-[26px];
+}
+
+h3 {
+  @apply font-semibold text-[22px];
+}
+
+.btn-primary {
+  @apply bg-primary text-white;
+}
+
+.btn-secondary {
+  @apply bg-white text-black;
+}
