@@ -12,7 +12,7 @@
 			<div class="grid grid-cols-2 md:grid-cols-4 gap-5 place-items-center">
 				<h1 class="col-span-2 md:col-span-4 place-self-start">All Items</h1>
 				<% for (let i = 0; i < 8; i++) { %> <%-
-				include('../components/itemCard.ejs') %> <% } %>
+				include('../components/itemCard.ejs', {item: items}) %> <% } %>
 			</div>
 		</div>
 	</body>
