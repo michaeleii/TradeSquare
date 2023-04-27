@@ -1,186 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link href="/styles/styles.css" rel="stylesheet" />
-  </head>
-  <body>
-    <article class="mx-auto w-[90%] md:w-[50%]">
-      <div class="inline-block">
-        <h1 class="border border-b-grey border-x-0 border-t-0 text-[42px] mb-3">
-          Create a Listing
-        </h1>
-      </div>
-      <div
-        class="flex justify-center items-center w-[340px] h-[175px] bg-offwhite border-grey border-2 rounded-lg"
-      >
-        <img class="w-[13px] h-[11px]" src="/images/icons/Plus.svg" alt="" />
-        <img class="w-[24px] h-[24px]" src="/images/icons/Image.svg" alt="" />
-      </div>
-      <div class="my-5">
-        <h2 class="text-[23px]">Add Photos</h2>
-        <p class="text-[16px]">
-          Be sure to include quality photos. Listings with poorly taken photos
-          will be reviewed and may be taken down.
-        </p>
-      </div>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link href="/styles/styles.css" rel="stylesheet" />
+	</head>
+	<body>
+		<article class="mx-auto w-[90%] md:w-[50%]">
+			<div class="inline-block">
+				<h1 class="border border-b-grey border-x-0 border-t-0 text-[42px] mb-3">
+					Create a Listing
+				</h1>
+			</div>
+      
+			<form class="flex flex-col" action="/items/createListing" method="POST">
+        <div
+				class="flex justify-center items-center w-[340px] h-[175px] bg-offwhite border-grey border-2 rounded-lg"
+			>
+				<!-- <img class="w-[13px] h-[11px]" src="/images/icons/Plus.svg" alt="" />
+				<img class="w-[24px] h-[24px]" src="/images/icons/Image.svg" alt="" /> -->
+       <input type="file"
+         id="image" name="image"
+         accept="image/png, image/jpeg">
+			</div>
+        <div class="my-5">
+          <h2 class="text-[23px]">Add Photos</h2>
+          <p class="text-[16px]">
+            Be sure to include quality photos. Listings with poorly taken photos
+            will be reviewed and may be taken down.
+          </p>
+        </div>
+				<label class="text-[23px] font-bold" for="listingTitle">
+					Title of your Listing
+				</label>
+				<input
+					class="p-3 border-2 border-darkgrey rounded-md placeholder:text-grey"
+					type="text"
+					id="listingTitle"
+					placeholder="..."
+				/>
 
-      <form class="flex flex-col" action="">
-        <label class="text-[23px] font-bold" for="listingTitle"
-          >Title of your Listing</label
-        >
-        <input
-          class="p-3 border-2 border-darkgrey rounded-md placeholder:text-grey"
-          type="text"
-          id="listingTitle"
-          placeholder="..."
-        />
+				<label class="mt-20 text-[23px] font-bold" for="listingDescription">
+					Description
+				</label>
+				<textarea
+					class="border-2 border-darkgrey rounded-md placeholder:text-grey"
+					id="listingDescription"
+					rows="6"
+					cols="15"
+					placeholder="..."
+				></textarea>
 
-        <label class="mt-20 text-[23px] font-bold" for="listingDescription"
-          >Description</label
-        >
-        <textarea
-          class="border-2 border-darkgrey rounded-md placeholder:text-grey"
-          id="listingDescription"
-          rows="6"
-          cols="15"
-          placeholder="..."
-        ></textarea>
+				<!-- <label class="mt-20 text-[23px] font-bold" for="category">
+					Category
+				</label>
+				<p class="text-[12px] text-darkgrey">
+					“shoes” “electronics” “outdoor” etc...
+				</p>
+				<input
+					class="p-3 border-2 border-darkgrey rounded-md placeholder:text-grey"
+					type="text"
+					id="category"
+					placeholder="..."
+				/>
 
-        <label class="mt-20 text-[23px] font-bold" for="category"
-          >Category</label
-        >
-        <p class="text-[12px] text-darkgrey">
-          “shoes” “electronics” “outdoor” etc...
-        </p>
-        <input
-          class="p-3 border-2 border-darkgrey rounded-md placeholder:text-grey"
-          type="text"
-          id="category"
-          placeholder="..."
-        />
+				<label class="mt-20 text-[23px] font-bold" for="tags">Tags</label>
+				<p class="text-[12px] text-darkgrey">
+					“retro” “classic” “vintage” etc...
+				</p>
+				<input
+					class="p-3 border-2 border-darkgrey rounded-md placeholder:text-grey"
+					type="text"
+					id="tags"
+					placeholder="..."
+				/>
 
-        <label class="mt-20 text-[23px] font-bold" for="tags">Tags</label>
-        <p class="text-[12px] text-darkgrey">
-          “retro” “classic” “vintage” etc...
-        </p>
-        <input
-          class="p-3 border-2 border-darkgrey rounded-md placeholder:text-grey"
-          type="text"
-          id="tags"
-          placeholder="..."
-        />
+				<label class="mt-20 text-[23px] font-bold" for="condition">
+					Condition
+				</label>
+				<p class="text-[12px] text-darkgrey">
+					“like new” “new” “used” “well worn” etc...
+				</p>
+				<input
+					class="p-3 border-2 border-darkgrey rounded-md placeholder:text-grey"
+					type="text"
+					id="condition"
+					placeholder="..."
+				/>
 
-        <label class="mt-20 text-[23px] font-bold" for="condition"
-          >Condition</label
-        >
-        <p class="text-[12px] text-darkgrey">
-          “like new” “new” “used” “well worn” etc...
-        </p>
-        <input
-          class="p-3 border-2 border-darkgrey rounded-md placeholder:text-grey"
-          type="text"
-          id="condition"
-          placeholder="..."
-        />
+				<label class="mt-20 text-[23px] font-bold" for="city">City</label>
+				<p class="text-[12px] text-darkgrey">
+					“Vancouver” “New York” “Los Angeles”
+				</p>
+				<input
+					class="p-3 border-2 border-darkgrey rounded-md placeholder:text-grey"
+					type="text"
+					id="city"
+					placeholder="..."
+				/>
 
-        <label class="mt-20 text-[23px] font-bold" for="city">City</label>
-        <p class="text-[12px] text-darkgrey">
-          “Vancouver” “New York” “Los Angeles”
-        </p>
-        <input
-          class="p-3 border-2 border-darkgrey rounded-md placeholder:text-grey"
-          type="text"
-          id="city"
-          placeholder="..."
-        />
+				<label
+					for="countries"
+					class="mt-20 text-[23px] font-bold block mb-2 text-sm text-gray-900 dark:text-white"
+				>
+					Post to your community
+				</label>
+				<select
+					id="countries"
+					class="bg-gray-50 border-2 border-darkgrey text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+				>
+					<option selected>Communities</option>
+					<option value="">Retro Computers</option>
+					<option value="">Basketball Shoes</option>
+					<option value="">Watch Collectors Vancouver</option>
+				</select> -->
+			</form>
+		</article>
 
-        <label
-          for="countries"
-          class="mt-20 text-[23px] font-bold block mb-2 text-sm text-gray-900 dark:text-white"
-          >Post to your community</label
-        >
-        <select
-          id="countries"
-          class="bg-gray-50 border-2 border-darkgrey text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        >
-          <option selected>Communities</option>
-          <option value="">Retro Computers</option>
-          <option value="">Basketball Shoes</option>
-          <option value="">Watch Collectors Vancouver</option>
-        </select>
-      </form>
-    </article>
+		<!-- <article class="mx-auto w-[90%] md:w-[50%]">
+			<div class="mt-12 inline-block">
+				<h1 class="border border-b-grey border-x-0 border-t-0 text-[42px] mb-3">
+					What in Return?
+				</h1>
+			</div>
+			<div
+				class="flex justify-center items-center w-[340px] h-[175px] bg-offwhite border-grey border-2 rounded-lg"
+			>
+				<img class="w-[13px] h-[11px]" src="/images/icons/Plus.svg" alt="" />
+				<img class="w-[24px] h-[24px]" src="/images/icons/Image.svg" alt="" />
+			</div>
+			<div class="my-5">
+				<h2 class="text-[23px]">Add Photos</h2>
+				<p class="text-[16px]">
+					Be sure to include quality photos. Listings with poorly taken photos
+					will be reviewed and may be taken down.
+				</p>
+			</div>
 
-    <article class="mx-auto w-[90%] md:w-[50%]">
-      <div class="mt-12 inline-block">
-        <h1 class="border border-b-grey border-x-0 border-t-0 text-[42px] mb-3">
-          What in Return?
-        </h1>
-      </div>
-      <div
-        class="flex justify-center items-center w-[340px] h-[175px] bg-offwhite border-grey border-2 rounded-lg"
-      >
-        <img class="w-[13px] h-[11px]" src="/images/icons/Plus.svg" alt="" />
-        <img class="w-[24px] h-[24px]" src="/images/icons/Image.svg" alt="" />
-      </div>
-      <div class="my-5">
-        <h2 class="text-[23px]">Add Photos</h2>
-        <p class="text-[16px]">
-          Be sure to include quality photos. Listings with poorly taken photos
-          will be reviewed and may be taken down.
-        </p>
-      </div>
+			<form class="flex flex-col" action="">
+				<label class="text-[23px] font-bold" for="itemNames">
+					Name of Item(s)
+				</label>
+				<input
+					class="p-3 border-2 border-darkgrey rounded-md placeholder:text-grey"
+					type="text"
+					id="itemNames"
+					placeholder="..."
+				/>
 
-      <form class="flex flex-col" action="">
-        <label class="text-[23px] font-bold" for="itemNames"
-          >Name of Item(s)</label
-        >
-        <input
-          class="p-3 border-2 border-darkgrey rounded-md placeholder:text-grey"
-          type="text"
-          id="itemNames"
-          placeholder="..."
-        />
+				<label class="mt-20 text-[23px] font-bold" for="listingDescription">
+					Description
+				</label>
+				<textarea
+					class="border-2 border-darkgrey rounded-md placeholder:text-grey"
+					id="listingDescription"
+					rows="6"
+					cols="15"
+					placeholder="..."
+				></textarea>
 
-        <label class="mt-20 text-[23px] font-bold" for="listingDescription"
-          >Description</label
-        >
-        <textarea
-          class="border-2 border-darkgrey rounded-md placeholder:text-grey"
-          id="listingDescription"
-          rows="6"
-          cols="15"
-          placeholder="..."
-        ></textarea>
+				<label class="mt-20 text-[23px] font-bold" for="condition">
+					Condition
+				</label>
+				<input
+					class="p-3 border-2 border-darkgrey rounded-md placeholder:text-grey"
+					type="text"
+					id="condition"
+					placeholder="..."
+				/>
+			</form> -->
 
-        <label class="mt-20 text-[23px] font-bold" for="condition"
-          >Condition</label
-        >
-        <input
-          class="p-3 border-2 border-darkgrey rounded-md placeholder:text-grey"
-          type="text"
-          id="condition"
-          placeholder="..."
-        />
-      </form>
-
-      <h1 class="mt-10 sm:text-center">You're All Done!</h1>
-      <div class="flex sm:justify-center">
-        <button
+			<h1 class="mt-10 sm:text-center">You're All Done!</h1>
+			<div class="flex sm:justify-center">
+				<!-- <button
           class="mr-2 w-[94px] h-[50px] bg-white text-primary rounded-xl py-2 px-6 mt-2 border-2 border-solid border-primary border-"
         >
           Draft
-        </button>
-        <button
-          class="bg-primary w-[235px] h-[50px] rounded-xl text-white py-2.5 px-5 mt-2 mr-2 block"
-        >
-          Post
-        </button>
-      </div>
-    </article>
-  </body>
+        </button> -->
+				<button
+					class="bg-primary w-[235px] h-[50px] rounded-xl text-white py-2.5 px-5 mt-2 mr-2 block"
+				>
+					Post
+				</button>
+			</div>
+		</article>
+	</body>
 </html>
