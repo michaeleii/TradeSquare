@@ -58,7 +58,9 @@
 				<button class="btn-primary-outline rounded w-[200]">
 					More about seller
 				</button>
-				<button class="btn-primary rounded w-[200]">Email the seller</button>
+				<a href="mailto:<%= item.user.email %>">
+					<button class="btn-primary rounded w-[200]">Email the seller</button>
+				</a>
 			</div>
 
 			<!-- <button class="bg-primary text-white border border-primary py-2 px-4 rounded-full">+</button> -->
