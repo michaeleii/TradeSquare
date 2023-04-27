@@ -10,24 +10,24 @@
 </head>
 <body>
     <article class="w-[90%] mx-auto md:w-[60%] mb-10">
-        <%- include('../components/header.ejs') %>
+       <%- include('../components/subNavigation.ejs') %>
         
     <div class="h-full flex flex-col justify-between">
         <div>
             <img src="/images/users/user1.png" class="rounded-full w-[300px] h-[300px] object-cover mx-auto"
                 alt="" />
             <h2 class="mb-2">
-                Veronica
+                <%= user.f_name %> <%= user.l_name %>
             </h2>
             <p class="text-darkgrey">
-                Hi, I am Veronica. I am a student at the University of Toronto.
+                A little bit about me...
             </p>
         </div>
 
-        <div class="flex gap-5 justify-between pt-5 pb-5">
+        <!-- <div class="flex gap-5 justify-between pt-5 pb-5">
             <button class="btn-primary rounded w-[200]">Follow</button>
             <button class="btn-primary-outline rounded w-[200]">Want/Have</button>
-        </div>
+        </div> -->
 
         <h3>Location</h3>
         <div class="pb-5">
@@ -51,28 +51,29 @@
         </div>
         
         <p class="text-darkgrey text-xs pb-5">
-            20 Reviews 4.5 Stars
+            20 Reviews <%= user.rating %> Stars
         </p>
 
         <h3>Listings</h3>
         <div>
-
-            <div class="relative">
-                <img src="/images/product/product1.jpg" class="mx-auto opacity-70 aspect-video rounded-lg object-cover mb-5" alt="" />
-                <p class="text-sm absolute top-0 left-0 p-4 text-darkgrey text-center text-lg">Home/ Furniture</p>
-                <p class="absolute  top-5 left-0 p-4 text-black  text-lg font-bold">Bean Bag Chair Giant High-Density Foam Filling Sofa </p>
-            </div>
+            <% user.items.forEach(item => { %>
+                <div class="relative">
+                    <img src="/images/product/product<%= item.id %>.jpg" class="mx-auto opacity-70 aspect-video rounded-lg object-cover mb-5" alt="" />
+                    <p class="text-sm absolute top-0 left-0 p-4 text-darkgrey text-center text-lg">Home</p>
+                    <p class="absolute  top-5 left-0 p-4 text-black  text-lg font-bold"><%= item.name %></p>
+                </div>
+            <% }) %>
     
-            <div class="relative">
+            <!-- <div class="relative">
                 <img src="/images/product/product2.jpg" class="mx-auto opacity-70 aspect-video rounded-lg object-cover mb-5"
                     alt="" />
                 <p class="text-sm absolute top-0 left-0 p-4 text-darkgrey text-center text-lg">Home/ Service</p>
                 <p class="absolute  top-5 left-0 p-4 text-black  text-lg font-bold">Art Lessons</p>
-            </div>
+            </div> -->
 
         </div>
        
-        <h3>Want/ Have Items</h3>
+        <!-- <h3>Want/ Have Items</h3>
         <div class="grid">
             <div class="flex justify-between">
                 <div>
@@ -97,7 +98,7 @@
                 <p class="text-darkgrey text-xm">Location: Vancouver</p>
             </div>
 
-        </div>
+        </div> -->
 
 
     </div>
