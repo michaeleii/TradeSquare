@@ -55,9 +55,11 @@
 			</div>
 
 			<div class="flex gap-5 justify-center">
-				<button class="btn-primary-outline rounded w-[200]">
-					More about seller
-				</button>
+				<a href="/users/<%= item.user.id %>">
+					<button class="btn-primary-outline rounded w-[200]">
+						More about seller
+					</button>
+				</a>
 				<a href="mailto:<%= item.user.email %>">
 					<button class="btn-primary rounded w-[200]">Email the seller</button>
 				</a>
