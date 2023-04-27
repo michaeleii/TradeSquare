@@ -1,5 +1,5 @@
-// import Item from "../interfaces/Item";
-// import User from "../interfaces/User";
+import Item from "../interfaces/Item";
+import User from "../interfaces/User";
 // import ItemData from "../interfaces/ItemData";
 // import { getUserById } from "./user";
 
@@ -76,8 +76,6 @@
 //     });
 // };
 
-
-
 // function getItemByItemId(id: number): ItemData | null {
 //     const item = items.find((item) => item.id === id) || null;
 //     if (item) {
@@ -95,39 +93,40 @@
 // }
 // console.log(getItemByItemId(1))
 
-import prisma, { Item, User } from "../client";
+import prisma from "../client";
 
-async function getAllItems(): Promise<(Item & { user: User | null; })[]> {
-    try {
-        const allItems = await prisma.item.findMany({
-            include: {
-                user: true,
-            }
-        });
-        return allItems
-    } catch (error) {
-        throw error;
-    }
-};
+async function getAllItems(): Promise<(Item & { user: User | null })[]> {
+	try {
+		const allItems = await prisma.item.findMany({
+			include: {
+				user: true,
+			},
+		});
+		return allItems;
+	} catch (error) {
+		throw error;
+	}
+}
 
 // getAllItems().then((items) => console.log(items));
 
-
-async function getItemByItemId(itemId: number): Promise<(Item & { user: User | null; })| null> {
-    try {
-        const item = await prisma.item.findUnique({
-            where: {
-                id: itemId
-            },
-            include: {
-                user: true,
-            }
-        });
-        return item
-    } catch (error) {
-        throw error;
-    }
-};
+async function getItemByItemId(
+	itemId: number
+): Promise<(Item & { user: User | null }) | null> {
+	try {
+		const item = await prisma.item.findUnique({
+			where: {
+				id: itemId,
+			},
+			include: {
+				user: true,
+			},
+		});
+		return item;
+	} catch (error) {
+		throw error;
+	}
+}
 
 // getItemByItemId(1).then((item) => console.log(item));
 
