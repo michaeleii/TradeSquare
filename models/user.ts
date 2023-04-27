@@ -58,19 +58,21 @@ import prisma from "../client";
 
 // -------------------------------------------------
 
-
 async function getUserById(id: number): Promise<User | null> {
-  try {
-    const getUser = await prisma.user.findUnique({
-      where: {
-        id: id,
-      },
-    });
-    return getUser;
-  } catch (error) {
-    throw error;
-  }
-};
+	try {
+		const getUser = await prisma.user.findUnique({
+			where: {
+				id: id,
+			},
+			include: {
+				items: true,
+			},
+		});
+		return getUser;
+	} catch (error) {
+		throw error;
+	}
+}
 
 // export default users;
 
