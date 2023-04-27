@@ -15,6 +15,11 @@ items
 	})
 	.post((req, res) => {});
 
+items.get("/seller/:id", (req, res) => {
+	const sellerId = req.params.id;
+  	res.render("components/seller")
+});
+
 items.get("/:id", async (req, res) => {
 	const item = await getItemByItemId(+req.params.id);
 	if (item) {
@@ -39,5 +44,8 @@ items.get("/itempage", (req, res) => {
 });
 
 items.get("/itembtns", (req, res) => {});
+
+
+
 
 export default items;
