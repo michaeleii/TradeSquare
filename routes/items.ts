@@ -8,9 +8,12 @@ items.get("/all", async (req, res) => {
 	res.render("pages/itemList", { items });
 });
 
-items.get("/createListing", (req, res) => {
-	res.render("components/createListing");
-});
+items
+	.route("/createListing")
+	.get((req, res) => {
+		res.render("components/createListing");
+	})
+	.post((req, res) => {});
 
 items.get("/:id", async (req, res) => {
 	const item = await getItemByItemId(+req.params.id);
