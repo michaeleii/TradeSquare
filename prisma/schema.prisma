@@ -28,6 +28,7 @@ model Item {
   description String
   user        User?  @relation(fields: [userId], references: [id])
   userId      Int
+  imgName     String
   likes       Int    @default(0)
 
   @@index(userId)

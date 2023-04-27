@@ -1,11 +1,23 @@
 import express from "express";
 import { getAllItems, getItemByItemId } from "../models/item";
 
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import {
+  S3Client,
+  PutObjectCommand,
+  GetObjectCommand,
+  S3,
+} from "@aws-sdk/client-s3";
 import multer from "multer";
 import { z } from "zod";
 import dotenv from "dotenv";
 import crypto from "crypto";
+import prisma from "../client";
+import { Item } from "@prisma/client";
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+
+interface ItemWithImgUrl extends Item {
+  imgUrl: string;
+}
 dotenv.config();
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -51,6 +63,21 @@ const items = express.Router();
 items.get("/all", async (req, res) => {
 	const items = await getAllItems();
 	res.render("pages/itemList", { items });
+});
+
+items.get("/getImgUrl", async (req, res) => {
+  const items = await prisma.item.findMany({});
+
+  for (const item of items) {
+    const getObjectParams = {
+      Bucket: bucketName,
+      Key: item.imgName,
+    };
+    const command = new GetObjectCommand(getObjectParams);
+    const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+    (item as ItemWithImgUrl).imgUrl = url;
+  }
+  res.send(items);
 });
 
 items
