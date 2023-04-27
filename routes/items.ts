@@ -12,8 +12,8 @@ items.get("/createListing", (req, res) => {
   res.render("components/createListing");
 });
 
-items.get("/:id", (req, res) => {
-  const item = getItemByItemId(+req.params.id);
+items.get("/:id", async (req, res) => {
+  const item = await getItemByItemId(+req.params.id);
   if (item) {
     res.render("pages/item", { item });
   } else {
