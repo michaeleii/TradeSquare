@@ -11,6 +11,7 @@
 	"version": "1.0.0",
 	"main": "sum.js",
 	"dependencies": {
+		"@aws-sdk/client-s3": "^3.321.1",
 		"@prisma/client": "^4.13.0",
 		"ansi-escapes": "^4.3.2",
 		"ansi-regex": "^5.0.1",
@@ -48,6 +49,7 @@
 		"deepmerge": "^4.3.0",
 		"detect-newline": "^3.1.0",
 		"diff-sequences": "^29.4.3",
+		"dotenv": "^16.0.3",
 		"ejs": "^3.1.9",
 		"electron-to-chromium": "^1.4.323",
 		"emittery": "^0.13.1",
@@ -200,7 +202,8 @@
 		"yallist": "^3.1.1",
 		"yargs": "^17.7.1",
 		"yargs-parser": "^21.1.1",
-		"yocto-queue": "^0.1.0"
+		"yocto-queue": "^0.1.0",
+		"zod": "^3.21.4"
 	},
 	"scripts": {
 		"test": "jest",
