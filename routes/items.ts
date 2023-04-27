@@ -1,10 +1,17 @@
 import express from "express";
 import { getAllItems, getItemByItemId } from "../models/item";
 
-import { S3Client } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import multer from "multer";
 import { z } from "zod";
 import dotenv from "dotenv";
+import crypto from "crypto";
 dotenv.config();
+
+const upload = multer({ storage: multer.memoryStorage() });
+
+const randomImageName = (bytes = 32) =>
+  crypto.randomBytes(bytes).toString("hex");
 
 const envVariables = z.object({
   BUCKET_NAME: z.string(),
@@ -47,11 +54,27 @@ items.get("/all", async (req, res) => {
 });
 
 items
-	.route("/createListing")
-	.get((req, res) => {
-		res.render("components/createListing");
-	})
-	.post((req, res) => {});
+  .route("/createListing")
+  .get((req, res) => {
+    res.render("components/createListing");
+  })
+  .post(upload.single("image"), async (req, res) => {
+    console.log("req.body:", req.body);
+    console.log("req.file:", req.file);
+
+    if (!req.file) {
+      return res.status(400).send("No file uploaded");
+    }
+    const params = {
+      Bucket: bucketName,
+      Key: randomImageName(),
+      Body: req.file.buffer,
+      ContentType: req.file.mimetype,
+    };
+
+    const command = new PutObjectCommand(params);
+    await s3.send(command);
+  });
 
 items.get("/:id", async (req, res) => {
   const item = await getItemByItemId(+req.params.id);
