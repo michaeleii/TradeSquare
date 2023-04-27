@@ -18,7 +18,7 @@ model User {
   email  String @unique
   f_name String
   l_name String
-  rating Float
+  rating Float @default(0)
   items  Item[] 
 }
 
@@ -28,8 +28,8 @@ model Item {
   description String
   user        User?  @relation(fields: [userId], references: [id])
   userId      Int
-  likes       Int
   imgName     String
+  likes       Int    @default(0)
 
   @@index(userId)
 }

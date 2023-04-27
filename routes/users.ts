@@ -12,7 +12,8 @@ users.get("/:id", async (req, res) => {
 		});
 		return;
 	}
-	res.json(user);
+	console.log("user:", user);
+	res.render("pages/seller", { user: user });
 });
 
 export default users;
