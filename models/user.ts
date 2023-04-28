@@ -1,6 +1,3 @@
-import User from "../interfaces/User";
-import prisma from "../client";
-
 // const users: User[] = [
 //   {
 //     id: 1,
@@ -52,13 +49,15 @@ import prisma from "../client";
 //   },
 // ];
 
-// function getUserById(id: number): User | null {
-//   return users.find((user) => user.id === id) || null;
-// }
+import prisma from "../client";
+import { Item, User } from "@prisma/client";
 
-// -------------------------------------------------
-
-async function getUserById(id: number): Promise<User | null> {
+async function getUserById(id: number): Promise<
+	| (User & {
+			items: Item[];
+	  })
+	| null
+> {
 	try {
 		const getUser = await prisma.user.findUnique({
 			where: {
@@ -73,7 +72,5 @@ async function getUserById(id: number): Promise<User | null> {
 		throw error;
 	}
 }
-
-// export default users;
 
 export { getUserById };

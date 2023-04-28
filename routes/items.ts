@@ -5,19 +5,14 @@ import {
 	S3Client,
 	PutObjectCommand,
 	GetObjectCommand,
-	S3,
 } from "@aws-sdk/client-s3";
 import multer from "multer";
 import { z } from "zod";
 import dotenv from "dotenv";
 import crypto from "crypto";
-import prisma from "../client";
-import { Item, User } from "@prisma/client";
+import { Item } from "@prisma/client";
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
-interface ItemWithImgUrl extends Item {
-	imgUrl: string;
-}
 dotenv.config();
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -61,39 +56,34 @@ const s3 = new S3Client({
 const items = express.Router();
 
 items.get("/all", async (req, res) => {
-	const items = await getAllItems();
+	try {
+		const items = await getAllItems();
 
-	for (const item of items) {
-		const getObjectParams = {
-			Bucket: bucketName,
-			Key: item.imgName,
-		};
-		const command = new GetObjectCommand(getObjectParams);
-		const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
-		(
-			item as Item & {
-				user: User | null;
-				imgUrl: string;
-			}
-		).imgUrl = url;
+		if (!items) {
+			res.status(404).json({
+				message: "Items not found",
+			});
+			return;
+		}
+
+		for (const item of items) {
+			const getObjectParams = {
+				Bucket: bucketName,
+				Key: item.imgName,
+			};
+			const command = new GetObjectCommand(getObjectParams);
+			const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+			(
+				item as Item & {
+					imgUrl: string;
+				}
+			).imgUrl = url;
+		}
+		res.render("pages/itemList", { items });
+	} catch (error) {
+		res.status(500).send(error);
 	}
-	res.render("pages/itemList", { items });
 });
-
-// items.get("/getImgUrl", async (req, res) => {
-// 	const items = await prisma.item.findMany({});
-
-// 	for (const item of items) {
-// 		const getObjectParams = {
-// 			Bucket: bucketName,
-// 			Key: item.imgName,
-// 		};
-// 		const command = new GetObjectCommand(getObjectParams);
-// 		const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
-// 		(item as ItemWithImgUrl).imgUrl = url;
-// 	}
-// 	res.json(items);
-// });
 
 items
 	.route("/createListing")
@@ -118,14 +108,20 @@ items
 		await s3.send(command);
 	});
 
-// items.get("/seller/:id", (req, res) => {
-// 	const sellerId = req.params.id;
-// 	res.render("components/seller");
-// });
-
 items.get("/:id", async (req, res) => {
 	const item = await getItemByItemId(+req.params.id);
 	if (item) {
+		const getObjectParams = {
+			Bucket: bucketName,
+			Key: item.imgName,
+		};
+		const command = new GetObjectCommand(getObjectParams);
+		const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+		(
+			item as Item & {
+				imgUrl: string;
+			}
+		).imgUrl = url;
 		res.render("pages/item", { item });
 	} else {
 		res.status(404).render("pages/error", {
