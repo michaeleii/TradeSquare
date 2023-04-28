@@ -13,53 +13,57 @@
        <%- include('../components/subNavigation.ejs') %>
         
     <div class="h-full flex flex-col justify-between">
-        <div>
+        <div class="mb-10">
             <img src="/images/users/user<%= user.id %>.jpg" class="rounded-full w-[300px] h-[300px] object-cover mx-auto"
                 alt="" />
-            <h2 class="mb-2">
-                <%= user.f_name %> <%= user.l_name %>
-            </h2>
-            <p class="text-darkgrey">
-                A little bit about me...
-            </p>
         </div>
+        <h2 class="mb-2">
+                <%= user.f_name %> <%= user.l_name %>
+        </h2>
+        <p class="text-darkgrey">
+                A little bit about me...
+         </p>
 
         <!-- <div class="flex gap-5 justify-between pt-5 pb-5">
             <button class="btn-primary rounded w-[200]">Follow</button>
             <button class="btn-primary-outline rounded w-[200]">Want/Have</button>
         </div> -->
 
-        <h3>Location</h3>
-        <div class="pb-5">
+        <h3 class="mt-5">Location</h3>
+        <div class="mb-2">
             <p class="text-darkgrey">Toronto, Ontario</p>
         </div>
 
-        <h3>Analytics</h3>
-        <div>
+        <h3 class="mt-5">Analytics</h3>
+        <div class="mb-2">
             <div class="flex">
                 <p class="text-darkgrey">Total transactions:&nbsp;</p> 
                 <p class="text-primary">21</p>
             </div>
-    </div>
+        </div>
 
-        <div class="flex items-center gap-2">
-            <img src="/images/icons/FullStar.svg" class="w-[20px]" alt="" />
-            <img src="/images/icons/FullStar.svg" class="w-[20px]" alt="" />
-            <img src="/images/icons/FullStar.svg" class="w-[20px]" alt="" />
-            <img src="/images/icons/FullStar.svg" class="w-[20px]" alt="" />
-            <img src="/images/icons/HalfStar.svg" class="w-[20px]" alt="" />
+        <div class="flex items-center gap-2 mb-2">
+              <% for (var i = 1; i <= 5; i++) { %>
+        <% if (i <= Math.floor(user.rating)) { %>
+            <img src="/images/icons/FullStar.svg" class="w-[20px]" alt="Full star" />
+        <% } else if (i === Math.ceil(user.rating) && user.rating % 1 !== 0) { %>
+            <img src="/images/icons/HalfStar.svg" class="w-[20px]" alt="Half star" />
+        <% } else { %>
+            <img src="/images/icons/GreyStar.svg" class="w-[20px]" alt="Empty star" />
+        <% } %>
+    <% } %>
         </div>
         
-        <p class="text-darkgrey text-xs pb-5">
-            20 Reviews <%= user.rating %> Stars
+        <p class="text-darkgrey text-xs">
+            <%= user.rating %> Stars (20 reviews)
         </p>
 
-        <h3>Listings</h3>
+        <h3 class="mb-2 mt-10">Listings</h3>
         <div>
             <% user.items.forEach(item => { %>
                 <div class="relative">
-                    <img src="/images/product/product<%= item.id %>.jpg" class="mx-auto opacity-70 aspect-video rounded-lg object-cover mb-5" alt="" />
-                    <p class="text-sm absolute top-0 left-0 p-4 text-darkgrey text-center text-lg">Home</p>
+                    <img src="/images/product/product<%= item.id %>.jpg" class="mx-auto opacity-50 aspect-video rounded-lg object-cover mb-5" alt="" />
+                    <p class="text-sm absolute top-0 left-0 p-4 text-black text-center">Home</p>
                     <p class="absolute  top-5 left-0 p-4 text-black  text-lg font-bold"><%= item.name %></p>
                 </div>
             <% }) %>
