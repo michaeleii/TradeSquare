@@ -90,4 +90,15 @@ async function getItemByItemId(itemId: number): Promise<Item | null> {
 	}
 }
 
-export { getAllItems, getItemByItemId };
+async function createItem(formData: Item) {
+	try {
+		const newItem = await prisma.item.create({
+			data: formData,
+		});
+		return newItem;
+	} catch (error) {
+		throw error;
+	}
+}
+
+export { getAllItems, getItemByItemId, createItem };
