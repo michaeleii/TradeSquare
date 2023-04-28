@@ -117,7 +117,14 @@ items
 		}
 	});
 
+
+items.get("/categories", (req, res) => {
+  res.render("pages/categories")
+});
+
+
 items.get("/item/:id", async (req, res) => {
+
 	const item = await getItemByItemId(+req.params.id);
 	if (item) {
 		const getObjectParams = {
