@@ -108,6 +108,10 @@ items
 		await s3.send(command);
 	});
 
+items.get("/categories", (req, res) => {
+  res.render("pages/categories")
+});
+
 items.get("/:id", async (req, res) => {
 	const item = await getItemByItemId(+req.params.id);
 	if (item) {
