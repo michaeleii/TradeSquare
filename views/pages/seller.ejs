@@ -43,11 +43,15 @@
         </div>
 
         <div class="flex items-center gap-2 mb-2">
-            <img src="/images/icons/FullStar.svg" class="w-[20px]" alt="" />
-            <img src="/images/icons/FullStar.svg" class="w-[20px]" alt="" />
-            <img src="/images/icons/FullStar.svg" class="w-[20px]" alt="" />
-            <img src="/images/icons/FullStar.svg" class="w-[20px]" alt="" />
-            <img src="/images/icons/HalfStar.svg" class="w-[20px]" alt="" />
+              <% for (var i = 1; i <= 5; i++) { %>
+        <% if (i <= Math.floor(user.rating)) { %>
+            <img src="/images/icons/FullStar.svg" class="w-[20px]" alt="Full star" />
+        <% } else if (i === Math.ceil(user.rating) && user.rating % 1 !== 0) { %>
+            <img src="/images/icons/HalfStar.svg" class="w-[20px]" alt="Half star" />
+        <% } else { %>
+            <img src="/images/icons/GreyStar.svg" class="w-[20px]" alt="Empty star" />
+        <% } %>
+    <% } %>
         </div>
         
         <p class="text-darkgrey text-xs pb-5">
@@ -59,7 +63,7 @@
             <% user.items.forEach(item => { %>
                 <div class="relative">
                     <img src="/images/product/product<%= item.id %>.jpg" class="mx-auto opacity-50 aspect-video rounded-lg object-cover mb-5" alt="" />
-                    <p class="text-sm absolute top-0 left-0 p-4 text-black text-center text-lg">Home</p>
+                    <p class="text-sm absolute top-0 left-0 p-4 text-black text-center">Home</p>
                     <p class="absolute  top-5 left-0 p-4 text-black  text-lg font-bold"><%= item.name %></p>
                 </div>
             <% }) %>
