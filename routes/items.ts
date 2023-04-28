@@ -108,6 +108,9 @@ items
 // 	res.render("components/seller");
 // });
 
+items.get("/categories", (req, res) => res.render("pages/categories"))
+
+
 items.get("/:id", async (req, res) => {
   const item = await getItemByItemId(+req.params.id);
   if (item) {
@@ -122,6 +125,7 @@ items.get("/:id", async (req, res) => {
     });
   }
 });
+
 
 items.get("/itemcard", (req, res) => res.render("components/itemCard"));
 
