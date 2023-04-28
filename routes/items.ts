@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllItems, getItemByItemId } from "../models/item";
+import { createItem, getAllItems, getItemByItemId } from "../models/item";
 
 import {
 	S3Client,
@@ -86,7 +86,7 @@ items.get("/all", async (req, res) => {
 });
 
 items
-	.route("/createListing")
+	.route("/create")
 	.get((req, res) => {
 		res.render("components/createListing");
 	})
@@ -105,14 +105,26 @@ items
 		};
 
 		const command = new PutObjectCommand(params);
-		await s3.send(command);
+		try {
+			await s3.send(command);
+			let formData = req.body;
+			formData.imgName = params.Key;
+			formData.userId = 1;
+			const item = await createItem(req.body);
+			res.redirect(`/items/item/${item.id}`);
+		} catch (error) {
+			res.status(500).send(error);
+		}
 	});
+
 
 items.get("/categories", (req, res) => {
   res.render("pages/categories")
 });
 
-items.get("/:id", async (req, res) => {
+
+items.get("/item/:id", async (req, res) => {
+
 	const item = await getItemByItemId(+req.params.id);
 	if (item) {
 		const getObjectParams = {
