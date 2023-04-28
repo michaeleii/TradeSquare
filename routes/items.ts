@@ -111,7 +111,7 @@ items
 items.get("/:id", async (req, res) => {
   const item = await getItemByItemId(+req.params.id);
   if (item) {
-    res.render("pages/item", { item, user: `user${req.params.id}` });
+    res.render("pages/item", { item });
   } else {
     res.status(404).render("pages/error", {
       message: "Item not found",
