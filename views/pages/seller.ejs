@@ -13,7 +13,7 @@
        <%- include('../components/subNavigation.ejs') %>
         
     <div class="h-full flex flex-col justify-between">
-        <div class="mb-5">
+        <div class="mb-10">
             <img src="/images/users/user1.png" class="rounded-full w-[300px] h-[300px] object-cover mx-auto"
                 alt="" />
         </div>
@@ -54,11 +54,11 @@
     <% } %>
         </div>
         
-        <p class="text-darkgrey text-xs pb-5">
+        <p class="text-darkgrey text-xs">
             <%= user.rating %> Stars (20 reviews)
         </p>
 
-        <h3 class="mb-2">Listings</h3>
+        <h3 class="mb-2 mt-10">Listings</h3>
         <div>
             <% user.items.forEach(item => { %>
                 <div class="relative">
