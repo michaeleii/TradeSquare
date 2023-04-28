@@ -1,0 +1,109 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/styles/styles.css" rel="stylesheet" />
+
+   
+</head>
+<body>
+    <article class="w-[90%] mx-auto md:w-[60%] mb-10">
+       <%- include('../components/subNavigation.ejs') %>
+        
+    <div class="h-full flex flex-col justify-between">
+        <div class="mb-10">
+            <img src="/images/users/user<%= user.id %>.jpg" class="rounded-full w-[300px] h-[300px] object-cover mx-auto"
+                alt="" />
+        </div>
+        <h2 class="mb-2">
+                <%= user.f_name %> <%= user.l_name %>
+        </h2>
+        <p class="text-darkgrey">
+                A little bit about me...
+         </p>
+
+        <!-- <div class="flex gap-5 justify-between pt-5 pb-5">
+            <button class="btn-primary rounded w-[200]">Follow</button>
+            <button class="btn-primary-outline rounded w-[200]">Want/Have</button>
+        </div> -->
+
+        <h3 class="mt-5">Location</h3>
+        <div class="mb-2">
+            <p class="text-darkgrey">Toronto, Ontario</p>
+        </div>
+
+        <h3 class="mt-5">Analytics</h3>
+        <div class="mb-2">
+            <div class="flex">
+                <p class="text-darkgrey">Total transactions:&nbsp;</p> 
+                <p class="text-primary">21</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-2 mb-2">
+              <% for (var i = 1; i <= 5; i++) { %>
+        <% if (i <= Math.floor(user.rating)) { %>
+            <img src="/images/icons/FullStar.svg" class="w-[20px]" alt="Full star" />
+        <% } else if (i === Math.ceil(user.rating) && user.rating % 1 !== 0) { %>
+            <img src="/images/icons/HalfStar.svg" class="w-[20px]" alt="Half star" />
+        <% } else { %>
+            <img src="/images/icons/GreyStar.svg" class="w-[20px]" alt="Empty star" />
+        <% } %>
+    <% } %>
+        </div>
+        
+        <p class="text-darkgrey text-xs">
+            <%= user.rating %> Stars (20 reviews)
+        </p>
+
+        <h3 class="mb-2 mt-10">Listings</h3>
+        <div>
+            <% user.items.forEach(item => { %>
+                <div class="relative">
+                    <img src="/images/product/product<%= item.id %>.jpg" class="mx-auto opacity-50 aspect-video rounded-lg object-cover mb-5" alt="" />
+                    <p class="text-sm absolute top-0 left-0 p-4 text-black text-center">Home</p>
+                    <p class="absolute  top-5 left-0 p-4 text-black  text-lg font-bold"><%= item.name %></p>
+                </div>
+            <% }) %>
+    
+            <!-- <div class="relative">
+                <img src="/images/product/product2.jpg" class="mx-auto opacity-70 aspect-video rounded-lg object-cover mb-5"
+                    alt="" />
+                <p class="text-sm absolute top-0 left-0 p-4 text-darkgrey text-center text-lg">Home/ Service</p>
+                <p class="absolute  top-5 left-0 p-4 text-black  text-lg font-bold">Art Lessons</p>
+            </div> -->
+
+        </div>
+       
+        <!-- <h3>Want/ Have Items</h3>
+        <div class="grid">
+            <div class="flex justify-between">
+                <div>
+                    <img src="/images/product/product3.jpg" class="w-[200px] h-[150px] object-cover rounded mb-[13px]"
+                        alt="" />
+                    <p class="text-black">Foster Road Coin</p>
+                    <p class="text-darkgrey text-xm">Location: Vancouver</p>
+                </div>
+
+                <div>
+                    <img src="/images/product/product4.jpg" class="w-[200px] h-[150px] object-cover rounded mb-[13px]" alt="" />
+                    <p class="text-black">Vintage Ice Cube</p>
+                    <p class="text-darkgrey text-xm">Location: Vancouver</p>
+                </div>
+
+                
+            </div>
+
+            <div>
+                <img src="/images/product/product4.jpg" class="w-[200px] h-[150px] object-cover rounded mb-[13px]" alt="" />
+                <p class="text-black">Vintage Ice Cube</p>
+                <p class="text-darkgrey text-xm">Location: Vancouver</p>
+            </div>
+
+        </div> -->
+
+
+    </div>
+</body>

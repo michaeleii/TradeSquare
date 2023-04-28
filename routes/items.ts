@@ -1,11 +1,23 @@
 import express from "express";
 import { getAllItems, getItemByItemId } from "../models/item";
 
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import {
+  S3Client,
+  PutObjectCommand,
+  GetObjectCommand,
+  S3,
+} from "@aws-sdk/client-s3";
 import multer from "multer";
 import { z } from "zod";
 import dotenv from "dotenv";
 import crypto from "crypto";
+import prisma from "../client";
+import { Item } from "@prisma/client";
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+
+interface ItemWithImgUrl extends Item {
+  imgUrl: string;
+}
 dotenv.config();
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -53,6 +65,21 @@ items.get("/all", async (req, res) => {
   res.render("pages/itemList", { items });
 });
 
+items.get("/getImgUrl", async (req, res) => {
+  const items = await prisma.item.findMany({});
+
+  for (const item of items) {
+    const getObjectParams = {
+      Bucket: bucketName,
+      Key: item.imgName,
+    };
+    const command = new GetObjectCommand(getObjectParams);
+    const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+    (item as ItemWithImgUrl).imgUrl = url;
+  }
+  res.send(items);
+});
+
 items
   .route("/createListing")
   .get((req, res) => {
@@ -76,10 +103,10 @@ items
     await s3.send(command);
   });
 
-items.get("/seller/:id", (req, res) => {
-	const sellerId = req.params.id;
-  	res.render("components/seller")
-});
+// items.get("/seller/:id", (req, res) => {
+// 	const sellerId = req.params.id;
+// 	res.render("components/seller");
+// });
 
 items.get("/:id", async (req, res) => {
   const item = await getItemByItemId(+req.params.id);
@@ -103,8 +130,5 @@ items.get("/searchbar", (req, res) => {});
 items.get("/itempage", (req, res) => {});
 
 items.get("/itembtns", (req, res) => {});
-
-
-
 
 export default items;
