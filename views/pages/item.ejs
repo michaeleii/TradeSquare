@@ -24,15 +24,15 @@
 				srcset=""
 			/>
 
-			<div class="flex justify-between">
-				<h4></h4>
-				<!-- <h4 class="text-darkgrey">Home</h4> -->
-				<img src="/images/icons/Like.svg" alt="Like Icon" srcset="" />
-			</div>
+			<!-- <div class="flex justify-between"> -->
+			<!-- <h4></h4> -->
+			<!-- <h4 class="text-darkgrey">Home</h4> -->
+			<!-- <img src="/images/icons/Like.svg" alt="Like Icon" srcset="" /> -->
+			<!-- </div> -->
 
 			<h1 class="font-bold mt-0 mb-2"><%= item.name %></h1>
 
-			<div class="flex gap-5 justify-start">
+			<div class="flex gap-5 justify-start mt-5">
 				<img
 					class="rounded-full w-[30px] h-[30px] object-cover"
 					src="/images/users/user1.png"
@@ -54,7 +54,7 @@
 				<p class="text-darkgrey"><%= item.description %></p>
 			</div>
 
-			<div class="flex gap-5 justify-center">
+			<div class="flex gap-5 justify-center my-10">
 				<a href="/users/<%= item.user.id %>">
 					<button class="btn-primary-outline rounded w-[200]">
 						More about seller
