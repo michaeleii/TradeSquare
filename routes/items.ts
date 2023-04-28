@@ -111,7 +111,7 @@ items
 			formData.imgName = params.Key;
 			formData.userId = 1;
 			const item = await createItem(req.body);
-			res.redirect(`/items/${item.id}`);
+			res.redirect(`/items/item/${item.id}`);
 		} catch (error) {
 			res.status(500).send(error);
 		}
