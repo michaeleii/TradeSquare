@@ -117,7 +117,7 @@ items
 		}
 	});
 
-items.get("/:id", async (req, res) => {
+items.get("/item/:id", async (req, res) => {
 	const item = await getItemByItemId(+req.params.id);
 	if (item) {
 		const getObjectParams = {
