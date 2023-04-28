@@ -1,5 +1,3 @@
-import Item from "../interfaces/Item";
-import User from "../interfaces/User";
 // import ItemData from "../interfaces/ItemData";
 // import { getUserById } from "./user";
 
@@ -94,6 +92,7 @@ import User from "../interfaces/User";
 // console.log(getItemByItemId(1))
 
 import prisma from "../client";
+import { Item, User } from "@prisma/client";
 
 async function getAllItems(): Promise<(Item & { user: User | null })[]> {
 	try {
