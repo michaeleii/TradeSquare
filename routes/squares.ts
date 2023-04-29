@@ -1,18 +1,15 @@
 import express from "express";
+import squareList from "../models/squares";
 
 const squares = express.Router();
 
 squares.get("/all", (req, res) => {
-  res.send("All the squares");
+  res.render("pages/squares", { squareList });
 });
 
 // squares.get("/:id", (req, res) => {
 // 	res.send("Square for id: " + req.params.id);
 // });
-
-squares.get("/squarecomponent", (req, res) => {
-  res.render("pages/squares");
-});
 
 squares.get("/squaretitlecomponent", (req, res) => {
   res.render("components/Square_Title_and_Description");
