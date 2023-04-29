@@ -8,6 +8,23 @@
     <link href="/styles/styles.css" rel="stylesheet" />
   </head>
   <body>
-    <%- include('../components/square.ejs') %>
+    <div class="mx-auto w-[90%] lg:w-[70%]">
+      <h3 class="text-[23px]">Squares</h3>
+      <p class="ml-4 my-4">
+        This is a community space for people who are interested in bartering to
+        connect and share their stories. We invite you to join our community and
+        engage with others who share your interests.
+      </p>
+      <div class="flex flex-col">
+        <% squareList.forEach(square => { %> <%-
+        include('../components/square.ejs', {square}) %> <% }) %>
+
+        <button
+          class="btn-primary rounded-lg w-full md:place-self-center md:w-[600px]"
+        >
+          My Squares
+        </button>
+      </div>
+    </div>
   </body>
 </html>
