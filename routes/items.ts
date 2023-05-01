@@ -1,5 +1,10 @@
 import express from "express";
-import { createItem, getAllItems, getItemByItemId } from "../models/item";
+import {
+	createItem,
+	getAllItems,
+	getItemByItemId,
+	updateItem,
+} from "../models/item";
 
 import {
 	S3Client,
@@ -91,9 +96,6 @@ items
 		res.render("components/createListing");
 	})
 	.post(upload.single("image"), async (req, res) => {
-		console.log("req.body:", req.body);
-		console.log("req.file:", req.file);
-
 		if (!req.file) {
 			return res.status(400).send("No file uploaded");
 		}
@@ -117,14 +119,38 @@ items
 		}
 	});
 
-
 items.get("/categories", (req, res) => {
-  res.render("pages/categories")
+	res.render("pages/categories");
 });
 
+items
+	.route("/edit/:id")
+	.get(async (req, res) => {
+		const item = await getItemByItemId(+req.params.id);
+		if (item) {
+			const getObjectParams = {
+				Bucket: bucketName,
+				Key: item.imgName,
+			};
+			const command = new GetObjectCommand(getObjectParams);
+			const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+			(
+				item as Item & {
+					imgUrl: string;
+				}
+			).imgUrl = url;
+			res.render("pages/editListing", { item });
+		} else {
+			res.status(404).send("Item not found");
+		}
+	})
+	.post(async (req, res) => {
+		const [itemId, formData] = [+req.params.id, req.body];
+		await updateItem(itemId, formData);
+		res.redirect(`/items/view/${itemId}`);
+	});
 
-items.get("/item/:id", async (req, res) => {
-
+items.get("/view/:id", async (req, res) => {
 	const item = await getItemByItemId(+req.params.id);
 	if (item) {
 		const getObjectParams = {
