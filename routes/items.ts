@@ -1,10 +1,16 @@
 import express from "express";
-import { createItem, getAllItems, getItemByItemId } from "../models/item";
+import {
+  createItem,
+  getAllItems,
+  getItemByItemId,
+  deleteItem,
+} from "../models/item";
 
 import {
   S3Client,
   PutObjectCommand,
   GetObjectCommand,
+  DeleteObjectCommand,
 } from "@aws-sdk/client-s3";
 import multer from "multer";
 import { z } from "zod";
@@ -178,7 +184,28 @@ items.get("/editListing/:id", async (req, res) => {
 });
 
 items.get("/deleteListing/:id", async (req, res) => {
-  res.send("This is the delete page");
+  const item = await getItemByItemId(+req.params.id);
+
+  if (item) {
+    const deleteObjectParams = {
+      Bucket: bucketName,
+      Key: item.imgName,
+    };
+    const command = new DeleteObjectCommand(deleteObjectParams);
+    await s3.send(command);
+
+    await deleteItem(+req.params.id);
+
+    res.send("Item deleted successfully");
+  } else {
+    res.status(404).render("pages/error", {
+      message: "Item not found",
+      error: {
+        status: "404",
+        stack: "The item you are looking for does not exist",
+      },
+    });
+  }
 });
 
 export default items;
