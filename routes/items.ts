@@ -172,7 +172,7 @@ items.get("/categories/:id", async (req, res) => {
 });
 
 
-items.get("/item/:id", async (req, res) => {
+items.get("/view/:id", async (req, res) => {
 
 	const item = await getItemByItemId(+req.params.id);
 	if (item) {
