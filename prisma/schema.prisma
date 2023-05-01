@@ -32,6 +32,7 @@ model Item {
   categoryId  Int?
 
   @@index(userId)
+  @@index(categoryId)
 }
 
 model Category {

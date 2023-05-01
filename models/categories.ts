@@ -4,48 +4,34 @@ import User from "../interfaces/User";
 import items from "../routes/items";
 
 async function getAllCategories(): Promise<Category[] | null> {
-    try {
-        const categories = await prisma.category.findMany({});
-        return categories;
-    } catch (error) {
-        throw error;
-    }
+	try {
+		const categories = await prisma.category.findMany({});
+		return categories;
+	} catch (error) {
+		throw error;
+	}
 }
 
-async function getItemsByCategoryId(categoryId: number): Promise<Item[] | undefined > {
-    try {
-        const category = await prisma.category.findUnique({
-            where: { 
-                id: categoryId 
-            }, 
-            include: { 
-                items: true, 
-            } 
-        })
-        const itemsInCategory = category?.items;
-        return itemsInCategory;
-    } catch (error) {
-        throw error;
-    }
+async function getItemsByCategoryId(
+	categoryId: number
+): Promise<Item[] | undefined> {
+	try {
+		const itemsInCategory = await prisma.item.findMany({
+			where: {
+				categoryId: categoryId,
+			},
+			include: {
+				user: true,
+				category: true,
+			},
+		});
+		return itemsInCategory;
+	} catch (error) {
+		throw error;
+	}
 }
 
-async function getCategoryItemsUsers(items: Item[]): Promise<User[] | null> {
-    try {
-        const users = await prisma.user.findMany({
-            where: {
-                id: {
-                    in: items.map((item) => item.userId)
-                }
-            }
-        })
-        return users;
-    } catch (error) {
-        throw error;
-    }
-}
-
-export { getAllCategories, getItemsByCategoryId, getCategoryItemsUsers }
-
+export { getAllCategories, getItemsByCategoryId };
 
 // getAllCategories().then((categories) => {console.log(categories?.map((category) => {return { name: category.name}}))});
 
