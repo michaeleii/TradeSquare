@@ -15,16 +15,23 @@
 				</h1>
 			</div>
       
-			<form class="flex flex-col" action="/items/create" method="POST" enctype="multipart/form-data">
-        <div
+			<form class="flex flex-col" action="" method="POST" enctype="multipart/form-data">
+				<div class="flex justify-center md:justify-normal">
+ <div
 				class="flex justify-center items-center w-[340px] h-[175px] bg-offwhite border-grey border-2 rounded-lg"
 			>
-				<!-- <img class="w-[13px] h-[11px]" src="/images/icons/Plus.svg" alt="" />
-				<img class="w-[24px] h-[24px]" src="/images/icons/Image.svg" alt="" /> -->
-       <input type="file"
-         id="image" name="image"
-         accept="image/png, image/jpeg">
+			<label for="image" class="flex items-center gap-1 h-full">
+				<img id="preview" class="w-[330px] h-[170px] object-cover rounded-lg hidden" src="#" alt="">
+<img class="w-[13px] h-[11px] input-icon mb-1" src="/images/icons/Plus.svg" alt="" />
+				<img class="w-[24px] h-[24px] input-icon" src="/images/icons/Image.svg" alt="" />
+				</label>
+     
 			</div>
+				</div>
+       
+			  <input type="file"
+         id="image" name="image"
+         accept="image/png, image/jpeg" class="hidden">
         <div class="my-5">
           <h2 class="text-[23px]">Add Photos</h2>
           <p class="text-[16px]">
@@ -196,5 +203,20 @@
 				</button>
 			</div> -->
 		</article>
+		<script>
+			const imageInput = document.querySelector("#image");
+			const imagePreview = document.querySelector("#preview");
+			const inputIcons = document.querySelectorAll(".input-icon");
+			imageInput.onchange = event => {
+  		const [file] = imageInput.files
+  			if (file) {
+    		imagePreview.src = URL.createObjectURL(file)
+			inputIcons.forEach(icon => {
+					icon.classList.add("hidden")
+			})
+			imagePreview.classList.remove("hidden")
+  			}
+}
+		</script>
 	</body>
 </html>

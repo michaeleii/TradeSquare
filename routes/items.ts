@@ -109,11 +109,11 @@ items
 		const command = new PutObjectCommand(params);
 		try {
 			await s3.send(command);
-			let formData = req.body;
+			const formData = req.body;
 			formData.imgName = params.Key;
 			formData.userId = 1;
 			const item = await createItem(req.body);
-			res.redirect(`/items/item/${item.id}`);
+			res.redirect(`/items/view/${item.id}`);
 		} catch (error) {
 			res.status(500).send(error);
 		}
