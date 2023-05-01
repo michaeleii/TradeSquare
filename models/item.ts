@@ -62,43 +62,56 @@ import prisma from "../client";
 import { Item } from "@prisma/client";
 
 async function getAllItems(): Promise<Item[] | null> {
-	try {
-		const allItems = await prisma.item.findMany({
-			include: {
-				user: true,
-			},
-		});
-		return allItems;
-	} catch (error) {
-		throw error;
-	}
+  try {
+    const allItems = await prisma.item.findMany({
+      include: {
+        user: true,
+      },
+    });
+    return allItems;
+  } catch (error) {
+    throw error;
+  }
 }
 
 async function getItemByItemId(itemId: number): Promise<Item | null> {
-	try {
-		const item = await prisma.item.findUnique({
-			where: {
-				id: itemId,
-			},
-			include: {
-				user: true,
-			},
-		});
-		return item;
-	} catch (error) {
-		throw error;
-	}
+  try {
+    const item = await prisma.item.findUnique({
+      where: {
+        id: itemId,
+      },
+      include: {
+        user: true,
+      },
+    });
+    return item;
+  } catch (error) {
+    throw error;
+  }
 }
 
 async function createItem(formData: Item) {
-	try {
-		const newItem = await prisma.item.create({
-			data: formData,
-		});
-		return newItem;
-	} catch (error) {
-		throw error;
-	}
+  try {
+    const newItem = await prisma.item.create({
+      data: formData,
+    });
+    return newItem;
+  } catch (error) {
+    throw error;
+  }
 }
 
-export { getAllItems, getItemByItemId, createItem };
+async function deleteItem(itemId: number): Promise<Item> {
+  try {
+    const deletedItem = await prisma.item.delete({
+      where: {
+        id: itemId,
+      },
+    });
+    return deletedItem;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export { getAllItems, getItemByItemId, createItem, deleteItem };
