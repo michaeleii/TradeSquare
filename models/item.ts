@@ -114,4 +114,18 @@ async function deleteItem(itemId: number): Promise<Item> {
   }
 }
 
-export { getAllItems, getItemByItemId, createItem, deleteItem };
+async function updateItem(itemId: number, formData: Item) {
+  try {
+    const updatedItem = await prisma.item.update({
+      where: {
+        id: itemId,
+      },
+      data: formData,
+    });
+    return updatedItem;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export { getAllItems, getItemByItemId, createItem, updateItem, deleteItem };

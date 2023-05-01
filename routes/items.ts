@@ -3,6 +3,7 @@ import {
   createItem,
   getAllItems,
   getItemByItemId,
+  updateItem,
   deleteItem,
 } from "../models/item";
 
@@ -97,9 +98,6 @@ items
     res.render("components/createListing");
   })
   .post(upload.single("image"), async (req, res) => {
-    console.log("req.body:", req.body);
-    console.log("req.file:", req.file);
-
     if (!req.file) {
       return res.status(400).send("No file uploaded");
     }
@@ -113,11 +111,11 @@ items
     const command = new PutObjectCommand(params);
     try {
       await s3.send(command);
-      let formData = req.body;
+      const formData = req.body;
       formData.imgName = params.Key;
       formData.userId = 1;
       const item = await createItem(req.body);
-      res.redirect(`/items/item/${item.id}`);
+      res.redirect(`/items/view/${item.id}`);
     } catch (error) {
       res.status(500).send(error);
     }
@@ -197,6 +195,63 @@ items.get("/deleteListing/:id", async (req, res) => {
     await deleteItem(+req.params.id);
 
     res.send("Item deleted successfully");
+  } else {
+    res.status(404).render("pages/error", {
+      message: "Item not found",
+      error: {
+        status: "404",
+        stack: "The item you are looking for does not exist",
+      },
+    });
+  }
+});
+
+items.get("/categories", (req, res) => {
+  res.render("pages/categories");
+});
+
+items
+  .route("/edit/:id")
+  .get(async (req, res) => {
+    const item = await getItemByItemId(+req.params.id);
+    if (item) {
+      const getObjectParams = {
+        Bucket: bucketName,
+        Key: item.imgName,
+      };
+      const command = new GetObjectCommand(getObjectParams);
+      const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+      (
+        item as Item & {
+          imgUrl: string;
+        }
+      ).imgUrl = url;
+      res.render("pages/editListing", { item });
+    } else {
+      res.status(404).send("Item not found");
+    }
+  })
+  .post(async (req, res) => {
+    const [itemId, formData] = [+req.params.id, req.body];
+    await updateItem(itemId, formData);
+    res.redirect(`/items/view/${itemId}`);
+  });
+
+items.get("/view/:id", async (req, res) => {
+  const item = await getItemByItemId(+req.params.id);
+  if (item) {
+    const getObjectParams = {
+      Bucket: bucketName,
+      Key: item.imgName,
+    };
+    const command = new GetObjectCommand(getObjectParams);
+    const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+    (
+      item as Item & {
+        imgUrl: string;
+      }
+    ).imgUrl = url;
+    res.render("pages/item", { item });
   } else {
     res.status(404).render("pages/error", {
       message: "Item not found",
