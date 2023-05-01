@@ -1,5 +1,6 @@
 import express from "express";
 import { createItem, getAllItems, getItemByItemId } from "../models/item";
+import { getAllCategories, getItemsByCategoryId, getCategoryItemsUsers } from "../models/categories";
 
 import {
 	S3Client,
@@ -118,8 +119,56 @@ items
 	});
 
 
-items.get("/categories", (req, res) => {
-  res.render("pages/categories")
+items.get("/categories", async (req, res) => {
+	const categories = await getAllCategories();
+	if(categories) {
+		res.render("pages/categories", { categories })
+	} else {
+			res.status(404).render("pages/error", {
+				message: "Item not found",
+				error: {
+					status: "404",
+					stack: "The item you are looking for does not exist",
+				},
+			});	
+	}
+});
+
+
+items.get("/categories/:id", async (req, res) => {
+	const categoryId = Number(req.params.id);
+	const categoryItems = await getItemsByCategoryId(categoryId);
+	if (categoryItems) {
+		const users = await getCategoryItemsUsers(categoryItems);
+		if(users) {
+			for(let i = 0; i < categoryItems.length; i++) {
+				(categoryItems as any)[i].user = users[i];
+			};
+		}
+
+		for (const item of categoryItems) {
+			const getObjectParams = {
+				Bucket: bucketName,
+				Key: item.imgName,
+			};
+			const command = new GetObjectCommand(getObjectParams);
+			const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+			(
+				item as Item & {
+					imgUrl: string;
+				}
+			).imgUrl = url;
+		}
+		res.render("pages/itemList", { items:categoryItems })
+	} else {
+		res.status(404).render("pages/error", {
+			message: "Item not found",
+			error: {
+				status: "404",
+				stack: "The item you are looking for does not exist",
+			},
+		});
+	}
 });
 
 
