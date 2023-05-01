@@ -1,4 +1,6 @@
 import express from "express";
+
+import { getAllCategories, getItemsByCategoryId, getCategoryItemsUsers } from "../models/categories";
 import {
 	createItem,
 	getAllItems,
@@ -7,12 +9,14 @@ import {
 	deleteItem,
 } from "../models/item";
 
+
 import {
 	S3Client,
 	PutObjectCommand,
 	GetObjectCommand,
 	DeleteObjectCommand,
 } from "@aws-sdk/client-s3";
+
 import multer from "multer";
 import { z } from "zod";
 import dotenv from "dotenv";
@@ -111,6 +115,7 @@ items
 		const command = new PutObjectCommand(params);
 		try {
 			await s3.send(command);
+
 			const formData = req.body;
 			formData.imgName = params.Key;
 			formData.userId = 1;
@@ -121,25 +126,48 @@ items
 		}
 	});
 
-items.get("/categories", (req, res) => {
-	res.render("pages/categories");
+
+items.get("/categories", async (req, res) => {
+	const categories = await getAllCategories();
+	if(categories) {
+		res.render("pages/categories", { categories })
+	} else {
+			res.status(404).render("pages/error", {
+				message: "Item not found",
+				error: {
+					status: "404",
+					stack: "The item you are looking for does not exist",
+				},
+			});	
+	}
 });
 
-items.get("/item/:id", async (req, res) => {
-	const item = await getItemByItemId(+req.params.id);
-	if (item) {
-		const getObjectParams = {
-			Bucket: bucketName,
-			Key: item.imgName,
-		};
-		const command = new GetObjectCommand(getObjectParams);
-		const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
-		(
-			item as Item & {
-				imgUrl: string;
-			}
-		).imgUrl = url;
-		res.render("pages/item", { item });
+
+items.get("/categories/:id", async (req, res) => {
+	const categoryId = Number(req.params.id);
+	const categoryItems = await getItemsByCategoryId(categoryId);
+	if (categoryItems) {
+		const users = await getCategoryItemsUsers(categoryItems);
+		if(users) {
+			for(let i = 0; i < categoryItems.length; i++) {
+				(categoryItems as any)[i].user = users[i];
+			};
+		}
+
+		for (const item of categoryItems) {
+    	const getObjectParams = {
+				Bucket: bucketName,
+				Key: item.imgName,
+			};
+			const command = new GetObjectCommand(getObjectParams);
+			const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+			(
+				item as Item & {
+					imgUrl: string;
+				}
+			).imgUrl = url;
+    	}
+		res.render("pages/itemList", { items:categoryItems })
 	} else {
 		res.status(404).render("pages/error", {
 			message: "Item not found",
@@ -202,27 +230,12 @@ items.get("/delete/:id", async (req, res) => {
 	}
 });
 
-items.get("/categories", (req, res) => {
-	res.render("pages/categories");
-});
-
 items
 	.route("/edit/:id")
 	.get(async (req, res) => {
 		const item = await getItemByItemId(+req.params.id);
 		if (item) {
-			const getObjectParams = {
-				Bucket: bucketName,
-				Key: item.imgName,
-			};
-			const command = new GetObjectCommand(getObjectParams);
-			const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
-			(
-				item as Item & {
-					imgUrl: string;
-				}
-			).imgUrl = url;
-			res.render("pages/editListing", { item });
+    			res.render("pages/editListing", { item });
 		} else {
 			res.status(404).send("Item not found");
 		}
@@ -232,7 +245,7 @@ items
 		await updateItem(itemId, formData);
 		res.redirect(`/items/my-item/${itemId}`);
 	});
-
+	
 items.get("/view/:id", async (req, res) => {
 	const item = await getItemByItemId(+req.params.id);
 	if (item) {

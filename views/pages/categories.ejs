@@ -21,17 +21,20 @@
                 Categories
             </h1>
 
-            <a href="/items/all">
-                <div class="flex gap-5 justify-start mt-5 bg-offwhite rounded-md hover:bg-gray-300" >
-                    <img src="/images/icons/Furniture.svg" alt="Furniture Icon" srcset="" class="p-3"/>
+            <% categories.forEach(category => { %>
+                
+                <a href="/items/categories/<%= category.id %>">
+                    <div class="flex gap-5 justify-start mt-5 bg-offwhite rounded-md hover:bg-gray-300" >
+                        <img src="/images/icons/category_<%= category.id %>.svg" alt="<%= category.name %> Icon" srcset="" class="p-3"/>
+    
+                        <p class="text-black font-bold place-self-center">
+                            <%= category.name %>
+                        </p>
+                    </div>
+                </a>
+            <% }); %>
 
-                    <p class="text-black font-bold place-self-center">
-                    Home Furniture/ Organizer
-                    </p>
-                </div>
-            </a>
-
-            <div class="flex gap-5 justify-start mt-5 bg-offwhite rounded-md">
+            <!-- <div class="flex gap-5 justify-start mt-5 bg-offwhite rounded-md">
                 <img src="/images/icons/Cloth.svg" alt="Cloth Icon" srcset="" class="p-3" />
             
                 <p class="text-black font-bold place-self-center">
@@ -69,7 +72,7 @@
                 <p class="text-black font-bold place-self-center">
                     Car / Electronics
                 </p>
-            </div>
+            </div> -->
 
            
 
