@@ -1,0 +1,89 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/styles/styles.css" rel="stylesheet" />
+
+    <title><%= item.name %></title>
+  </head>
+  <body>
+    <!-- <header class="p-10 flex justify-between">
+			<div class="flex justify-normal gap-2">
+				<img src="/images/icons/BackArrow.svg" alt="Backward Icon" srcset="" />
+				<h3 class="text-primary">Back</h3>
+			</div>
+			<img src="/images/icons/Bell.svg" alt="Bell Icon" srcset="" />
+		</header> -->
+    <article class="w-[90%] mx-auto md:w-[60%] mb-10">
+      <%- include('../components/subNavigation.ejs') %>
+      <img
+        class="mx-auto aspect-video rounded-lg object-cover mb-5"
+        src="<%= item.imgUrl %>"
+        alt="Item Img"
+        srcset=""
+      />
+
+      <!-- <div class="flex justify-between"> -->
+      <!-- <h4></h4> -->
+      <!-- <h4 class="text-darkgrey">Home</h4> -->
+      <!-- <img src="/images/icons/Like.svg" alt="Like Icon" srcset="" /> -->
+      <!-- </div> -->
+
+      <h1 class="font-bold mt-0 mb-2"><%= item.name %></h1>
+
+      <div class="flex gap-5 justify-start mt-5">
+        <img
+          class="rounded-full w-[30px] h-[30px] object-cover"
+          src="/images/users/user<%= item.user.id %>.jpg"
+          alt="Seller Img"
+          srcset=""
+        />
+        <p class="text-darkgrey font-bold text-2xl">
+          <%= item.user.f_name %> <%= item.user.l_name %>
+        </p>
+      </div>
+
+      <div class="flex gap-5 justify-start items-center pl-2 my-5">
+        <% for (var i = 1; i <= 5; i++) { %> <% if (i <=
+        Math.floor(item.user.rating)) { %>
+        <img
+          src="/images/icons/FullStar.svg"
+          class="w-[20px]"
+          alt="Full star"
+        />
+        <% } else if (i === Math.ceil(item.user.rating) && item.user.rating % 1
+        !== 0) { %>
+        <img
+          src="/images/icons/HalfStar.svg"
+          class="w-[20px]"
+          alt="Half star"
+        />
+        <% } else { %>
+        <img
+          src="/images/icons/GreyStar.svg"
+          class="w-[20px]"
+          alt="Empty star"
+        />
+        <% } %> <% } %>
+        <p class="text-xs"><%= item.user.rating %></p>
+      </div>
+
+      <div class="my-5">
+        <h2 class="mb-2">Product Details</h2>
+        <p class="text-darkgrey"><%= item.description %></p>
+      </div>
+
+      <div class="flex gap-5 justify-center my-10">
+        <a href="/items/editListing/<%= item.user.id %>">
+          <button class="btn-primary-outline rounded w-[200]">Edit Post</button>
+        </a>
+        <a href="/items/deleteListing/<%= item.user.id %>">
+          <button class="btn-primary rounded w-[200]">Delete Post</button>
+        </a>
+      </div>
+
+      <!-- <button class="bg-primary text-white border border-primary py-2 px-4 rounded-full">+</button> -->
+    </article>
+  </body>
+</html>
