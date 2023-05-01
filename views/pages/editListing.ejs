@@ -15,7 +15,7 @@
 				</h1>
 			</div>
       
-			<form class="flex flex-col" action="" method="POST">
+			<form class="flex flex-col" action="/items/edit/<%= item.id %>" method="POST">
 			
 				<label class="text-[23px] font-bold" for="listingTitle">
 					Title of your Listing
@@ -46,9 +46,14 @@
 				
 			<div class="flex justify-center mt-10">
 				<button
-					class="bg-primary w-[235px] h-[50px] rounded-xl text-white py-2.5 px-5 mt-2 mr-2 block"
+					class="bg-success w-[235px] h-[50px] rounded-xl text-white py-2.5 px-5 mt-2 mr-2 block"
 				>
 					Edit
+				</button>
+				<button
+					class="bg-danger w-[235px] h-[50px] rounded-xl text-white py-2.5 px-5 mt-2 mr-2 block" formaction="/items/my-item/<%=item.id%>" formmethod="get"
+				>
+					Cancel
 				</button>
 			</div>
 			</form>

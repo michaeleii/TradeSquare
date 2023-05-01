@@ -29,3 +29,35 @@ h3 {
 .btn-primary-outline:hover {
 	@apply bg-primary text-white border border-primary py-2 px-4;
 }
+
+.btn-danger {
+	@apply bg-danger text-white py-2 px-4 transition-colors ease-in-out;
+}
+
+.btn-danger:hover {
+	@apply bg-danger-dark text-white py-2 px-4;
+}
+
+.btn-danger-outline {
+	@apply bg-white text-danger border border-danger py-2 px-4 transition-colors ease-in-out;
+}
+
+.btn-danger-outline:hover {
+	@apply bg-danger text-white border border-danger py-2 px-4;
+}
+
+.btn-success {
+	@apply bg-success text-white py-2 px-4 transition-colors ease-in-out;
+}
+
+.btn-success:hover {
+	@apply bg-success-dark text-white py-2 px-4;
+}
+
+.btn-success-outline {
+	@apply bg-white text-success border border-success py-2 px-4 transition-colors ease-in-out;
+}
+
+.btn-success-outline:hover {
+	@apply bg-success text-white border border-success py-2 px-4;
+}
