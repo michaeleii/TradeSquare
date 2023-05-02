@@ -9,7 +9,7 @@
 	"name": "idsp-tt-bartering-app",
 	"description": "This project uses the following technologies:",
 	"version": "1.0.0",
-	"main": "sum.js",
+	"main": "app.js",
 	"dependencies": {
 		"@aws-sdk/client-s3": "^3.321.1",
 		"@aws-sdk/s3-request-presigner": "^3.321.1",
