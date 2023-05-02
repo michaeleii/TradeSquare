@@ -1,13 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="/styles/styles.css" rel="stylesheet" />
-    <title>TradeSquare</title>
-  </head>
-  <body>
-    <%- include('../components/header.ejs') %>
-  </body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="/styles/styles.css" rel="stylesheet" />
+		<title>TradeSquare</title>
+	</head>
+	<body>
+		<div class="mx-auto w-[90%] md:w-[50%] my-5">
+			<%- include('../components/header.ejs') %>
+			<h1 class="text-3xl mb-2">Welcome,</h1>
+			<p class="text-darkgrey">Hello Username 👋</p>
+			<section class="my-10">
+				<div class="flex justify-between items-center mb-3">
+					<h2>Popular Categories</h2>
+					<a
+						href="/categories/all"
+						class="text-primary hover:text-primary-dark"
+					>
+						Show All
+					</a>
+				</div>
+				<div class="grid grid-cols-3 gap-5">
+					<a href="/categories/1">
+          <div class="bg-primary hover:bg-primary-dark rounded-lg py-5">
+						<img
+							src="/images/icons/category_1.svg"
+							alt=""
+							class="w-[43px] h-[43px] mx-auto"
+						/>
+						<p class="text-center text-white mt-2">Furniture</p>
+					</div>
+          </a>
+					<a href="/categories/3">
+        <div class="bg-primary hover:bg-primary-dark rounded-lg py-5">
+						<img
+							src="/images/icons/category_3.svg"
+							alt=""
+							class="w-[43px] h-[43px] mx-auto"
+						/>
+						<p class="text-center text-white mt-2">Shoes</p>
+					</div>
+          </a>
+					<a href="/categories/4">
+          <div class="bg-primary hover:bg-primary-dark rounded-lg py-5">
+						<img
+							src="/images/icons/category_4.svg"
+							alt=""
+							class="w-[43px] h-[43px] mx-auto"
+						/>
+						<p class="text-center text-white mt-2">Art</p>
+					</div>
+				</div>
+          </a>
+			</section>
+			<section class="my-10">
+				<div class="flex justify-between items-center mb-3">
+					<h2>Featured Squares</h2>
+					<a href="/squares/all" class="text-primary hover:text-primary-dark">
+						Show All
+					</a>
+				</div>
+
+				<div class="grid grid-cols-3 gap-5">
+					<a href="">
+						<div
+							class="p-5 bg-primary hover:bg-primary-dark rounded-lg h-[100px] flex justify-center items-center"
+						>
+							<p class="text-center text-white">Art Collector</p>
+						</div>
+					</a>
+					<a href="">
+						<div
+							class="p-5 bg-primary hover:bg-primary-dark rounded-lg h-[100px] flex justify-center items-center"
+						>
+							<p class="text-center text-white">Sustainable Living Enthusiasts</p>
+						</div>
+					</a>
+					<a href="">
+						<div
+							class="p-5 bg-primary hover:bg-primary-dark rounded-lg h-[100px] flex justify-center items-center"
+						>
+							<p class="text-center text-white">Small Business Owners</p>
+						</div>
+					</a>
+				</div>
+			</section>
+			<section class="my-10">
+				<h2 class="mb-3">Recommended for you</h2>
+				<div class="grid grid-cols-2 md:grid-cols-4 gap-5 justify-center">
+					<% for(let i = 1; i <= 8; i++) { %> <% let item = {id: i, name: `Item
+					${i}`,imgUrl:
+					"https://tradesqaure-s3-bucket.s3.ca-central-1.amazonaws.com/19e5cd750d6468ec455a905cfd399822785be97ed6256f283cd54762a99a2a90?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIA5TYE5C6Z2HFL3L7Z%2F20230502%2Fca-central-1%2Fs3%2Faws4_request&X-Amz-Date=20230502T220743Z&X-Amz-Expires=3600&X-Amz-Signature=e5ed49ed159f0e6a09ce442ad13d36735adc1d3cc4445ac2585f35b26fcf3bfa&X-Amz-SignedHeaders=host&x-id=GetObject",
+					user: {f_name: "Scott", l_name: "Chen", rating: 5, likes: 0} } %> <%-
+					include('../components/itemCard.ejs', {item}) %> <% } %>
+				</div>
+			</section>
+		</div>
+	</body>
 </html>
