@@ -64,7 +64,11 @@ async function getUserById(id: number): Promise<
 				id: id,
 			},
 			include: {
-				items: true,
+				items: {
+					include: {
+						category: true,
+					},
+				},
 			},
 		});
 		return getUser;
