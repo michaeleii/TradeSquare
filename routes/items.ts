@@ -115,7 +115,9 @@ items
       const formData = req.body;
       formData.imgName = params.Key;
       formData.userId = 1;
+      formData.categoryId = +formData.categoryId;
       const item = await createItem(req.body);
+
       res.redirect(`/items/view/${item.id}`);
     } catch (error) {
       res.status(500).send(error);
