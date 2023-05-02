@@ -21,4 +21,18 @@ const squares: Square[] = [
   },
 ];
 
-export default squares;
+import prisma from "../client";
+import { Square } from "@prisma/client";
+
+async function getAllSquares(): Promise<Square[] | null > {
+  try {
+    const allSquares = await prisma.square.findMany();
+    return allSquares; 
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+
+export default getAllSquares;

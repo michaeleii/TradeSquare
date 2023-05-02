@@ -1,10 +1,13 @@
 import express from "express";
 import squareList from "../models/squares";
+import getAllSquares from "../models/squares";
+
 
 const squares = express.Router();
 
-squares.get("/all", (req, res) => {
-  res.render("pages/squares", { squareList });
+squares.get("/all", async (req, res) => {
+  const squares =  await getAllSquares();
+  res.render("pages/squares", { squares });
 });
 
 // squares.get("/:id", (req, res) => {
