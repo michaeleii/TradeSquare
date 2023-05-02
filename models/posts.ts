@@ -18,3 +18,5 @@ const posts: Post[] = [
 		description: "Can you guys suggest me some art exhibitions near me?",
 	},
 ];
+
+export default posts
