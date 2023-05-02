@@ -1,6 +1,5 @@
 import express from "express";
 
-import { getAllCategories, getItemsByCategoryId } from "../models/categories";
 import {
 	createItem,
 	getAllItems,
@@ -19,11 +18,9 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 import multer from "multer";
 import { z } from "zod";
-import dotenv from "dotenv";
+
 import crypto from "crypto";
 import { Item } from "@prisma/client";
-
-dotenv.config();
 
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -124,51 +121,6 @@ items
 			res.status(500).send(error);
 		}
 	});
-
-items.get("/categories", async (req, res) => {
-	const categories = await getAllCategories();
-	if (categories) {
-		res.render("pages/categories", { categories });
-	} else {
-		res.status(404).render("pages/error", {
-			message: "Item not found",
-			error: {
-				status: "404",
-				stack: "The item you are looking for does not exist",
-			},
-		});
-	}
-});
-
-items.get("/categories/:id", async (req, res) => {
-	const categoryId = Number(req.params.id);
-	const items = await getItemsByCategoryId(categoryId);
-	console.log("items", items);
-	if (items) {
-		for (const item of items) {
-			const getObjectParams = {
-				Bucket: bucketName,
-				Key: item.imgName,
-			};
-			const command = new GetObjectCommand(getObjectParams);
-			const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
-			(
-				item as Item & {
-					imgUrl: string;
-				}
-			).imgUrl = url;
-		}
-		res.render("pages/itemList", { items });
-	} else {
-		res.status(404).render("pages/error", {
-			message: "Item not found",
-			error: {
-				status: "404",
-				stack: "The item you are looking for does not exist",
-			},
-		});
-	}
-});
 
 items.get("/my-item/:id", async (req, res) => {
 	const item = await getItemByItemId(+req.params.id);
