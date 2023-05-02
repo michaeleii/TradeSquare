@@ -1,28 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="/styles/styles.css" rel="stylesheet" />
-    <title>Viewing Items of Category</title>
-</head>
-
-<body>
-    <div class="flex flex-col items-center my-10">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-5 justify-center">
-            <h1 class="col-span-2 md:col-span-4">All Items</h1>
-            <% categoryItems.forEach(item=> { %>
-                
-
-                    <a href="/items/category/<%= item.id %>">
-                        <%- include('../components/itemCard.ejs', {item}) %>
-                    </a>
-                <% }) %>
-
-        </div>
-    </div>
-</body>
-
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="/styles/styles.css" rel="stylesheet" />
+		<title><%= category ? category.name : "All Items" %></title>
+	</head>
+	<body>
+		<div class="flex flex-col items-center my-10">
+			<div class="grid grid-cols-2 md:grid-cols-4 gap-5 justify-center">
+				<h1 class="col-span-2 md:col-span-4">
+					<%= category ? category.name : "All Items" %>
+				</h1>
+				<% category.items.forEach(item => { %>
+				<a href="/items/view/<%= item.id %>">
+					<%- include('../components/itemCard.ejs', {item}) %>
+				</a>
+				<% }) %>
+			</div>
+		</div>
+	</body>
 </html>

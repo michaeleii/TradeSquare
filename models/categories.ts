@@ -12,17 +12,18 @@ async function getAllCategories(): Promise<Category[] | null> {
 	}
 }
 
-async function getItemsByCategoryId(
-	categoryId: number
-): Promise<Item[] | undefined> {
+async function getItemsByCategoryId(categoryId: number) {
 	try {
-		const itemsInCategory = await prisma.item.findMany({
+		const itemsInCategory = await prisma.category.findUnique({
 			where: {
-				categoryId: categoryId,
+				id: categoryId,
 			},
 			include: {
-				user: true,
-				category: true,
+				items: {
+					include: {
+						user: true,
+					},
+				},
 			},
 		});
 		return itemsInCategory;
