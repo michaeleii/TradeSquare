@@ -1,3 +1,5 @@
+import Square from "../interfaces/Square";
+
 const squares: Square[] = [
   {
     id: 1,

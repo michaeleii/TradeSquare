@@ -138,7 +138,7 @@ items.get("/my-item/:id", async (req, res) => {
         imgUrl: string;
       }
     ).imgUrl = url;
-    res.render("pages/EditItem", { item });
+    res.render("pages/EditItem", { item, previousLink: req.headers.referer });
   } else {
     res.status(404).render("pages/error", {
       message: "Item not found",
@@ -205,7 +205,7 @@ items.get("/view/:id", async (req, res) => {
         imgUrl: string;
       }
     ).imgUrl = url;
-    res.render("pages/item", { item });
+    res.render("pages/item", { item, previousLink: req.headers.referer });
   } else {
     res.status(404).render("pages/error", {
       message: "Item not found",
