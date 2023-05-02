@@ -16,6 +16,7 @@ import squaresRouter from "./routes/squares";
 import itemsRouter from "./routes/items";
 import usersRouter from "./routes/users";
 import categories from "./routes/categories";
+import apiRouter from "./routes/api";
 
 app.use("/squares", squaresRouter);
 
@@ -24,6 +25,8 @@ app.use("/items", itemsRouter);
 app.use("/categories", categories);
 
 app.use("/users", usersRouter);
+
+app.use("/api", apiRouter);
 
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);

@@ -1,24 +1,30 @@
-<div class="h-full flex flex-col justify-between">
+<div
+	class="h-full flex flex-col justify-between item-card"
+	data-id="<%= item.id %>"
+>
 	<div>
 		<img
 			src="<%= item.imgUrl %>"
 			class="w-[165px] h-[130px] object-cover rounded mb-[13px]"
+			id="imgUrl"
 			alt=""
 		/>
-		<h2 class="w-[160px] text-[17px] line-clamp-2"><%= item.name%></h2>
+		<h2 class="w-[160px] text-[17px] line-clamp-2" id="itemName">
+			<%= item.name%>
+		</h2>
 	</div>
 	<div>
-		<p class="text-[16px] mt-[5px] mb-[7px]">
+		<p class="text-[16px] mt-[5px] mb-[7px]" id="seller">
 			<%= item.user.f_name %> <%= item.user.l_name %>
 		</p>
 		<div class="flex gap-5">
 			<div class="flex items-center gap-2">
 				<img src="/images/icons/GreyStar.svg" class="w-[15px]" alt="" />
-				<span class="text-[12px]"><%= item.user.rating %></span>
+				<span class="text-[12px]" id="rating"><%= item.user.rating %></span>
 			</div>
 			<div class="flex items-center gap-2">
 				<img src="/images/icons/LikeGrey.svg" class="w-[15px]" alt="" />
-				<span class="text-[12px]"><%= item.likes %> Likes</span>
+				<span class="text-[12px]" id="likes"><%= item.likes %> Likes</span>
 			</div>
 		</div>
 	</div>
