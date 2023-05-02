@@ -69,6 +69,7 @@
 		"find-up": "^4.1.0",
 		"fs.realpath": "^1.0.0",
 		"function-bind": "^1.1.1",
+		"fuse.js": "^6.6.2",
 		"gensync": "^1.0.0-beta.2",
 		"get-caller-file": "^2.0.5",
 		"get-package-type": "^0.1.0",
