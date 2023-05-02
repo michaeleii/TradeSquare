@@ -18,14 +18,18 @@
 
 			<a href="/categories/<%= category.id %>">
 				<div
-					class="flex gap-5 justify-start mt-5 bg-offwhite rounded-md hover:bg-gray-300"
+					class="flex gap-5 justify-start p-5 mt-5 bg-offwhite rounded-md hover:bg-gray-300"
 				>
-					<img
-						src="/images/icons/category_<%= category.id %>.svg"
-						alt="<%= category.name %> Icon"
-						srcset=""
-						class="p-3"
-					/>
+					<div
+						class="bg-primary w-[100px] h-[100px] flex justify-center items-center rounded"
+					>
+						<img
+							src="/images/icons/category_<%= category.id %>.svg"
+							alt="<%= category.name %> Icon"
+							srcset=""
+							class=""
+						/>
+					</div>
 
 					<p class="text-black font-bold place-self-center">
 						<%= category.name %>
