@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllItems } from "../models/item";
+import { getAllItems } from "../services/item";
 
 const api = express.Router();
 
