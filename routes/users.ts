@@ -1,5 +1,5 @@
 import express from "express";
-import { getUserById } from "../models/user";
+import { getUserById } from "../services/user";
 import { Category, Item } from "@prisma/client";
 import { z } from "zod";
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";

@@ -6,7 +6,7 @@ import {
 	getItemByItemId,
 	updateItem,
 	deleteItem,
-} from "../models/item";
+} from "../services/item";
 
 import {
 	S3Client,
