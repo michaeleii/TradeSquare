@@ -70,3 +70,11 @@ h3 {
 .like-icon:hover {
 	@apply cursor-pointer;
 }
+
+li:hover svg > path {
+	@apply stroke-primary;
+}
+
+li:hover a > span {
+	@apply text-primary;
+}
