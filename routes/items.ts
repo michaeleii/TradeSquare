@@ -1,11 +1,10 @@
 import express from "express";
-
 import {
-	createItem,
-	getAllItems,
-	getItemByItemId,
-	updateItem,
-	deleteItem,
+  createItem,
+  getAllItems,
+  getItemByItemId,
+  updateItem,
+  deleteItem,
 } from "../services/item";
 
 import {
@@ -21,217 +20,125 @@ import {
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 import multer from "multer";
-import { z } from "zod";
-
-import crypto from "crypto";
 import { Item, User } from "@prisma/client";
-
-const upload = multer({ storage: multer.memoryStorage() });
+import { uploadFile, deleteFile, getObjectSignedUrl } from "../s3";
+import crypto from "crypto";
 
 const randomImageName = (bytes = 32) =>
-	crypto.randomBytes(bytes).toString("hex");
+  crypto.randomBytes(bytes).toString("hex");
 
-const envVariables = z.object({
-	BUCKET_NAME: z.string(),
-	BUCKET_REGION: z.string(),
-	ACCESS_KEY: z.string(),
-	SECRET_ACCESS_KEY: z.string(),
-});
-
-envVariables.parse(process.env);
-
-declare global {
-	namespace NodeJS {
-		interface ProcessEnv extends z.infer<typeof envVariables> {
-			BUCKET_NAME: string;
-			BUCKET_REGION: string;
-			ACCESS_KEY: string;
-			SECRET_ACCESS_KEY: string;
-		}
-	}
-}
-
-const bucketName = process.env.BUCKET_NAME;
-const bucketRegion = process.env.BUCKET_REGION;
-const accessKey = process.env.ACCESS_KEY;
-const secretAccessKey = process.env.SECRET_ACCESS_KEY;
-
-const s3 = new S3Client({
-	credentials: {
-		accessKeyId: accessKey,
-		secretAccessKey: secretAccessKey,
-	},
-	region: bucketRegion,
-});
+const upload = multer({ storage: multer.memoryStorage() });
 
 const items = express.Router();
 
 items.get("/all", async (req, res) => {
-	try {
-		const items = await getAllItems();
+  try {
+    const items = await getAllItems();
 
-		if (!items) {
-			res.status(404).json({
-				message: "Items not found",
-			});
-			return;
-		}
+    if (!items) return res.status(404).send("Items not found");
 
-		for (const item of items) {
-			const getObjectParams = {
-				Bucket: bucketName,
-				Key: item.imgName,
-			};
-			const command = new GetObjectCommand(getObjectParams);
-			const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
-			(
-				item as Item & {
-					user: User;
-					imgUrl: string;
-				}
-			).imgUrl = url;
-		}
-		res.render("pages/itemList", { items });
-	} catch (error) {
-		res.status(500).send(error);
-	}
+    for (const item of items) {
+      const url = await getObjectSignedUrl(item.imgName);
+      (
+        item as Item & {
+          user: User;
+          imgUrl: string;
+        }
+      ).imgUrl = url;
+    }
+    res.render("pages/itemList", { items });
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 items
-	.route("/create")
-	.get((req, res) => {
-		res.render("components/createListing");
-	})
-	.post(upload.single("image"), async (req, res) => {
-		if (!req.file) {
-			return res.status(400).send("No file uploaded");
-		}
-		const params = {
-			Bucket: bucketName,
-			Key: randomImageName(),
-			Body: req.file.buffer,
-			ContentType: req.file.mimetype,
-		};
+  .route("/create")
+  .get((req, res) => {
+    res.render("components/createListing");
+  })
+  .post(upload.single("image"), async (req, res) => {
+    if (!req.file) {
+      return res.status(400).send("No file uploaded");
+    }
 
-		const command = new PutObjectCommand(params);
-		try {
-			await s3.send(command);
+    try {
+      const imgName = randomImageName();
+      await uploadFile(req.file.buffer, imgName, req.file.mimetype);
 
-			const formData = req.body;
-			formData.imgName = params.Key;
-			formData.userId = 1;
-			formData.categoryId = +formData.categoryId;
-			const item = await createItem(req.body);
+      req.body.imgName = imgName;
+      req.body.userId = 1;
+      req.body.categoryId = +req.body.categoryId;
+      const item = await createItem(req.body);
 
-			res.redirect(`/items/view/${item.id}`);
-		} catch (error) {
-			res.status(500).send(error);
-		}
-	});
+      res.redirect(`/items/view/${item.id}`);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  });
 
 items.get("/my-item/:id", async (req, res) => {
-	const item = await getItemByItemId(+req.params.id);
-	if (item) {
-		const getObjectParams = {
-			Bucket: bucketName,
-			Key: item.imgName,
-		};
-		const command = new GetObjectCommand(getObjectParams);
-		const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
-		(
-			item as Item & {
-				user: User;
-				likedBy: User[];
-				imgUrl: string;
-			}
-		).imgUrl = url;
-		res.render("pages/EditItem", { item, previousLink: req.headers.referer });
-	} else {
-		res.status(404).render("pages/error", {
-			message: "Item not found",
-			error: {
-				status: "404",
-				stack: "The item you are looking for does not exist",
-			},
-		});
-	}
+  const item = await getItemByItemId(+req.params.id);
+  if (!item) return res.status(404).send("Item not found");
+  const url = await getObjectSignedUrl(item.imgName);
+  (
+    item as Item & {
+      user: User;
+      likedBy: User[];
+      imgUrl: string;
+    }
+  ).imgUrl = url;
+  res.render("pages/EditItem", { item });
 });
 
 items.get("/delete/:id", async (req, res) => {
-	const item = await getItemByItemId(+req.params.id);
-
-	if (item) {
-		const deleteObjectParams = {
-			Bucket: bucketName,
-			Key: item.imgName,
-		};
-		const command = new DeleteObjectCommand(deleteObjectParams);
-		await s3.send(command);
-
-		await deleteItem(+req.params.id);
-
-		res.send("Item deleted successfully");
-	} else {
-		res.status(404).render("pages/error", {
-			message: "Item not found",
-			error: {
-				status: "404",
-				stack: "The item you are looking for does not exist",
-			},
-		});
-	}
+  try {
+    const item = await getItemByItemId(+req.params.id);
+    if (!item) return res.status(404).send("Item not found");
+    await deleteFile(item.imgName);
+    await deleteItem(+req.params.id);
+    res.redirect("/items/all");
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 items
-	.route("/edit/:id")
-	.get(async (req, res) => {
-		const item = await getItemByItemId(+req.params.id);
-		if (item) {
-			res.render("pages/editListing", { item });
-		} else {
-			res.status(404).send("Item not found");
-		}
-	})
-	.post(async (req, res) => {
-		const [itemId, formData] = [+req.params.id, req.body];
-		await updateItem(itemId, formData);
-		res.redirect(`/items/my-item/${itemId}`);
-	});
+  .route("/edit/:id")
+  .get(async (req, res) => {
+    const item = await getItemByItemId(+req.params.id);
+    if (!item) return res.status(404).send("Item not found");
+    res.render("pages/editListing", { item });
+  })
+  .post(async (req, res) => {
+    const [itemId, formData] = [+req.params.id, req.body];
+    await updateItem(itemId, formData);
+    res.redirect(`/items/my-item/${itemId}`);
+  });
 
 items.get("/view/:id", async (req, res) => {
-	const item = await getItemByItemId(+req.params.id);
-	if (item) {
-		const getObjectParams = {
-			Bucket: bucketName,
-			Key: item.imgName,
-		};
-		const command = new GetObjectCommand(getObjectParams);
-		const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
-		(
-			item as Item & {
-				user: User;
-				likedBy: User[];
-				imgUrl: string;
-			}
-		).imgUrl = url;
-		const likedBy = item.likedBy.map((user) => {return user.id});
-		res.render("pages/item", { item, previousLink: req.headers.referer, likedBy });
-	} else {
-		res.status(404).render("pages/error", {
-			message: "Item not found",
-			error: {
-				status: "404",
-				stack: "The item you are looking for does not exist",
-			},
-		});
-	}
+  const item = await getItemByItemId(+req.params.id);
+  let likedBy: number[] = [];
+  if(item) {
+    likedBy = item.likedBy.map((user) => {return user.id});
+  }
+
+  if (!item) return res.status(404).send("Item not found");
+  const url = await getObjectSignedUrl(item.imgName);
+  (
+    item as Item & {
+      user: User;
+      likedBy: User[];
+      imgUrl: string;
+    }
+  ).imgUrl = url;
+  res.render("pages/item", { item, likedBy });
 });
 
 items.post('/view/:id/like', async (req, res) => {
 	const itemId = Number(req.params.id);
 	const userId = 1;
 	await userLikeOrUnlike(userId, itemId);
-
 	res.redirect("back");
 });
 

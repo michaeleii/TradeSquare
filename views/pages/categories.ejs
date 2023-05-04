@@ -1,44 +1,44 @@
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link href="/styles/styles.css" rel="stylesheet" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/styles/styles.css" rel="stylesheet" />
 
-		<title>Categories</title>
-	</head>
+    <title>Categories</title>
+  </head>
 
-	<body>
-		<article class="w-[90%] mx-auto md:w-[60%] mb-10">
-			<%- include('../components/subNavigation.ejs', {previousLink}) %>
+  <body>
+    <article class="w-[90%] mx-auto md:w-[60%] mb-10">
+      <%- include('../components/subNavigation.ejs') %>
 
-			<h1 class="font-bold mt-0 mb-2">Categories</h1>
+      <h1 class="font-bold mt-0 mb-2">Categories</h1>
 
-			<% categories.forEach(category => { %>
+      <% categories.forEach(category => { %>
 
-			<a href="/categories/<%= category.id %>">
-				<div
-					class="flex gap-5 justify-start p-5 mt-5 bg-offwhite rounded-md hover:bg-gray-300 transition-colors shadow-lg"
-				>
-					<div
-						class="bg-primary w-[100px] h-[100px] flex justify-center items-center rounded"
-					>
-						<img
-							src="/images/icons/category_<%= category.id %>.svg"
-							alt="<%= category.name %> Icon"
-							srcset=""
-							class=""
-						/>
-					</div>
+      <a href="/categories/<%= category.id %>">
+        <div
+          class="flex gap-5 justify-start p-5 mt-5 bg-offwhite rounded-md hover:bg-gray-300 transition-colors shadow-lg"
+        >
+          <div
+            class="bg-primary w-[100px] h-[100px] flex justify-center items-center rounded"
+          >
+            <img
+              src="/images/icons/category_<%= category.id %>.svg"
+              alt="<%= category.name %> Icon"
+              srcset=""
+              class=""
+            />
+          </div>
 
-					<p class="text-black font-bold place-self-center">
-						<%= category.name %>
-					</p>
-				</div>
-			</a>
-			<% }); %>
+          <p class="text-black font-bold place-self-center">
+            <%= category.name %>
+          </p>
+        </div>
+      </a>
+      <% }); %>
 
-			<!-- <div class="flex gap-5 justify-start mt-5 bg-offwhite rounded-md">
+      <!-- <div class="flex gap-5 justify-start mt-5 bg-offwhite rounded-md">
                 <img src="/images/icons/Cloth.svg" alt="Cloth Icon" srcset="" class="p-3" />
             
                 <p class="text-black font-bold place-self-center">
@@ -77,6 +77,6 @@
                     Car / Electronics
                 </p>
             </div> -->
-		</article>
-	</body>
+    </article>
+  </body>
 </html>
