@@ -31,8 +31,8 @@
 			<!-- </div> -->
 			<div class="flex justify-between">
 				<h1 class="font-bold mt-0 mb-2"><%= item.name %></h1>
+        <form action="/items/view/<%= item.id %>/like" method="POST">
         <% if (likedBy.includes(1)) { %>
-          <form action="/items/view/<%= item.id %>/like" method="POST">
 						<button type="submit">
 						<svg 
 							width="40" 
@@ -49,9 +49,7 @@
 								stroke-linejoin="round" />
 						</svg>
 						</button>
-          </form>
 					<% } else { %>
-            <form action="/items/view/<%= item.id %>/like" method="POST">
 						<button type="submit">
 						<svg
 							width="40"
@@ -70,7 +68,6 @@
 							/>
 						</svg>
 						</button>
-            </form>
 					<% } %>
 				</form>
 			</div>
