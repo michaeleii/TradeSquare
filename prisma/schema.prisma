@@ -19,6 +19,7 @@ model User {
   rating Float  @default(0)
   items  Item[]
   posts  Post[]
+  likedItems Item[] @relation("likedItems")
 }
 
 model Item {
@@ -31,6 +32,7 @@ model Item {
   likes       Int      @default(0)
   category    Category @relation(fields: [categoryId], references: [id])
   categoryId  Int
+  likedBy     User[]   @relation("likedItems")
 
   @@index(userId)
   @@index(categoryId)
