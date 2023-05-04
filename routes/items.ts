@@ -9,6 +9,10 @@ import {
 } from "../services/item";
 
 import {
+	userLikeOrUnlike,
+} from "../services/user";
+
+import {
 	S3Client,
 	PutObjectCommand,
 	GetObjectCommand,
@@ -137,6 +141,7 @@ items.get("/my-item/:id", async (req, res) => {
 		(
 			item as Item & {
 				user: User;
+				likedBy: User[];
 				imgUrl: string;
 			}
 		).imgUrl = url;
@@ -205,10 +210,12 @@ items.get("/view/:id", async (req, res) => {
 		(
 			item as Item & {
 				user: User;
+				likedBy: User[];
 				imgUrl: string;
 			}
 		).imgUrl = url;
-		res.render("pages/item", { item, previousLink: req.headers.referer });
+		const likedBy = item.likedBy.map((user) => {return user.id});
+		res.render("pages/item", { item, previousLink: req.headers.referer, likedBy });
 	} else {
 		res.status(404).render("pages/error", {
 			message: "Item not found",
@@ -218,6 +225,14 @@ items.get("/view/:id", async (req, res) => {
 			},
 		});
 	}
+});
+
+items.post('/view/:id/like', async (req, res) => {
+	const itemId = Number(req.params.id);
+	const userId = 1;
+	await userLikeOrUnlike(userId, itemId);
+
+	res.redirect("back");
 });
 
 export default items;
