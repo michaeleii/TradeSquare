@@ -87,16 +87,16 @@
 					</a>
 				</div>
 			</section>
-			<section class="my-10">
-				<h2 class="mb-3">Recommended for you</h2>
-				<div class="grid grid-cols-2 md:grid-cols-4 gap-5 justify-center">
-					<% for(let i = 1; i <= 8; i++) { %> <% let item = {id: i, name: `Item
-					${i}`,imgUrl:
-					"https://tradesqaure-s3-bucket.s3.ca-central-1.amazonaws.com/19e5cd750d6468ec455a905cfd399822785be97ed6256f283cd54762a99a2a90?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIA5TYE5C6Z2HFL3L7Z%2F20230502%2Fca-central-1%2Fs3%2Faws4_request&X-Amz-Date=20230502T220743Z&X-Amz-Expires=3600&X-Amz-Signature=e5ed49ed159f0e6a09ce442ad13d36735adc1d3cc4445ac2585f35b26fcf3bfa&X-Amz-SignedHeaders=host&x-id=GetObject",
-					user: {f_name: "Scott", l_name: "Chen", rating: 5, likes: 0} } %> <%-
-					include('../components/itemCard.ejs', {item}) %> <% } %>
+			
+				<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 justify-center">
+					<h2 class="mb-3 col-span-2 md:col-span-4">Recommended for you</h2>
+					 <% items.forEach(item => { %>
+						<a href="/items/view/<%= item.id %>">
+							<%- include('../components/itemCard', {item}) %>
+						   <% }) %>
+						</a>
 				</div>
-			</section>
+			
 		</div>
 	</body>
 </html>
