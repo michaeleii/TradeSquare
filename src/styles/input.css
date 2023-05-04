@@ -61,3 +61,12 @@ h3 {
 .btn-success-outline:hover {
 	@apply bg-success text-white border border-success py-2 px-4;
 }
+
+.notification-icon:hover path {
+	@apply fill-primary-dark;
+}
+
+.notification-icon:hover,
+.like-icon:hover {
+	@apply cursor-pointer;
+}
