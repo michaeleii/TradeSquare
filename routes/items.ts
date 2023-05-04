@@ -74,7 +74,7 @@ items.get("/my-item/:id", async (req, res) => {
       imgUrl: string;
     }
   ).imgUrl = url;
-  res.render("pages/EditItem", { item, previousLink: req.headers.referer });
+  res.render("pages/EditItem", { item });
 });
 
 items.get("/delete/:id", async (req, res) => {
@@ -112,7 +112,7 @@ items.get("/view/:id", async (req, res) => {
       imgUrl: string;
     }
   ).imgUrl = url;
-  res.render("pages/item", { item, previousLink: req.headers.referer });
+  res.render("pages/item", { item });
 });
 
 export default items;
