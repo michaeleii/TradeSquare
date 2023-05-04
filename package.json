@@ -228,8 +228,5 @@
 		"url": "https://github.com/michaeleii/IDSP-TT-Bartering-App/issues"
 	},
 	"homepage": "https://github.com/michaeleii/IDSP-TT-Bartering-App#readme",
-	"keywords": [],
-	"volta": {
-		"node": "20.0.0"
-	}
+	"keywords": []
 }
