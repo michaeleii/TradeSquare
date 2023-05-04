@@ -20,4 +20,19 @@ async function getUserById(id: number) {
 	}
 }
 
-export { getUserById };
+async function getUserLikedItems(id: number) {
+	try {
+		const userLikedItems = await prisma.user.findUnique({
+			where: {
+				id: id,
+			},
+		}).likedItems();
+		return userLikedItems;
+	}
+	catch (error) {
+		throw error;
+	}
+}
+
+export { getUserById, getUserLikedItems};
+
