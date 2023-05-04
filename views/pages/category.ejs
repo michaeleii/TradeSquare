@@ -8,7 +8,7 @@
 		<title><%= category ? category.name : "All Items" %></title>
 	</head>
 	<body>
-		<div class="flex flex-col items-center mb-10">
+		<div class="flex flex-col items-center mb-32">
 			<div class="grid grid-cols-2 md:grid-cols-4 gap-4 justify-center">
 				<div class="self-start">
 					<%- include('../components/subNavigation.ejs') %>
@@ -23,5 +23,6 @@
 				<% }) %>
 			</div>
 		</div>
+		<%- include('../components/navigationBar') %>
 	</body>
 </html>
