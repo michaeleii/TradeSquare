@@ -36,7 +36,7 @@
 					height="45"
 					viewBox="0 0 40 45"
 					fill="none"
-					class="hover:fill-primary transition-colors"
+					class="hover:fill-primary like-icon"
 					xmlns="http://www.w3.org/2000/svg"
 				>
 					<path
@@ -93,12 +93,14 @@
 
 			<div class="flex gap-5 justify-center my-10">
 				<a href="/users/<%= item.user.id %>">
-					<button class="btn-primary-outline rounded w-[200]">
+					<button class="btn-primary-outline rounded md:w-[200]">
 						More about seller
 					</button>
 				</a>
 				<a href="mailto:<%= item.user.email %>">
-					<button class="btn-primary rounded w-[200]">Email the seller</button>
+					<button class="btn-primary rounded md:w-[200]">
+						Email the seller
+					</button>
 				</a>
 			</div>
 
