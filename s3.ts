@@ -51,6 +51,7 @@ export async function uploadFile(
 			width: 1920,
 			height: 1080,
 			fit: "contain",
+			background: { r: 255, g: 255, b: 255, alpha: 1 },
 		})
 		.toFormat("webp")
 		.toBuffer();
