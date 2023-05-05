@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link href="/styles/styles.css" rel="stylesheet" />
-		<title><%= category ? category.name : "All Items" %></title>
-	</head>
-	<body>
-		<div class="flex flex-col items-center">
-			<div class="grid grid-cols-2 md:grid-cols-4 gap-4 justify-center">
-				<div class="self-start">
-					<%- include('../components/subNavigation.ejs') %>
-				</div>
-				<h1 class="col-span-2 md:col-span-4">
-					<%= category ? category.name : "All Items" %>
-				</h1>
-				<% category.items.forEach(item => { %>
-				<a href="/items/view/<%= item.id %>">
-					<%- include('../components/itemCard.ejs', {item}) %>
-				</a>
-				<% }) %>
-			</div>
-		</div>
-		<%- include('../components/navigationBar') %>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/styles/styles.css" rel="stylesheet" />
+    <title><%= category ? category.name : "All Items" %></title>
+  </head>
+  <body>
+    <div class="flex flex-col items-center">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 justify-center">
+        <div class="self-start">
+          <%- include('../components/subNavigation.ejs') %>
+        </div>
+        <h1 class="col-span-2 md:col-span-4">
+          <%= category ? category.name : "All Items" %>
+        </h1>
+        <% category.items.forEach(item => { %>
+        <a href="/items/view/<%= item.id %>">
+          <%- include('../components/itemCard.ejs', {item}) %>
+        </a>
+        <% }) %>
+      </div>
+    </div>
+    <%- include('../components/navigationBar') %>
+  </body>
 </html>
