@@ -52,6 +52,7 @@ async function userLikeOrUnlike(id: number, itemId: number) {
 						},
 					},
 				}).likedItems();
+				await decreaseItemLikes(itemId);
 				return userUnlikedItem;
 			} else {
 				const userLikedItem = await prisma.user.update({
@@ -66,6 +67,7 @@ async function userLikeOrUnlike(id: number, itemId: number) {
 						},
 					},
 				}).likedItems();
+				await increaseItemLikes(itemId);
 				return userLikedItem;
 			}
 		} catch (error) {
@@ -74,6 +76,37 @@ async function userLikeOrUnlike(id: number, itemId: number) {
 	}
 }
 
+async function increaseItemLikes(itemId: number) {
+	try {
+		const likePlus = await prisma.item.update({
+			where: {
+				id: itemId,
+			},
+			data: {
+				likes: {increment: 1},}
+			});
+		return likePlus;
+		}
+	catch (error) {
+		throw error;
+	}
+}
+
+async function decreaseItemLikes(itemId: number) {
+	try {
+		const likeMinus = await prisma.item.update({
+			where: {
+				id: itemId,
+			},
+			data: {
+				likes: { decrement: 1 },
+			}
+		});
+		return likeMinus;
+	}
+	catch (error) {
+		throw error;
+	}
+}
 
 export { getUserById, getUserLikedItems, userLikeOrUnlike };
-
