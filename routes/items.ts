@@ -6,6 +6,11 @@ import {
   updateItem,
   deleteItem,
 } from "../services/item";
+
+import {
+	userLikeOrUnlike,
+} from "../services/user";
+
 import multer from "multer";
 import { Item, User } from "@prisma/client";
 import { uploadFile, deleteFile, getObjectSignedUrl } from "../s3";
@@ -71,6 +76,7 @@ items.get("/my-item/:id", async (req, res) => {
   (
     item as Item & {
       user: User;
+      likedBy: User[];
       imgUrl: string;
     }
   ).imgUrl = url;
@@ -105,14 +111,25 @@ items
 items.get("/view/:id", async (req, res) => {
   const item = await getItemByItemId(+req.params.id);
   if (!item) return res.status(404).send("Item not found");
+   let likedBy: number[] = [];
+   likedBy = item.likedBy.map((user) => {return user.id});
   const url = await getObjectSignedUrl(item.imgName);
   (
     item as Item & {
       user: User;
+      likedBy: User[];
       imgUrl: string;
     }
   ).imgUrl = url;
-  res.render("pages/item", { item });
+  res.render("pages/item", { item, likedBy });
+});
+
+items.post('/view/:id/like', async (req, res) => {
+	const itemId = Number(req.params.id);
+	const userId = 1;
+	await userLikeOrUnlike(userId, itemId);
+	res.redirect("back");
+
 });
 
 export default items;
