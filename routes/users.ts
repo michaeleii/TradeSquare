@@ -42,6 +42,17 @@ const s3 = new S3Client({
 
 const users = express.Router();
 
+users.get("/profile/:id", async (req, res) => {
+  const id = Number(req.params.id);
+  const user = await getUserById(id);
+  if (!user) {
+    res.status(404).json({
+      message: "User not found",
+    });
+    return;
+  }
+  res.render("pages/profile", { user: user, previousLink: req.headers.referer, })
+});
 
 users.get("/likes/:id", async (req, res) => {
 	const id = Number(req.params.id);

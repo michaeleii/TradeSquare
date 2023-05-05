@@ -110,6 +110,3 @@ async function decreaseItemLikes(itemId: number) {
 }
 
 export { getUserById, getUserLikedItems, userLikeOrUnlike };
-
-// increaseItemLikes(5).then((data) => console.log(data));
-// decreaseItemLikes(5).then((data) => console.log(data));
