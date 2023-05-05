@@ -6,6 +6,7 @@ import {
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { z } from "zod";
+import sharp from "sharp";
 
 const envVariables = z.object({
 	BUCKET_NAME: z.string(),
