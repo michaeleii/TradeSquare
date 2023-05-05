@@ -11,14 +11,6 @@ import {
 	userLikeOrUnlike,
 } from "../services/user";
 
-import {
-	S3Client,
-	PutObjectCommand,
-	GetObjectCommand,
-	DeleteObjectCommand,
-} from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-
 import multer from "multer";
 import { Item, User } from "@prisma/client";
 import { uploadFile, deleteFile, getObjectSignedUrl } from "../s3";
@@ -118,12 +110,9 @@ items
 
 items.get("/view/:id", async (req, res) => {
   const item = await getItemByItemId(+req.params.id);
-  let likedBy: number[] = [];
-  if(item) {
-    likedBy = item.likedBy.map((user) => {return user.id});
-  }
-
   if (!item) return res.status(404).send("Item not found");
+   let likedBy: number[] = [];
+   likedBy = item.likedBy.map((user) => {return user.id});
   const url = await getObjectSignedUrl(item.imgName);
   (
     item as Item & {
@@ -140,6 +129,7 @@ items.post('/view/:id/like', async (req, res) => {
 	const userId = 1;
 	await userLikeOrUnlike(userId, itemId);
 	res.redirect("back");
+
 });
 
 export default items;

@@ -8,4 +8,6 @@ api.get("/items", async (req, res) => {
 	res.json(items);
 });
 
+api.get("/nav", (req, res) => res.render("components/navigationBar"));
+
 export default api;

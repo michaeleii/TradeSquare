@@ -1,39 +1,35 @@
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="/styles/styles.css" rel="stylesheet" />
 
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="/styles/styles.css" rel="stylesheet" />
+		<title>User Liked items</title>
+	</head>
 
-    <title>
-        User Liked items
-    </title>
-</head>
+	<body>
+		<article class="w-[90%] mx-auto md:w-[60%] mb-10">
+			<div class="pt-5"><%- include('../components/subNavigation.ejs') %></div>
 
-<body>
-    <article class="w-[90%] mx-auto md:w-[60%] mb-10">
-        <div class="pt-5"><%- include('../components/subNavigation.ejs') %></div>
-        <div class="pt-5"><%- include('../components/searchBar.ejs') %></div>
+			<h1 class="font-bold mt-0 mb-2">Recently Liked items</h1>
 
+			<div class="grid grid-col grid-cols-3 gap-4">
+				<% userLikedItems.forEach(function(item){ %>
+				<a href="/items/view/<%= item.id %>">
+					<div class="flex gap-5 justify-start mt-5">
+						<img
+							src="<%= item.imgUrl %>"
+							alt="item 1"
+							srcset=""
+							class="w-[200px] h-[200px] object-cover justify-start rounded-md"
+						/>
+					</div>
+				</a>
 
-        <h1 class="font-bold mt-0 mb-2">
-            Recently Liked items
-        </h1>
+				<% }) %>
 
-        <div class="grid grid-col grid-cols-3 gap-4">
-            <% userLikedItems.forEach(function(item){ %>
-                <a href="/items/view/<%= item.id %>">
-                    <div class="flex gap-5 justify-start mt-5">
-                        <img src="<%= item.imgUrl %>" alt="item 1" srcset=""
-                            class="w-[200px] h-[200px] object-cover justify-start rounded-md" />
-                    </div>
-                </a>
-
-                <% }) %>
-
-
-                    <!-- <a href="/items/all" >
+				<!-- <a href="/items/all" >
                     <div class="flex gap-5 justify-start mt-5">
                         <img src="/images/users/user1.jpg" alt="item 1" srcset="" class="w-[200px] h-[200px] object-cover justify-start rounded-md" />          
                     </div>
@@ -68,9 +64,7 @@
                     <img src="/images/users/user7.jpg" alt="item 7" srcset=""
                         class="w-[200px] h-[200px] object-cover justify-start rounded-md" />
                 </div> -->
-        </div>
-
-    </article>
-</body>
-
+			</div>
+		</article>
+	</body>
 </html>
