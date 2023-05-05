@@ -46,9 +46,18 @@ export async function uploadFile(
 	fileName: string,
 	mimetype: string
 ) {
+	const convertedImageBuffer = await sharp(fileBuffer)
+		.resize({
+			width: 1920,
+			height: 1080,
+			fit: "contain",
+		})
+		.toFormat("webp")
+		.toBuffer();
+
 	const uploadParams = {
 		Bucket: bucketName,
-		Body: fileBuffer,
+		Body: convertedImageBuffer,
 		Key: fileName,
 		ContentType: mimetype,
 	};
