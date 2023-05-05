@@ -8,13 +8,14 @@
     <title>Document</title>
 </head>
 <body>
-    <!-- <div>
-        <% posts.forEach(post => { %>
-            <%- include('../components/postCard.ejs')  %>
-            
-         
-        <% }) %>
-    </div> -->
+   <h1>Hello world</h1>
+   
+   <div>
+     <% posts.forEach(post => { %>
+        <%- include('../components/postCard.ejs', {post}) %>
+     <% }) %>
+   </div>
+   
 
     
 </body>
