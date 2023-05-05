@@ -56,12 +56,13 @@
           />
           <% } %> <% } %>
         </div>
-
         <p class="text-darkgrey text-xs">
           <%= user.rating %> Stars (20 reviews)
         </p>
 
-        <a href="/users/<%= user.id %>" class="mx-auto">
+        <hr class="border border-t-4 mt-5" />
+
+        <a href="/users/myLists/<%= user.id %>" class="mx-auto">
           <button class="btn-primary rounded w-[300] mx-auto gap-2 mb-2 mt-5">
             <div class="flex justify-start gap-10 n">
               <svg
@@ -100,7 +101,6 @@
                   stroke-linejoin="round"
                 />
               </svg>
-
               <p>Your Listings</p>
             </div>
           </button>
