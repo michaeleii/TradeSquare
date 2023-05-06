@@ -5,6 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
+		<script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		<link href="/styles/styles.css" rel="stylesheet" />
 	</head>
 	<body>
@@ -19,12 +20,19 @@
 				<% squares.forEach(square => { %> <%-
 				include('../components/square.ejs', {square}) %> <% }) %>
 
-				<button
-					class="btn-primary rounded-lg w-full md:place-self-center md:w-[600px]"
-				>
+				<button class="btn-primary rounded-lg w-full md:place-self-center md:w-[600px]">
 					My Squares
 				</button>
 			</div>
 		</div>
+		<script>
+
+			const openButtons = Array.from(document.querySelectorAll('.join-btn'));
+			openButtons.map(button => {
+				button.addEventListener('click', () => {
+					Swal.fire("Successfully added to your Community Page!");
+				})
+			});
+		</script>
 	</body>
 </html>
