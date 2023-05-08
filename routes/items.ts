@@ -7,10 +7,10 @@ import {
 	deleteItem,
 } from "../services/item";
 
-import { userLikeOrUnlike } from "../services/user";
+import { checkIfUserLiked, likeItem, unlikeItem } from "../services/user";
 
 import multer from "multer";
-import { Item, User } from "@prisma/client";
+import { Item, Like, User } from "@prisma/client";
 import { uploadFile, deleteFile, getObjectSignedUrl } from "../s3";
 import crypto from "crypto";
 
@@ -31,7 +31,9 @@ items.get("/all", async (req, res) => {
 			const url = await getObjectSignedUrl(item.imgName);
 			(
 				item as Item & {
+					likeCount: number;
 					user: User;
+					likes: Like[];
 					imgUrl: string;
 				}
 			).imgUrl = url;
@@ -57,13 +59,13 @@ items
 			await uploadFile(req.file.buffer, imgName, req.file.mimetype);
 
 			req.body.imgName = imgName;
-			req.body.userId = 1;
+			req.body.userId = 9;
 			req.body.categoryId = +req.body.categoryId;
 			const item = await createItem(req.body);
 
 			res.redirect(`/items/view/${item.id}`);
-		} catch (error) {
-			res.status(500).send(error);
+		} catch (error: any) {
+			res.status(500).send(error.message);
 		}
 	});
 
@@ -73,11 +75,21 @@ items.get("/my-item/:id", async (req, res) => {
 	const url = await getObjectSignedUrl(item.imgName);
 	(
 		item as Item & {
+			likeCount: number;
 			user: User;
-			likedBy: User[];
+			likes: Like[];
 			imgUrl: string;
 		}
 	).imgUrl = url;
+	(
+		item as Item & {
+			liked: boolean;
+			likeCount: number;
+			user: User;
+			likes: Like[];
+			imgUrl: string;
+		}
+	).liked = await checkIfUserLiked(9, item.id);
 	res.render("pages/editItem", { item });
 });
 
@@ -109,25 +121,31 @@ items
 items.get("/view/:id", async (req, res) => {
 	const item = await getItemByItemId(+req.params.id);
 	if (!item) return res.status(404).send("Item not found");
-	let likedBy: number[] = [];
-	likedBy = item.likedBy.map((user) => {
-		return user.id;
-	});
+
 	const url = await getObjectSignedUrl(item.imgName);
 	(
 		item as Item & {
+			likeCount: number;
 			user: User;
-			likedBy: User[];
+			likes: Like[];
 			imgUrl: string;
 		}
 	).imgUrl = url;
-	res.render("pages/item", { item, likedBy });
+
+	(
+		item.user as User & {
+			liked: boolean;
+		}
+	).liked = await checkIfUserLiked(9, item.id);
+
+	res.render("pages/item", { item });
 });
 
 items.post("/view/:id/like", async (req, res) => {
-	const itemId = Number(req.params.id);
-	const userId = 1;
-	await userLikeOrUnlike(userId, itemId);
+	const itemId = +req.params.id;
+	const userId = 9;
+	const liked = await checkIfUserLiked(userId, itemId);
+	liked ? await unlikeItem(userId, itemId) : await likeItem(userId, itemId);
 	res.redirect("back");
 });
 
