@@ -35,7 +35,11 @@
     <script>
       const openButton = document.querySelector('.join-btn');
       openButton.addEventListener("click", () => {
-        Swal.fire("Successfully added to your Community Page!")
+        Swal.fire({
+          icon: "success",
+          text: "Successfully added to your Community Page!",
+        })
+
       })
     </script>
   </body>
