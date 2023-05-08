@@ -33,7 +33,7 @@ items.get("/all", async (req, res) => {
 				item as Item & {
 					likeCount: number;
 					user: User;
-					Like: Like[];
+					likes: Like[];
 					imgUrl: string;
 				}
 			).imgUrl = url;
@@ -77,7 +77,7 @@ items.get("/my-item/:id", async (req, res) => {
 		item as Item & {
 			likeCount: number;
 			user: User;
-			Like: Like[];
+			likes: Like[];
 			imgUrl: string;
 		}
 	).imgUrl = url;
@@ -86,7 +86,7 @@ items.get("/my-item/:id", async (req, res) => {
 			liked: boolean;
 			likeCount: number;
 			user: User;
-			Like: Like[];
+			likes: Like[];
 			imgUrl: string;
 		}
 	).liked = await checkIfUserLiked(9, item.id);
@@ -127,7 +127,7 @@ items.get("/view/:id", async (req, res) => {
 		item as Item & {
 			likeCount: number;
 			user: User;
-			Like: Like[];
+			likes: Like[];
 			imgUrl: string;
 		}
 	).imgUrl = url;

@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link href="/styles/styles.css" rel="stylesheet" />
 
-		<title>User Liked items</title>
+		<title>Liked items</title>
 	</head>
 
 	<body>
@@ -15,12 +15,12 @@
 			<h1 class="font-bold mt-0 mb-2">Recently Liked items</h1>
 
 			<div class="grid grid-col grid-cols-3 gap-4">
-				<% userLikedItems.forEach(function(item){ %>
+				<% likedItems.forEach(({item}) => { %>
 				<a href="/items/view/<%= item.id %>">
 					<div class="flex gap-5 justify-start mt-5">
 						<img
 							src="<%= item.imgUrl %>"
-							alt="item 1"
+							alt="<%= item.name %>"
 							srcset=""
 							class="w-[200px] h-[200px] object-cover justify-start rounded-md"
 						/>

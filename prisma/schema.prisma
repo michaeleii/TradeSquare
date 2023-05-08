@@ -19,7 +19,7 @@ model User {
   rating Float  @default(0)
   items  Item[]
   posts  Post[]
-  Like   Like[]
+  likes  Like[]
 }
 
 model Item {
@@ -31,7 +31,7 @@ model Item {
   imgName     String
   category    Category @relation(fields: [categoryId], references: [id])
   categoryId  Int
-  Like        Like[]
+  likes       Like[]
 
   @@index(userId)
   @@index(categoryId)

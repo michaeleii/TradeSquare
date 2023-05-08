@@ -7,11 +7,11 @@ async function getAllItems() {
 			.findMany({
 				include: {
 					user: true,
-					Like: true,
+					likes: true,
 				},
 			})
 			.then((items) =>
-				items.map((item) => ({ ...item, likeCount: item.Like.length }))
+				items.map((item) => ({ ...item, likeCount: item.likes.length }))
 			);
 		return allItems;
 	} catch (error) {
@@ -28,7 +28,7 @@ async function getItemByItemId(itemId: number) {
 				},
 				include: {
 					user: true,
-					Like: true,
+					likes: true,
 				},
 			})
 			.then((item) => {
@@ -37,7 +37,7 @@ async function getItemByItemId(itemId: number) {
 				}
 				return {
 					...item,
-					likeCount: item.Like.length,
+					likeCount: item.likes.length,
 				};
 			});
 		return item;

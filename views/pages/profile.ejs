@@ -1,134 +1,134 @@
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="/styles/styles.css" rel="stylesheet" />
-  </head>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="/styles/styles.css" rel="stylesheet" />
+	</head>
 
-  <body>
-    <article class="w-[90%] mx-auto md:w-[60%] mb-10">
-      <%- include('../components/subNavigation.ejs') %>
+	<body>
+		<article class="w-[90%] mx-auto md:w-[60%] mb-10">
+			<%- include('../components/subNavigation.ejs') %>
 
-      <div class="h-full flex flex-col justify-between">
-        <div class="mb-10">
-          <img
-            src="/images/users/user<%= user.id %>.jpg"
-            class="rounded-full w-[300px] h-[300px] object-cover mx-auto"
-            alt=""
-          />
-        </div>
-        <h2 class="mb-2 mx-auto"><%= user.f_name %> <%= user.l_name %></h2>
-        <p class="text-darkgrey mx-auto">A little bit about me...</p>
+			<div class="h-full flex flex-col justify-between">
+				<div class="mb-10">
+					<img
+						src="/images/users/user<%= user.id %>.jpg"
+						class="rounded-full w-[300px] h-[300px] object-cover mx-auto"
+						alt=""
+					/>
+				</div>
+				<h2 class="mb-2 mx-auto"><%= user.f_name %> <%= user.l_name %></h2>
+				<p class="text-darkgrey mx-auto">A little bit about me...</p>
 
-        <h3 class="mt-5">About</h3>
-        <div class="mb-2">
-          <p class="text-darkgrey">Toronto, Ontario</p>
-        </div>
+				<h3 class="mt-5">About</h3>
+				<div class="mb-2">
+					<p class="text-darkgrey">Toronto, Ontario</p>
+				</div>
 
-        <h3 class="mt-5">Your Analytics</h3>
-        <div class="mb-2">
-          <div class="flex">
-            <p class="text-darkgrey">Total transactions:&nbsp;</p>
-            <p class="text-primary">21</p>
-          </div>
-        </div>
+				<h3 class="mt-5">Your Analytics</h3>
+				<div class="mb-2">
+					<div class="flex">
+						<p class="text-darkgrey">Total transactions:&nbsp;</p>
+						<p class="text-primary">21</p>
+					</div>
+				</div>
 
-        <div class="flex items-center gap-2 mb-2">
-          <% for (var i=1; i <=5; i++) { %> <% if (i <=Math.floor(user.rating))
-          { %>
-          <img
-            src="/images/icons/FullStar.svg"
-            class="w-[20px]"
-            alt="Full star"
-          />
-          <% } else if (i===Math.ceil(user.rating) && user.rating % 1 !==0) { %>
-          <img
-            src="/images/icons/HalfStar.svg"
-            class="w-[20px]"
-            alt="Half star"
-          />
-          <% } else { %>
-          <img
-            src="/images/icons/GreyStar.svg"
-            class="w-[20px]"
-            alt="Empty star"
-          />
-          <% } %> <% } %>
-        </div>
-        <p class="text-darkgrey text-xs">
-          <%= user.rating %> Stars (20 reviews)
-        </p>
+				<div class="flex items-center gap-2 mb-2">
+					<% for (var i=1; i <=5; i++) { %> <% if (i <=Math.floor(user.rating))
+					{ %>
+					<img
+						src="/images/icons/FullStar.svg"
+						class="w-[20px]"
+						alt="Full star"
+					/>
+					<% } else if (i===Math.ceil(user.rating) && user.rating % 1 !==0) { %>
+					<img
+						src="/images/icons/HalfStar.svg"
+						class="w-[20px]"
+						alt="Half star"
+					/>
+					<% } else { %>
+					<img
+						src="/images/icons/GreyStar.svg"
+						class="w-[20px]"
+						alt="Empty star"
+					/>
+					<% } %> <% } %>
+				</div>
+				<p class="text-darkgrey text-xs">
+					<%= user.rating %> Stars (20 reviews)
+				</p>
 
-        <hr class="border border-t-4 mt-5" />
+				<hr class="border border-t-4 mt-5" />
 
-        <a href="/users/myLists/<%= user.id %>" class="mx-auto">
-          <button class="btn-primary rounded w-[300] mx-auto gap-2 mb-2 mt-5">
-            <div class="flex justify-start gap-10 n">
-              <svg
-                width="23"
-                height="33"
-                viewBox="0 0 23 33"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M22.25 25.3242H1"
-                  stroke="white"
-                  stroke-width="1.40625"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M22.25 1H1"
-                  stroke="white"
-                  stroke-width="1.40625"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M2.59375 19.2432H20.6563C21.5364 19.2432 22.25 18.2222 22.25 16.9628V9.36146C22.25 8.10202 21.5364 7.08105 20.6563 7.08105H2.59375C1.71354 7.08105 1 8.10202 1 9.36146V16.9628C1 18.2222 1.71354 19.2432 2.59375 19.2432Z"
-                  stroke="white"
-                  stroke-width="1.40625"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M13.75 31.4053H1"
-                  stroke="white"
-                  stroke-width="1.40625"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-              <p>Your Listings</p>
-            </div>
-          </button>
-        </a>
+				<a href="/users/my-items" class="mx-auto">
+					<button class="btn-primary rounded w-[300] mx-auto gap-2 mb-2 mt-5">
+						<div class="flex justify-start gap-10 n">
+							<svg
+								width="23"
+								height="33"
+								viewBox="0 0 23 33"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									d="M22.25 25.3242H1"
+									stroke="white"
+									stroke-width="1.40625"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+								<path
+									d="M22.25 1H1"
+									stroke="white"
+									stroke-width="1.40625"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+								<path
+									d="M2.59375 19.2432H20.6563C21.5364 19.2432 22.25 18.2222 22.25 16.9628V9.36146C22.25 8.10202 21.5364 7.08105 20.6563 7.08105H2.59375C1.71354 7.08105 1 8.10202 1 9.36146V16.9628C1 18.2222 1.71354 19.2432 2.59375 19.2432Z"
+									stroke="white"
+									stroke-width="1.40625"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+								<path
+									d="M13.75 31.4053H1"
+									stroke="white"
+									stroke-width="1.40625"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+							</svg>
+							<p>Your Listings</p>
+						</div>
+					</button>
+				</a>
 
-        <a href="/squares/all" class="mx-auto">
-          <button class="btn-primary rounded w-[300] mx-auto gap-2 mb-5">
-            <div class="flex justify-start gap-10">
-              <svg
-                width="26"
-                height="26"
-                viewBox="0 0 26 26"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M0.630316 7.51695L12.4592 12.8829C12.8045 13.0399 13.195 13.0399 13.5403 12.8829L25.3692 7.51695C26.2096 7.13558 26.2096 5.86556 25.3692 5.48419L13.5408 0.117683C13.3712 0.0401357 13.1868 0 13.0003 0C12.8137 0 12.6294 0.0401357 12.4597 0.117683L0.630316 5.48369C-0.210105 5.86505 -0.210105 7.13558 0.630316 7.51695ZM25.3697 11.9999L22.4198 10.6628L14.2116 14.3835C13.8277 14.5577 13.42 14.6461 13 14.6461C12.58 14.6461 12.1728 14.5577 11.7884 14.3835L3.58068 10.6628L0.630316 11.9999C-0.210105 12.3807 -0.210105 13.6502 0.630316 14.0311L12.4592 19.393C12.8045 19.5494 13.195 19.5494 13.5403 19.393L25.3697 14.0311C26.2101 13.6502 26.2101 12.3807 25.3697 11.9999ZM25.3697 18.4897L22.431 17.1577L14.2116 20.8835C13.8277 21.0576 13.42 21.146 13 21.146C12.58 21.146 12.1728 21.0576 11.7884 20.8835L3.56951 17.1577L0.630316 18.4897C-0.210105 18.8705 -0.210105 20.14 0.630316 20.5209L12.4592 25.8828C12.8045 26.0392 13.195 26.0392 13.5403 25.8828L25.3697 20.5209C26.2101 20.14 26.2101 18.8705 25.3697 18.4897Z"
-                  fill="white"
-                />
-              </svg>
+				<a href="/squares/all" class="mx-auto">
+					<button class="btn-primary rounded w-[300] mx-auto gap-2 mb-5">
+						<div class="flex justify-start gap-10">
+							<svg
+								width="26"
+								height="26"
+								viewBox="0 0 26 26"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									d="M0.630316 7.51695L12.4592 12.8829C12.8045 13.0399 13.195 13.0399 13.5403 12.8829L25.3692 7.51695C26.2096 7.13558 26.2096 5.86556 25.3692 5.48419L13.5408 0.117683C13.3712 0.0401357 13.1868 0 13.0003 0C12.8137 0 12.6294 0.0401357 12.4597 0.117683L0.630316 5.48369C-0.210105 5.86505 -0.210105 7.13558 0.630316 7.51695ZM25.3697 11.9999L22.4198 10.6628L14.2116 14.3835C13.8277 14.5577 13.42 14.6461 13 14.6461C12.58 14.6461 12.1728 14.5577 11.7884 14.3835L3.58068 10.6628L0.630316 11.9999C-0.210105 12.3807 -0.210105 13.6502 0.630316 14.0311L12.4592 19.393C12.8045 19.5494 13.195 19.5494 13.5403 19.393L25.3697 14.0311C26.2101 13.6502 26.2101 12.3807 25.3697 11.9999ZM25.3697 18.4897L22.431 17.1577L14.2116 20.8835C13.8277 21.0576 13.42 21.146 13 21.146C12.58 21.146 12.1728 21.0576 11.7884 20.8835L3.56951 17.1577L0.630316 18.4897C-0.210105 18.8705 -0.210105 20.14 0.630316 20.5209L12.4592 25.8828C12.8045 26.0392 13.195 26.0392 13.5403 25.8828L25.3697 20.5209C26.2101 20.14 26.2101 18.8705 25.3697 18.4897Z"
+									fill="white"
+								/>
+							</svg>
 
-              <p>My Squares</p>
-            </div>
-          </button>
-        </a>
-      </div>
-    </article>
+							<p>My Squares</p>
+						</div>
+					</button>
+				</a>
+			</div>
+		</article>
 
-    <%- include('../components/navigationBar.ejs') %>
-  </body>
+		<%- include('../components/navigationBar.ejs') %>
+	</body>
 </html>

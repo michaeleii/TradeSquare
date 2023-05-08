@@ -12,6 +12,7 @@ async function getUserById(id: number) {
 						category: true,
 					},
 				},
+				likes: true,
 			},
 		});
 		return getUser;
@@ -57,51 +58,31 @@ async function unlikeItem(userId: number, itemId: number) {
 		throw error;
 	}
 }
-// async function getUserLikedItems(id: number) {
-// 	try {
-// 		const userLikedItems = await prisma.user
-// 			.findUnique({
-// 				where: {
-// 					id: id,
-// 				},
-// 			})
-// 			.likedItems();
-// 		return userLikedItems;
-// 	} catch (error) {
-// 		throw error;
-// 	}
-// }
 
-// async function increaseItemLikes(itemId: number) {
-// 	try {
-// 		const likePlus = await prisma.item.update({
-// 			where: {
-// 				id: itemId,
-// 			},
-// 			data: {
-// 				likes: { increment: 1 },
-// 			},
-// 		});
-// 		return likePlus;
-// 	} catch (error) {
-// 		throw error;
-// 	}
-// }
+async function getUserLikedItems(userId: number) {
+	try {
+		const likedItems = await prisma.like.findMany({
+			where: {
+				userId,
+			},
+			include: {
+				item: {
+					include: {
+						category: true,
+					},
+				},
+			},
+		});
+		return likedItems;
+	} catch (error) {
+		throw error;
+	}
+}
 
-// async function decreaseItemLikes(itemId: number) {
-// 	try {
-// 		const likeMinus = await prisma.item.update({
-// 			where: {
-// 				id: itemId,
-// 			},
-// 			data: {
-// 				likes: { decrement: 1 },
-// 			},
-// 		});
-// 		return likeMinus;
-// 	} catch (error) {
-// 		throw error;
-// 	}
-// }
-
-export { getUserById, checkIfUserLiked, likeItem, unlikeItem };
+export {
+	getUserById,
+	checkIfUserLiked,
+	likeItem,
+	unlikeItem,
+	getUserLikedItems,
+};
