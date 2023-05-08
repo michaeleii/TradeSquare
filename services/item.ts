@@ -29,6 +29,7 @@ async function getItemByItemId(itemId: number) {
 				include: {
 					user: true,
 					likes: true,
+					category: true,
 				},
 			})
 			.then((item) => {

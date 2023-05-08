@@ -23,15 +23,10 @@
 				alt="Item Img"
 				srcset=""
 			/>
-
-			<!-- <div class="flex justify-between"> -->
-			<!-- <h4></h4> -->
-			<!-- <h4 class="text-darkgrey">Home</h4> -->
-			<!-- <img src="/images/icons/Like.svg" alt="Like Icon" srcset="" /> -->
-			<!-- </div> -->
+				<h4 class="text-darkgrey mt-8"><%= item.category.name %></h4>
 			<div class="flex justify-between">
-				<h1 class="font-bold mt-0 mb-2"><%= item.name %></h1>
-				<svg
+				<h1 class="font-bold mb-2"><%= item.name %></h1>
+					<svg
 							width="40"
 							height="45"
 							viewBox="0 0 40 45"
@@ -47,7 +42,6 @@
 								stroke-linejoin="round"
 							/>
 						</svg>
-				</form>
 			</div>
 
 			<div class="flex gap-5 justify-start mt-5">
@@ -87,7 +81,7 @@
 				<p class="text-xs"><%= item.user.rating %></p>
 			</div>
 
-			<div class="my-5">
+			<div class="my-10">
 				<h2 class="mb-2">Product Details</h2>
 				<p class="text-darkgrey"><%= item.description %></p>
 			</div>
