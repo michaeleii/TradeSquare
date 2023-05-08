@@ -59,6 +59,9 @@ async function createItem(formData: Item) {
 
 async function deleteItem(itemId: number) {
 	try {
+		await prisma.like.deleteMany({
+			where: { itemId },
+		});
 		const deletedItem = await prisma.item.delete({
 			where: {
 				id: itemId,
