@@ -20,93 +20,88 @@ async function getUserById(id: number) {
 	}
 }
 
-async function getUserLikedItems(id: number) {
+async function checkIfUserLiked(userId: number, itemId: number) {
 	try {
-		const userLikedItems = await prisma.user.findUnique({
+		const liked = await prisma.like.findFirst({
 			where: {
-				id: id,
+				userId,
+				itemId,
 			},
-		}).likedItems();
-		return userLikedItems;
-	}
-	catch (error) {
-		throw error;
-	}
-}
-
-async function userLikeOrUnlike(id: number, itemId: number) {
-	const userLikedItems = await getUserLikedItems(id);
-	if (userLikedItems) {
-		const itemIsLiked = userLikedItems.some((item) => item.id === itemId);
-		try {
-			if (itemIsLiked) {
-				const userUnlikedItem = await prisma.user.update({
-					where: {
-						id: id,
-					},
-					data: {
-						likedItems: {
-							disconnect: {
-								id: itemId,
-							},
-						},
-					},
-				}).likedItems();
-				await decreaseItemLikes(itemId);
-				return userUnlikedItem;
-			} else {
-				const userLikedItem = await prisma.user.update({
-					where: {
-						id: id,
-					},
-					data: {
-						likedItems: {
-							connect: {
-								id: itemId,
-							},
-						},
-					},
-				}).likedItems();
-				await increaseItemLikes(itemId);
-				return userLikedItem;
-			}
-		} catch (error) {
-			throw error;
-		}
-	}
-}
-
-async function increaseItemLikes(itemId: number) {
-	try {
-		const likePlus = await prisma.item.update({
-			where: {
-				id: itemId,
-			},
-			data: {
-				likes: {increment: 1},}
-			});
-		return likePlus;
-		}
-	catch (error) {
-		throw error;
-	}
-}
-
-async function decreaseItemLikes(itemId: number) {
-	try {
-		const likeMinus = await prisma.item.update({
-			where: {
-				id: itemId,
-			},
-			data: {
-				likes: { decrement: 1 },
-			}
 		});
-		return likeMinus;
-	}
-	catch (error) {
+		return liked ? true : false;
+	} catch (error) {
 		throw error;
 	}
 }
 
-export { getUserById, getUserLikedItems, userLikeOrUnlike };
+async function likeItem(userId: number, itemId: number) {
+	try {
+		const like = await prisma.like.create({
+			data: {
+				userId,
+				itemId,
+			},
+		});
+		return like;
+	} catch (error) {
+		throw error;
+	}
+}
+
+async function unlikeItem(userId: number, itemId: number) {
+	try {
+		await prisma.like.delete({
+			where: { userId_itemId: { userId, itemId } },
+		});
+	} catch (error) {
+		throw error;
+	}
+}
+// async function getUserLikedItems(id: number) {
+// 	try {
+// 		const userLikedItems = await prisma.user
+// 			.findUnique({
+// 				where: {
+// 					id: id,
+// 				},
+// 			})
+// 			.likedItems();
+// 		return userLikedItems;
+// 	} catch (error) {
+// 		throw error;
+// 	}
+// }
+
+// async function increaseItemLikes(itemId: number) {
+// 	try {
+// 		const likePlus = await prisma.item.update({
+// 			where: {
+// 				id: itemId,
+// 			},
+// 			data: {
+// 				likes: { increment: 1 },
+// 			},
+// 		});
+// 		return likePlus;
+// 	} catch (error) {
+// 		throw error;
+// 	}
+// }
+
+// async function decreaseItemLikes(itemId: number) {
+// 	try {
+// 		const likeMinus = await prisma.item.update({
+// 			where: {
+// 				id: itemId,
+// 			},
+// 			data: {
+// 				likes: { decrement: 1 },
+// 			},
+// 		});
+// 		return likeMinus;
+// 	} catch (error) {
+// 		throw error;
+// 	}
+// }
+
+export { getUserById, checkIfUserLiked, likeItem, unlikeItem };

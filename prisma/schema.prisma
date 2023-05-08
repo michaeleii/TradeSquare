@@ -1,7 +1,5 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-// likedItems Item[] @relation("likedItems")
-// likedBy     User[]   @relation("likedItems")
 
 generator client {
   provider = "prisma-client-js"
@@ -21,6 +19,7 @@ model User {
   rating Float  @default(0)
   items  Item[]
   posts  Post[]
+  Like   Like[]
 }
 
 model Item {
@@ -30,12 +29,24 @@ model Item {
   user        User     @relation(fields: [userId], references: [id])
   userId      Int
   imgName     String
-  likes       Int      @default(0)
   category    Category @relation(fields: [categoryId], references: [id])
   categoryId  Int
+  Like        Like[]
 
   @@index(userId)
   @@index(categoryId)
+}
+
+model Like {
+  id     Int  @id @default(autoincrement())
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+  item   Item @relation(fields: [itemId], references: [id])
+  itemId Int
+
+  @@unique([userId, itemId])
+  @@index(userId)
+  @@index(itemId)
 }
 
 model Category {
