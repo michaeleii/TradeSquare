@@ -8,7 +8,8 @@
     <title>Post Component</title>
   </head>
   <body>
-    <div class="flex flex-col items-center mt-10" id="postsContainer">
+    <div><%- include('../components/Square_Title_and_Description.ejs') %></div>
+    <div class="flex flex-col items-center mt-20" id="postsContainer">
       <div class="grid grid-cols-1 gap-5 justify-center">
         <h1 class="col-span-1">Overview</h1>
         <% posts.forEach(post => { %> <%- include('../components/postCard',

@@ -3,15 +3,20 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="/styles/styles.css" rel="stylesheet" />
 
     <title>Square Title and Description</title>
   </head>
   <body>
-
     <div class="flex justify-between pl-9 pr-9">
-        <%- include('../components/subNavigation.ejs') %>
-        <img class="w-[25px] "src="/images/icons/Bell.svg" alt="Bell Icon" srcset=""/>
+      <%- include('../components/subNavigation.ejs') %>
+      <img
+        class="w-[25px]"
+        src="/images/icons/Bell.svg"
+        alt="Bell Icon"
+        srcset=""
+      />
     </div>
 
     <div class="grid gap-4 justify-center h-48">
@@ -23,7 +28,19 @@
       />
       <h2 class="font-bold text-center">Art Collectors</h2>
       <p class="text-grey text-center">Welcome to our art collectors square</p>
-      <button class="btn-primary rounded-full w-[340px] h-[50]">Join</button>
+      <button class="join-btn btn-primary rounded-full w-[340px] h-[50]">
+        Join
+      </button>
     </div>
+    <script>
+      const openButton = document.querySelector('.join-btn');
+      openButton.addEventListener("click", () => {
+        Swal.fire({
+          icon: "success",
+          text: "Successfully added to your Community Page!",
+        })
+
+      })
+    </script>
   </body>
 </html>
