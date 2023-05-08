@@ -141,12 +141,4 @@ items.get("/view/:id", async (req, res) => {
 	res.render("pages/item", { item });
 });
 
-items.post("/view/:id/like", async (req, res) => {
-	const itemId = +req.params.id;
-	const userId = 9;
-	const liked = await checkIfUserLiked(userId, itemId);
-	liked ? await unlikeItem(userId, itemId) : await likeItem(userId, itemId);
-	res.redirect("back");
-});
-
 export default items;
