@@ -27,7 +27,9 @@ import prisma from "../client";
 
 async function getALlPosts () {
   try {
-    const allPosts = await prisma.post.findMany();
+    const allPosts = await prisma.post.findMany({
+      
+    });
     return allPosts;
   } catch (error) {
     throw error;
