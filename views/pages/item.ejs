@@ -23,55 +23,25 @@
 				alt="Item Img"
 				srcset=""
 			/>
-
-			<!-- <div class="flex justify-between"> -->
-			<!-- <h4></h4> -->
-			<!-- <h4 class="text-darkgrey">Home</h4> -->
-			<!-- <img src="/images/icons/Like.svg" alt="Like Icon" srcset="" /> -->
-			<!-- </div> -->
+				<h4 class="text-darkgrey mt-8"><%= item.category.name %></h4>
 			<div class="flex justify-between">
-				<h1 class="font-bold mt-0 mb-2"><%= item.name %></h1>
-				<form action="/items/view/<%= item.id %>/like" method="POST">
-					<% if (item.user.liked) { %>
-					<button type="submit">
-						<svg
+				<h1 class="font-bold mb-2"><%= item.name %></h1>
+					<svg
 							width="40"
 							height="45"
 							viewBox="0 0 40 45"
-							class="fill-primary like-icon"
 							fill="none"
+							class="like-icon <%= item.user.liked ? "liked" : "" %>"
 							xmlns="http://www.w3.org/2000/svg"
+							data-item-id="<%= item.id %>"
 						>
 							<path
 								d="M32.0712 14.6772C31.5199 14.1256 30.8654 13.6881 30.145 13.3896C29.4246 13.0911 28.6525 12.9375 27.8727 12.9375C27.0929 12.9375 26.3208 13.0911 25.6004 13.3896C24.88 13.6881 24.2254 14.1256 23.6742 14.6772L22.5301 15.8212L21.3861 14.6772C20.2726 13.5636 18.7623 12.9381 17.1876 12.9381C15.6128 12.9381 14.1026 13.5636 12.9891 14.6772C11.8756 15.7907 11.25 17.3009 11.25 18.8756C11.25 20.4504 11.8756 21.9606 12.9891 23.0741L14.1331 24.2182L22.5301 32.6152L30.9271 24.2182L32.0712 23.0741C32.6227 22.5229 33.0602 21.8684 33.3587 21.148C33.6572 20.4276 33.8108 19.6554 33.8108 18.8756C33.8108 18.0959 33.6572 17.3237 33.3587 16.6033C33.0602 15.8829 32.6227 15.2284 32.0712 14.6772Z"
-								stroke="#506DF6"
 								stroke-width="2.39845"
 								stroke-linecap="round"
 								stroke-linejoin="round"
 							/>
 						</svg>
-					</button>
-					<% } else { %>
-					<button type="submit">
-						<svg
-							width="40"
-							height="45"
-							viewBox="0 0 40 45"
-							fill="none"
-							class="hover:fill-primary like-icon"
-							xmlns="http://www.w3.org/2000/svg"
-						>
-							<path
-								d="M32.0712 14.6772C31.5199 14.1256 30.8654 13.6881 30.145 13.3896C29.4246 13.0911 28.6525 12.9375 27.8727 12.9375C27.0929 12.9375 26.3208 13.0911 25.6004 13.3896C24.88 13.6881 24.2254 14.1256 23.6742 14.6772L22.5301 15.8212L21.3861 14.6772C20.2726 13.5636 18.7623 12.9381 17.1876 12.9381C15.6128 12.9381 14.1026 13.5636 12.9891 14.6772C11.8756 15.7907 11.25 17.3009 11.25 18.8756C11.25 20.4504 11.8756 21.9606 12.9891 23.0741L14.1331 24.2182L22.5301 32.6152L30.9271 24.2182L32.0712 23.0741C32.6227 22.5229 33.0602 21.8684 33.3587 21.148C33.6572 20.4276 33.8108 19.6554 33.8108 18.8756C33.8108 18.0959 33.6572 17.3237 33.3587 16.6033C33.0602 15.8829 32.6227 15.2284 32.0712 14.6772Z"
-								class="stroke-primary"
-								stroke-width="2.39845"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/>
-						</svg>
-					</button>
-					<% } %>
-				</form>
 			</div>
 
 			<div class="flex gap-5 justify-start mt-5">
@@ -111,7 +81,7 @@
 				<p class="text-xs"><%= item.user.rating %></p>
 			</div>
 
-			<div class="my-5">
+			<div class="my-10">
 				<h2 class="mb-2">Product Details</h2>
 				<p class="text-darkgrey"><%= item.description %></p>
 			</div>
@@ -129,5 +99,6 @@
 				</a>
 			</div>
 		</article>
+		<script src="/src/like.js"></script>
 	</body>
 </html>
