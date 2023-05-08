@@ -31,7 +31,10 @@
 			const openButtons = Array.from(document.querySelectorAll('.join-btn'));
 			openButtons.map(button => {
 				button.addEventListener('click', () => {
-					Swal.fire("Successfully added to your Community Page!");
+					Swal.fire({
+						icon: "success",
+						text: "Successfully added to your Community Page!",
+					});
 				})
 			});
 		</script>
