@@ -32,4 +32,7 @@ squares.get("/searchBarComponent", (req, res) => {
 	res.render("components/searchBar");
 });
 
+squares.get("/mysquarecomponent", (req, res) => 
+ res.render("components/mySquare")
+);
 export default squares;

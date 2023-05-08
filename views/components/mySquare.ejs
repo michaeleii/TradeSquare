@@ -1,0 +1,32 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="/styles/styles.css" rel="stylesheet" />
+
+    <title>Square Title and Description</title>
+  </head>
+  <body>
+    <div class="flex justify-between pl-9 pr-9">
+      <%- include('../components/subNavigation.ejs') %>
+      <img
+        class="w-[25px]"
+        src="/images/icons/Bell.svg"
+        alt="Bell Icon"
+        srcset=""
+      />
+    </div>
+
+    <div class="grid gap-4 justify-center h-48">
+      <img
+        class="mx-auto rounded-full w-[85px] h-[85px] h-50 mb-2 object-cover"
+        src="https://picsum.photos/id/237/100/100"
+        alt="Square Img"
+        srcset=""
+      />
+      <h2 class="font-bold text-center">My Square</h2>
+    </div>
+  </body>
+</html>
