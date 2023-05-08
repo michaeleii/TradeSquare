@@ -22,7 +22,7 @@ async function getItemByItemId(itemId: number) {
 			},
 			include: {
 				user: true,
-				likedBy: true,
+				// likedBy: true,
 			},
 		});
 		return item;

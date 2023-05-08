@@ -57,13 +57,13 @@ items
 			await uploadFile(req.file.buffer, imgName, req.file.mimetype);
 
 			req.body.imgName = imgName;
-			req.body.userId = 1;
+			req.body.userId = 9;
 			req.body.categoryId = +req.body.categoryId;
 			const item = await createItem(req.body);
 
 			res.redirect(`/items/view/${item.id}`);
-		} catch (error) {
-			res.status(500).send(error);
+		} catch (error: any) {
+			res.status(500).send(error.message);
 		}
 	});
 
@@ -110,9 +110,9 @@ items.get("/view/:id", async (req, res) => {
 	const item = await getItemByItemId(+req.params.id);
 	if (!item) return res.status(404).send("Item not found");
 	let likedBy: number[] = [];
-	likedBy = item.likedBy.map((user) => {
-		return user.id;
-	});
+	// likedBy = item.likedBy.map((user) => {
+	// 	return user.id;
+	// });
 	const url = await getObjectSignedUrl(item.imgName);
 	(
 		item as Item & {
