@@ -43,6 +43,14 @@ users.get("/my-items", async (req, res) => {
 	res.render("pages/myLists", { items });
 });
 
+users.get("/my-squares", async (req, res) => {
+	const user = await getUserById(9);
+	if (!user) {
+		res.status(404).send("User not found");
+		return;
+	}
+	const squares = user.squares;
+});
 users.get("/likes", async (req, res) => {
 	try {
 		const likedItems = await getUserLikedItems(9);

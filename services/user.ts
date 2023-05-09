@@ -79,10 +79,27 @@ async function getUserLikedItems(userId: number) {
 	}
 }
 
+async function getUserSquares(userId: number) {
+	try {
+		const userSquares = await prisma.user.findUnique({
+			where: {
+				id: userId,
+			},
+			include: {
+				squares: true,
+			},
+		});
+		return userSquares;
+	} catch (error) {
+		throw error;
+	}
+}
+
 export {
 	getUserById,
 	checkIfUserLiked,
 	likeItem,
 	unlikeItem,
 	getUserLikedItems,
+	getUserSquares,
 };
