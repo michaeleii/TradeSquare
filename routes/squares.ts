@@ -25,6 +25,11 @@ squares.get("/all", async (req, res) => {
 squares.get("/:id", async (req, res) => {
 	const id = +req.params.id;
 	const square = await getSquareById(id);
+	if (!square) {
+		res.status(404).send("Square not found");
+		return;
+	}
+	(square as any).joined = await checkIfUserJoined(9, square.id);
 	res.render("pages/singleSquare", { square });
 });
 squares.get("/mysquarecomponent", (req, res) =>

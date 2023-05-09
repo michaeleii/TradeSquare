@@ -1,13 +1,20 @@
 <div class="grid gap-4 justify-center">
 	<img
 		class="mx-auto rounded-full w-[200px] h-[200px] object-cover"
-		src="/images/squares/square<%= id %>.jpg"
+		src="/images/squares/square<%= square.id %>.jpg"
 		alt="Square Img"
 		srcset=""
 	/>
-	<h2 class="font-bold text-center"><%= title %></h2>
-	<p class="text-grey text-center px-2"><%= description %></p>
+	<h2 class="font-bold text-center"><%= square.name %></h2>
+	<p class="text-grey text-center px-2"><%= square.description %></p>
+	<% if (!square.joined) { %>
 	<div class="flex justify-center">
-		<button class="join-btn btn-primary rounded-full w-[340px]">Join</button>
+		<button
+			class="join-btn btn-primary rounded-full w-[340px]"
+			data-square-id="<%= square.id %>"
+		>
+			Join
+		</button>
 	</div>
+	<% } %>
 </div>
