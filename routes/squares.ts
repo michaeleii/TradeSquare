@@ -1,33 +1,52 @@
 import express from "express";
-import getAllSquares from "../services/squares";
-import { getAllPosts, createPost, getPostsBySquareId } from '../services/posts';
-
-
 import multer from "multer";
-import { Category, Item, Like, User } from "@prisma/client";
-import { uploadFile, deleteFile, getObjectSignedUrl } from "../s3";
 import crypto from "crypto";
-import {Post} from "@prisma/client";
+import { getAllSquares, getSquareById } from "../services/squares";
+import {getAllPosts, createPost, getPostsBySquareId} from "../services/posts";
+import { checkIfUserJoined } from "../services/user";
+import { Square, Category, Item, Like, User, Post } from "@prisma/client";
+import { uploadFile, deleteFile, getObjectSignedUrl } from "../s3";
+
+const squares = express.Router();
 
 const randomImageName = (bytes = 32) =>
 	crypto.randomBytes(bytes).toString("hex");
 
 const upload = multer({ storage: multer.memoryStorage() });
 
-const squares = express.Router();
-
-
-
-// squares.get("/:id", (req, res) => {
-// 	res.send("Square for id: " + req.params.id);
-// });
+squares.get("/all", async (req, res) => {
+	const squares = await getAllSquares();
+	if (!squares) {
+		res.status(404).send("Squares not found");
+		return;
+	}
+	for (const square of squares) {
+		const joined = await checkIfUserJoined(9, square.id);
+		(
+			square as Square & {
+				joined: boolean;
+			}
+		).joined = joined;
+	}
+	res.render("pages/squares", { squares });
+});
+squares.get("/:id", async (req, res) => {
+	const id = +req.params.id;
+	const square = await getSquareById(id);
+	if (!square) {
+		res.status(404).send("Square not found");
+		return;
+	}
+	(square as any).joined = await checkIfUserJoined(9, square.id);
+	res.render("pages/singleSquare", { square });
+});
+squares.get("/mysquarecomponent", (req, res) =>
+	res.render("components/mySquare")
+);
 
 squares.get("/squaretitlecomponent", (req, res) => {
 	res.render("components/Square_Title_and_Description");
 });
-
-squares.get("/joinsquarebtncomponent", (req, res) => {});
-
 
 squares.get("/postcomponent", async (req, res) => {
 	const squareId = Number(req.query.squareId);
@@ -87,15 +106,6 @@ squares.get("/subnavcomponent", (req, res) => {
 
 squares.get("/searchBarComponent", (req, res) => {
 	res.render("components/searchBar");
-});
-
-squares.get("/mysquarecomponent", (req, res) => 
- res.render("components/mySquare")
-);
-
-squares.get("/all", async (req, res) => {
-	const squares = await getAllSquares();
-	res.render("pages/squares", { squares });
 });
 
 export default squares;

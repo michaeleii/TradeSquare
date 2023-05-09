@@ -1,51 +1,33 @@
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link href="/styles/styles.css" rel="stylesheet" />
-
-    <title>Square Title and Description</title>
-  </head>
-  <body>
-    <div class="flex justify-between pl-9 pr-9">
-      <%- include('../components/subNavigation.ejs') %>
-      <img
-        class="w-[25px]"
-        src="/images/icons/Bell.svg"
-        alt="Bell Icon"
-        srcset=""
-      />
-    </div>
-
-    <div class="grid gap-4 justify-center h-48">
-      <img
-        class="mx-auto rounded-full w-[85px] h-[85px] h-50 mb-2 object-cover"
-        src="https://picsum.photos/id/237/100/100"
-        alt="Square Img"
-        srcset=""
-      />
-      <h2 class="font-bold text-center">Art Collectors</h2>
-      <p class="text-grey text-center">Welcome to our art collectors square</p>
-      <button class="join-btn btn-primary rounded-full w-[340px] h-[50]">
-        Join
-      </button>
-      <a href="/squares/create?square=<%= squareName  %>&squareId=<%= squareId %>">
+<div class="grid gap-4 justify-center">
+  <img
+    class="mx-auto rounded-full w-[200px] h-[200px] object-cover"
+    src="/images/squares/square<%= square.id %>.jpg"
+    alt="Square Img"
+    srcset=""
+  />
+  <h2 class="font-bold text-center"><%= square.name %></h2>
+  <p class="text-grey text-center px-2"><%= square.description %></p>
+  <div class="flex justify-center">
+    <% if (!square.joined) { %>
+    <button
+      class="join-btn btn-primary rounded-full w-[340px]"
+      data-square-id="<%= square.id %>"
+    >
+      Join
+    </button>
+    <% } else { %>
+    <button
+      class="unjoin-btn btn-danger rounded-full py-2.5 px-5 mt-2 mr-2 w-[340px]"
+      data-square-id="<%= square.id %>"
+    >
+      Leave
+    </button>
+    <a href="/squares/create?square=<%= squareName  %>&squareId=<%= squareId %>">
         <button class="join-btn btn-primary rounded-full w-[340px] h-[50]">
           Create New Post
         </button>
       </a>
-    </div>
-    <script>
-      const openButton = document.querySelector('.join-btn');
-      openButton.addEventListener("click", () => {
-        Swal.fire({
-          icon: "success",
-          text: "Successfully added to your Community Page!",
-        })
+    <% } %>
+  </div>
+</div>
 
-      })
-    </script>
-  </body>
-</html>
