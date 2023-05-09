@@ -1,20 +1,27 @@
 <div class="grid gap-4 justify-center">
-	<img
-		class="mx-auto rounded-full w-[200px] h-[200px] object-cover"
-		src="/images/squares/square<%= square.id %>.jpg"
-		alt="Square Img"
-		srcset=""
-	/>
-	<h2 class="font-bold text-center"><%= square.name %></h2>
-	<p class="text-grey text-center px-2"><%= square.description %></p>
-	<% if (!square.joined) { %>
-	<div class="flex justify-center">
-		<button
-			class="join-btn btn-primary rounded-full w-[340px]"
-			data-square-id="<%= square.id %>"
-		>
-			Join
-		</button>
-	</div>
-	<% } %>
+  <img
+    class="mx-auto rounded-full w-[200px] h-[200px] object-cover"
+    src="/images/squares/square<%= square.id %>.jpg"
+    alt="Square Img"
+    srcset=""
+  />
+  <h2 class="font-bold text-center"><%= square.name %></h2>
+  <p class="text-grey text-center px-2"><%= square.description %></p>
+  <div class="flex justify-center">
+    <% if (!square.joined) { %>
+    <button
+      class="join-btn btn-primary rounded-full w-[340px]"
+      data-square-id="<%= square.id %>"
+    >
+      Join
+    </button>
+    <% } else { %>
+    <button
+      class="unjoin-btn btn-danger rounded-full py-2.5 px-5 mt-2 mr-2 w-[340px]"
+      data-square-id="<%= square.id %>"
+    >
+      Leave
+    </button>
+    <% } %>
+  </div>
 </div>
