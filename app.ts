@@ -1,5 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
+
+
 dotenv.config();
 const app = express();
 
@@ -13,9 +15,12 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+
+
 const PORT = process.env.PORT || 3000;
 
 app.get("/", async (req, res) => {
+
 	try {
 		const items = await getAllItems();
 		if (!items) {
@@ -36,7 +41,7 @@ app.get("/", async (req, res) => {
 				}
 			).imgUrl = url;
 		}
-		res.render("pages/index", { items });
+		res.render("pages/index", { items});
 	} catch (error) {
 		res.status(500).send(error);
 	}

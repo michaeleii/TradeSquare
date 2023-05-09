@@ -133,6 +133,7 @@ async function unjoinSquare(userId: number, squareId: number) {
 	}
 }
 
+
 export {
 	getUserById,
 	checkIfUserLiked,

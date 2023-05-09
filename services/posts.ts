@@ -24,8 +24,9 @@
 // export default posts;
 
 import prisma from "../client";
+import { Post } from "@prisma/client";
 
-async function getALlPosts () {
+async function getAllPosts () {
   try {
     const allPosts = await prisma.post.findMany({
       
@@ -36,4 +37,33 @@ async function getALlPosts () {
   }
 };
 
-export default getALlPosts;
+async function createPost(formData: Post) {
+  try {
+    const newPost = await prisma.post.create({
+      data: formData,
+    });
+    return newPost;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+async function getPostsBySquareId(squareId: number) {
+  try {
+    if (isNaN(squareId)) {
+      throw new Error('Invalid squareId');
+    }
+    const posts = await prisma.post.findMany({
+      where: {
+        squareId: squareId,
+      },
+    });
+    return posts;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+export { getAllPosts, createPost, getPostsBySquareId };
