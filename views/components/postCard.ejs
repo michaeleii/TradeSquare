@@ -1,36 +1,37 @@
-<div class="p-5 bg-[#D9D9D9] rounded grid mx-auto w-[500px]">
-  <div class="flex items-center gap-2">
-    <img
-      class="w-[35px] h-[35px] rounded-full object-cover"
-      src="/images/users/user<%= post.userId %>.jpg"
-      alt=""
-    />
-    <div>
-      <p class="font-medium text-base">Gidon</p>
-      <p class="font-normal text-sm"><%= new Date(post.date).toLocaleString() %> </p>
-    </div>
-  </div>
-  <div>
-    <img
-      class="rounded-lg w-[900px] mx-auto"
-      src="/images/posts/post<%= post.id %>.jpg"
-      alt=""
-    />
-  </div>
-  <div>
-    <p class="font-normal text-sm mt-2">
-      <%= post.description %>
-    </p>
-    <div class="flex justify-between gap-1">
-      <img
-        class="w-[35px] h-[35px] rounded-full"
-        src="/images/users/user9.jpg"
-        alt=""
-      />
-      <div class="flex items-center">
-        <img src="/images/icons/Comment.svg" alt="" />
-        <span class="text-primary text-sm">100</span>
-      </div>
-    </div>
-  </div>
+<div class="p-5 bg-[#D9D9D9] rounded mx-auto w-[500px]">
+	<div class="flex items-center gap-2 mb-3">
+		<img
+			class="w-[35px] h-[35px] rounded-full object-cover"
+			src="/images/users/user<%= post.userId %>.jpg"
+			alt=""
+		/>
+		<div class="">
+			<p class="font-medium text-base"><%= post.user.f_name %></p>
+			<p class="font-normal text-sm">
+				<%= new Date(post.date).toLocaleString("en-US", { month: "short", day:
+				"numeric", year: "numeric", }) %>
+			</p>
+		</div>
+	</div>
+	<div>
+		<img
+			class="rounded-lg w-[900px] mx-auto"
+			src="/images/posts/post<%= post.id %>.jpg"
+			alt=""
+		/>
+	</div>
+	<div>
+		<p class="font-normal text-sm mt-2"><%= post.description %></p>
+		<div class="flex justify-end gap-1">
+			<!-- <img
+				class="w-[35px] h-[35px] rounded-full"
+				src="/images/users/user9.jpg"
+				alt=""
+			/> -->
+			<div class="flex items-center">
+				<img src="/images/icons/Comment.svg" alt="" />
+				<span class="text-primary text-sm">100</span>
+			</div>
+		</div>
+	</div>
 </div>
