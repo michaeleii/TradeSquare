@@ -21,6 +21,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 const items = express.Router();
 
+
 items.get("/all", async (req, res) => {
 	try {
 		const items = await getAllItems();
@@ -47,6 +48,7 @@ items.get("/all", async (req, res) => {
 items
 	.route("/create")
 	.get((req, res) => {
+
 		res.render("components/createListing");
 	})
 	.post(upload.single("image"), async (req, res) => {

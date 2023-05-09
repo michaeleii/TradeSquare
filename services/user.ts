@@ -79,6 +79,7 @@ async function getUserLikedItems(userId: number) {
 	}
 }
 
+
 export {
 	getUserById,
 	checkIfUserLiked,
