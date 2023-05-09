@@ -5,6 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link href="/styles/styles.css" rel="stylesheet" />
+		<script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		<title><%= square.name %></title>
 	</head>
 	<body>
@@ -12,8 +13,7 @@
 			<%- include('../components/subNavigation.ejs') %>
 		</div>
 		<div>
-			<%- include('../components/Square_Title_and_Description.ejs', {id:
-			square.id, title: square.name, description: square.description}) %>
+			<%- include('../components/Square_Title_and_Description.ejs', {square}) %>
 		</div>
 		<div class="flex flex-col items-center mt-10" id="postsContainer">
 			<div class="grid grid-cols-1 gap-5 justify-center">
@@ -27,11 +27,28 @@
 		</div>
 		<%- include('../components/navigationBar') %>
 		<script>
-			const openButton = document.querySelector(".join-btn");
-			openButton.addEventListener("click", () => {
+			const joinBtn = document.querySelector(".join-btn");
+
+			joinBtn.addEventListener("click", (e) => {
 				Swal.fire({
 					icon: "success",
-					text: "Successfully added to your Community Page!",
+					html: "<p class='font-bold text-primary text-3xl'>Successfully added to your Community Page!<p>",
+					buttonsStyling: false,
+					confirmButtonText: "Check “My Squares”",
+					customClass: {
+						confirmButton: "btn-primary rounded-lg text-lg mb-2",
+					},
+				});
+				const squareId = e.target.dataset.squareId;
+				e.target.remove();
+				fetch(`/api/square/join`, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						squareId,
+					}),
 				});
 			});
 		</script>
