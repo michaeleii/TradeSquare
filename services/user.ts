@@ -95,6 +95,20 @@ async function getUserSquares(userId: number) {
 	}
 }
 
+async function checkIfUserJoined(userId: number, squareId: number) {
+	try {
+		const joined = await prisma.squaresUsers.findFirst({
+			where: {
+				userId,
+				squareId,
+			},
+		});
+		return joined ? true : false;
+	} catch (error) {
+		throw error;
+	}
+}
+
 async function joinSquare(userId: number, squareId: number) {
 	try {
 		const joinSquare = await prisma.squaresUsers.create({
@@ -109,6 +123,16 @@ async function joinSquare(userId: number, squareId: number) {
 	}
 }
 
+async function unjoinSquare(userId: number, squareId: number) {
+	try {
+		await prisma.squaresUsers.delete({
+			where: { squareId_userId: { squareId, userId } },
+		});
+	} catch (error) {
+		throw error;
+	}
+}
+
 export {
 	getUserById,
 	checkIfUserLiked,
@@ -116,4 +140,7 @@ export {
 	unlikeItem,
 	getUserLikedItems,
 	getUserSquares,
+	checkIfUserJoined,
+	joinSquare,
+	unjoinSquare,
 };

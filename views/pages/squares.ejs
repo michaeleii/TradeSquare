@@ -17,7 +17,7 @@
 				connect and share their stories. We invite you to join our community and
 				engage with others who share your interests.
 			</p>
-			<div class="flex flex-col">
+			<div class="flex flex-col" id="squareContainer">
 				<% squares.forEach(square => { %> <%-
 				include('../components/square.ejs', {square}) %> <% }) %>
 				<a
@@ -31,9 +31,9 @@
 		<%- include('../components/navigationBar') %>
 
 		<script>
-			const openButtons = Array.from(document.querySelectorAll(".join-btn"));
-			openButtons.map((button) => {
-				button.addEventListener("click", () => {
+			const squareContainer = document.querySelector("#squareContainer");
+			squareContainer.addEventListener("click", async (e) => {
+				if (e.target.classList.contains("join-btn")) {
 					Swal.fire({
 						icon: "success",
 						html: "<p class='font-bold text-primary text-3xl'>Successfully added to your Community Page!<p>",
@@ -44,7 +44,18 @@
 							confirmButton: "btn-primary rounded-lg text-lg mb-2",
 						},
 					});
-				});
+					const squareId = e.target.dataset.squareId;
+					e.target.remove();
+					await fetch(`/api/square/join`, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({
+							squareId,
+						}),
+					});
+				}
 			});
 		</script>
 	</body>
