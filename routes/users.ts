@@ -1,5 +1,9 @@
 import express from "express";
-import { getUserById, getUserLikedItems } from "../services/user";
+import {
+	getUserById,
+	getUserLikedItems,
+	getUserSquares,
+} from "../services/user";
 import { Category, Item } from "@prisma/client";
 import { getObjectSignedUrl } from "../s3";
 
@@ -43,6 +47,15 @@ users.get("/my-items", async (req, res) => {
 	res.render("pages/myLists", { items });
 });
 
+users.get("/my-squares", async (req, res) => {
+	const userSquares = await getUserSquares(9);
+	if (!userSquares) {
+		res.status(404).send("User not found");
+		return;
+	}
+	console.log(userSquares);
+	res.render("pages/mySquares", { userSquares });
+});
 users.get("/likes", async (req, res) => {
 	try {
 		const likedItems = await getUserLikedItems(9);

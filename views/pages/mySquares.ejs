@@ -1,0 +1,26 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="/styles/styles.css" rel="stylesheet" />
+
+		<title>My Squares</title>
+	</head>
+
+	<body>
+		<article class="w-[90%] mx-auto md:w-[60%] mb-10">
+			<div class="pt-5"><%- include('../components/subNavigation.ejs') %></div>
+
+			<h1 class="font-bold mt-0 mb-2">My Squares</h1>
+			<% if (userSquares.length) { %>
+			<div class="grid grid-col grid-cols-2 gap-4"></div>
+
+			<% } else {%>
+			<p class="text-darkgrey text-center mt-20 text-2xl">
+				You have no squares yet.
+			</p>
+			<% } %>
+		</article>
+	</body>
+</html>
