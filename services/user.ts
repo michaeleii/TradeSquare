@@ -95,6 +95,20 @@ async function getUserSquares(userId: number) {
 	}
 }
 
+async function joinSquare(userId: number, squareId: number) {
+	try {
+		const joinSquare = await prisma.squaresUsers.create({
+			data: {
+				userId,
+				squareId,
+			},
+		});
+		return joinSquare;
+	} catch (error) {
+		throw error;
+	}
+}
+
 export {
 	getUserById,
 	checkIfUserLiked,

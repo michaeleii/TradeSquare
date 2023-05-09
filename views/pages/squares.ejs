@@ -20,12 +20,12 @@
 			<div class="flex flex-col">
 				<% squares.forEach(square => { %> <%-
 				include('../components/square.ejs', {square}) %> <% }) %>
-
-				<button
-					class="btn-primary rounded-lg w-full md:self-center md:w-[300px]"
+				<a
+					href="/users/my-squares"
+					class="btn-primary text-center rounded-lg w-full md:self-center md:w-[300px]"
 				>
-					My Squares
-				</button>
+					<button>My Squares</button>
+				</a>
 			</div>
 		</div>
 		<%- include('../components/navigationBar') %>
