@@ -20,21 +20,20 @@ squares.get("/all", async (req, res) => {
 			}
 		).joined = joined;
 	}
-	console.log(squares);
 	res.render("pages/squares", { squares });
 });
-
 squares.get("/:id", async (req, res) => {
 	const id = +req.params.id;
 	const square = await getSquareById(id);
 	res.render("pages/singleSquare", { square });
 });
+squares.get("/mysquarecomponent", (req, res) =>
+	res.render("components/mySquare")
+);
 
 squares.get("/squaretitlecomponent", (req, res) => {
 	res.render("components/Square_Title_and_Description");
 });
-
-squares.get("/joinsquarebtncomponent", (req, res) => {});
 
 squares.get("/postcomponent", async (req, res) => {
 	const posts = await getALlPosts();
@@ -49,7 +48,4 @@ squares.get("/searchBarComponent", (req, res) => {
 	res.render("components/searchBar");
 });
 
-squares.get("/mysquarecomponent", (req, res) =>
-	res.render("components/mySquare")
-);
 export default squares;

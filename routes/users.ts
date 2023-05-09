@@ -53,7 +53,6 @@ users.get("/my-squares", async (req, res) => {
 		res.status(404).send("User not found");
 		return;
 	}
-	console.log(userSquares);
 	res.render("pages/mySquares", { userSquares });
 });
 users.get("/likes", async (req, res) => {
