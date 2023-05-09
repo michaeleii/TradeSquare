@@ -81,12 +81,12 @@ async function getUserLikedItems(userId: number) {
 
 async function getUserSquares(userId: number) {
 	try {
-		const userSquares = await prisma.user.findUnique({
+		const userSquares = await prisma.squaresUsers.findMany({
 			where: {
-				id: userId,
+				userId,
 			},
 			include: {
-				squares: true,
+				square: true,
 			},
 		});
 		return userSquares;
