@@ -12,14 +12,15 @@ datasource db {
 }
 
 model User {
-  id     Int    @id @default(autoincrement())
-  email  String @unique
-  f_name String
-  l_name String
-  rating Float  @default(0)
-  items  Item[]
-  posts  Post[]
-  likes  Like[]
+  id      Int    @id @default(autoincrement())
+  email   String @unique
+  f_name  String
+  l_name  String
+  auth0Id String @unique
+  rating  Float  @default(0)
+  items   Item[]
+  posts   Post[]
+  likes   Like[]
 }
 
 model Item {
