@@ -10,4 +10,25 @@ async function getAllSquares() {
 	}
 }
 
-export default getAllSquares;
+async function getSquareById(id: number) {
+	try {
+		const square = await prisma.square.findUnique({
+			where: {
+				id: id,
+			},
+			include: {
+				posts: {
+					include: {
+						user: true,
+					},
+				},
+			},
+		});
+		return square;
+	} catch (err) {
+		console.log(err);
+		return null;
+	}
+}
+
+export { getAllSquares, getSquareById };

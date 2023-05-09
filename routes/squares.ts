@@ -1,5 +1,5 @@
 import express from "express";
-import getAllSquares from "../services/squares";
+import { getAllSquares, getSquareById } from "../services/squares";
 import getALlPosts from "../services/posts";
 
 const squares = express.Router();
@@ -9,9 +9,11 @@ squares.get("/all", async (req, res) => {
 	res.render("pages/squares", { squares });
 });
 
-// squares.get("/:id", (req, res) => {
-// 	res.send("Square for id: " + req.params.id);
-// });
+squares.get("/:id", async (req, res) => {
+	const id = +req.params.id;
+	const square = await getSquareById(id);
+	res.render("pages/singleSquare", { square });
+});
 
 squares.get("/squaretitlecomponent", (req, res) => {
 	res.render("components/Square_Title_and_Description");
@@ -20,7 +22,7 @@ squares.get("/squaretitlecomponent", (req, res) => {
 squares.get("/joinsquarebtncomponent", (req, res) => {});
 
 squares.get("/postcomponent", async (req, res) => {
-	const posts = await getALlPosts(); 
+	const posts = await getALlPosts();
 	res.render("pages/singleSquare", { posts });
 });
 
@@ -32,7 +34,7 @@ squares.get("/searchBarComponent", (req, res) => {
 	res.render("components/searchBar");
 });
 
-squares.get("/mysquarecomponent", (req, res) => 
- res.render("components/mySquare")
+squares.get("/mysquarecomponent", (req, res) =>
+	res.render("components/mySquare")
 );
 export default squares;
