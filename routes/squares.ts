@@ -2,7 +2,7 @@ import express from "express";
 import multer from "multer";
 import crypto from "crypto";
 import { getAllSquares, getSquareById } from "../services/squares";
-import {getAllPosts, createPost, getPostsBySquareId} from "../services/posts";
+import { getAllPosts, createPost, getPostsBySquareId } from "../services/posts";
 import { checkIfUserJoined } from "../services/user";
 import { Square, Category, Item, Like, User, Post } from "@prisma/client";
 import { uploadFile, deleteFile, getObjectSignedUrl } from "../s3";
@@ -37,6 +37,10 @@ squares.get("/:id", async (req, res) => {
 		res.status(404).send("Square not found");
 		return;
 	}
+	for (const post of square.posts) {
+		const url = await getObjectSignedUrl(post.imageName);
+		(post as any).imgUrl = url;
+	}
 	(square as any).joined = await checkIfUserJoined(9, square.id);
 	res.render("pages/singleSquare", { square });
 });
@@ -50,7 +54,7 @@ squares.get("/squaretitlecomponent", (req, res) => {
 
 squares.get("/postcomponent", async (req, res) => {
 	const squareId = Number(req.query.squareId);
-	const posts = await getPostsBySquareId(squareId); 
+	const posts = await getPostsBySquareId(squareId);
 	// const posts = await getAllPosts();
 	for (const post of posts) {
 		const url = await getObjectSignedUrl(post.imageName);
@@ -69,12 +73,16 @@ squares.get("/postcomponent", async (req, res) => {
 });
 
 squares
-	.route("/create")
-	.get((req, res) => {
-		const squareName = req.query.square;
-		const squareId = req.query.squareId;
+	.route("/create/:id")
+	.get(async (req, res) => {
+		const squareId = +req.params.id;
+		const square = await getSquareById(squareId);
+		if (!square) {
+			res.status(404).send("Square not found");
+			return;
+		}
 
-		res.render("components/createPost", { squareName, squareId });
+		res.render("components/createPost", { square });
 	})
 	.post(upload.single("image"), async (req, res) => {
 		if (!req.file) {
@@ -87,18 +95,17 @@ squares
 
 			req.body.imageName = imageName;
 			req.body.userId = 9;
-			req.body.squareId = Number(req.query.squareId);
+			req.body.squareId = +req.params.id;
 
-			req.body.date = new Date();
+			req.body.date = new Date(Date.now());
 
-			const post = await createPost(req.body);
+			await createPost(req.body);
 
-			res.redirect('/squares/postcomponent');
+			res.redirect(`/squares/${req.params.id}`);
 		} catch (error: any) {
 			res.status(500).send(error.message);
 		}
 	});
-
 
 squares.get("/subnavcomponent", (req, res) => {
 	res.render("components/subNavigation");
