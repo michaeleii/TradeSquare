@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link href="/styles/styles.css" rel="stylesheet" />
+</head>
+
+<body>
+    <article class="mx-auto w-[90%] md:w-[50%] my-5">
+        <%- include('../components/subNavigation.ejs') %>
+            <div class="inline-block">
+				<h1 class="text-primary text-[42px] mb-3">
+					<%= square.name  %>
+				</h1>
+                <h2 class="border border-b-grey border-x-0 border-t-0 text-[35px] mb-3">
+                    Create a Post
+                </h2>
+            </div>
+
+            <form class="flex flex-col" action="" method="POST" enctype="multipart/form-data">
+                <div class="flex justify-center md:justify-normal">
+                    <div
+                        class="flex justify-center items-center w-[340px] h-[175px] bg-offwhite border-grey border-2 rounded-lg">
+                        <label for="image" class="flex items-center gap-1 h-full">
+                            <img id="preview" class="w-[330px] h-[170px] object-cover rounded-lg hidden" src="#" alt="">
+                            <img class="w-[13px] h-[11px] input-icon mb-1" src="/images/icons/Plus.svg" alt="" />
+                            <img class="w-[24px] h-[24px] input-icon" src="/images/icons/Image.svg" alt="" />
+                        </label>
+
+                    </div>
+                </div>
+
+                <input type="file" id="image" name="image" accept="image/png, image/jpeg" class="hidden">
+                <div class="my-5">
+                    <h2 class="text-[23px]">Add Photos</h2>
+                    <p class="text-[16px]">
+                        Be sure to include quality photos. Listings with poorly taken photos
+                        will be reviewed and may be taken down.
+                    </p>
+                </div>
+
+                <label class="mt-10 text-[23px] font-bold" for="postDescription">
+					Description
+                </label>
+                <textarea class="border-2 p-2 border-darkgrey rounded-md placeholder:text-grey" name="description"
+                    id="listingDescription" rows="6" cols="15" placeholder="..."></textarea>
+
+                <!-- <label class="mt-10 text-[23px] font-bold" for="square">
+                    Square
+                </label> -->
+                <!-- <select class="p-3 border-2 border-darkgrey rounded-md" name="squareId" id="square">
+                    <option value="">--Please choose a square--</option>
+
+                    <option value="1">Home Furniture / Organizer</option>
+                    <option value="2">Cloth / Accessories</option>
+                    <option value="3">Shoes</option>
+                    <option value="4">Collections ( Art / Music)</option>
+                    <option value="5">Kitchen Appliances</option>
+                    <option value="6">Car / Electronics</option>
+                </select> -->
+
+                
+                <h1 class="mt-10 sm:text-center">You're All Done!</h1>
+                <div class="flex sm:justify-center">
+                    <button class="bg-primary w-[235px] h-[50px] rounded-xl text-white py-2.5 px-5 mt-2 mr-2 block">
+                        Post
+                    </button>
+                </div>
+            </form>
+    </article>
+
+   
+    </article>
+    <script>
+        const imageInput = document.querySelector("#image");
+        const imagePreview = document.querySelector("#preview");
+        const inputIcons = document.querySelectorAll(".input-icon");
+        imageInput.onchange = event => {
+            const [file] = imageInput.files
+            if (file) {
+                imagePreview.src = URL.createObjectURL(file)
+                inputIcons.forEach(icon => {
+                    icon.classList.add("hidden")
+                })
+                imagePreview.classList.remove("hidden")
+            }
+        }
+    </script>
+</body>
+
+</html>

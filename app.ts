@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+
 dotenv.config();
 const app = express();
 
@@ -23,6 +24,7 @@ app.set("view engine", "ejs");
 app.set("views", "views");
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
@@ -47,11 +49,7 @@ app.get("/", async (req, res) => {
         }
       ).imgUrl = url;
     }
-    res.render("pages/index", {
-      items,
-      isAuthenticated: req.oidc.isAuthenticated(),
-      user: req.oidc.user,
-    });
+    res.render("pages/index", { items });
   } catch (error) {
     res.status(500).send(error);
   }

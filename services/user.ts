@@ -79,10 +79,69 @@ async function getUserLikedItems(userId: number) {
 	}
 }
 
+async function getUserSquares(userId: number) {
+	try {
+		const userSquares = await prisma.squaresUsers.findMany({
+			where: {
+				userId,
+			},
+			include: {
+				square: true,
+			},
+		});
+		return userSquares;
+	} catch (error) {
+		throw error;
+	}
+}
+
+async function checkIfUserJoined(userId: number, squareId: number) {
+	try {
+		const joined = await prisma.squaresUsers.findFirst({
+			where: {
+				userId,
+				squareId,
+			},
+		});
+		return joined ? true : false;
+	} catch (error) {
+		throw error;
+	}
+}
+
+async function joinSquare(userId: number, squareId: number) {
+	try {
+		const joinSquare = await prisma.squaresUsers.create({
+			data: {
+				userId,
+				squareId,
+			},
+		});
+		return joinSquare;
+	} catch (error) {
+		throw error;
+	}
+}
+
+async function unjoinSquare(userId: number, squareId: number) {
+	try {
+		await prisma.squaresUsers.delete({
+			where: { squareId_userId: { squareId, userId } },
+		});
+	} catch (error) {
+		throw error;
+	}
+}
+
+
 export {
 	getUserById,
 	checkIfUserLiked,
 	likeItem,
 	unlikeItem,
 	getUserLikedItems,
+	getUserSquares,
+	checkIfUserJoined,
+	joinSquare,
+	unjoinSquare,
 };

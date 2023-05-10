@@ -1,5 +1,9 @@
 import express from "express";
-import { getUserById, getUserLikedItems } from "../services/user";
+import {
+  getUserById,
+  getUserLikedItems,
+  getUserSquares,
+} from "../services/user";
 import { Category, Item } from "@prisma/client";
 import { getObjectSignedUrl } from "../s3";
 import { requiresAuth } from "express-openid-connect";
@@ -44,7 +48,15 @@ users.get("/my-items", async (req, res) => {
   res.render("pages/myLists", { items });
 });
 
-users.get("/likes", requiresAuth(), async (req, res) => {
+users.get("/my-squares", async (req, res) => {
+  const userSquares = await getUserSquares(9);
+  if (!userSquares) {
+    res.status(404).send("User not found");
+    return;
+  }
+  res.render("pages/mySquares", { userSquares });
+});
+users.get("/likes", async (req, res) => {
   try {
     const likedItems = await getUserLikedItems(9);
     if (!likedItems) return res.status(404).json({ message: "User not found" });

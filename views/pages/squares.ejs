@@ -17,22 +17,44 @@
 				connect and share their stories. We invite you to join our community and
 				engage with others who share your interests.
 			</p>
-			<div class="flex flex-col">
+			<div class="flex flex-col" id="squareContainer">
 				<% squares.forEach(square => { %> <%-
 				include('../components/square.ejs', {square}) %> <% }) %>
-
-				<button class="btn-primary rounded-lg w-full md:place-self-center md:w-[600px]">
-					My Squares
-				</button>
+				<a
+					href="/users/my-squares"
+					class="btn-primary text-center rounded-lg w-full md:self-center md:w-[300px]"
+				>
+					<button>My Squares</button>
+				</a>
 			</div>
 		</div>
-		<script>
+		<%- include('../components/navigationBar') %>
 
-			const openButtons = Array.from(document.querySelectorAll('.join-btn'));
-			openButtons.map(button => {
-				button.addEventListener('click', () => {
-					Swal.fire("Successfully added to your Community Page!");
-				})
+		<script>
+			const squareContainer = document.querySelector("#squareContainer");
+			squareContainer.addEventListener("click", async (e) => {
+				if (e.target.classList.contains("join-btn")) {
+					Swal.fire({
+						icon: "success",
+						html: "<p class='font-bold text-primary text-3xl'>Successfully added to your Community Page!<p>",
+						buttonsStyling: false,
+						confirmButtonText: "Check “My Squares”",
+						customClass: {
+							confirmButton: "btn-primary rounded-lg text-lg mb-2",
+						},
+					});
+					const squareId = e.target.dataset.squareId;
+					e.target.remove();
+					fetch(`/api/square/join`, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({
+							squareId,
+						}),
+					});
+				}
 			});
 		</script>
 	</body>

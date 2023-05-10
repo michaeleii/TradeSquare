@@ -1,0 +1,45 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+		<link href="/styles/styles.css" rel="stylesheet" />
+		<title>My Square</title>
+	</head>
+	<body>
+		<div class="flex justify-between pl-9 pr-9">
+			<%- include('../components/subNavigation.ejs') %>
+			<img
+				class="w-[25px]"
+				src="/images/icons/Bell.svg"
+				alt="Bell Icon"
+				srcset=""
+			/>
+		</div>
+
+		<div class="grid gap-4 justify-center h-48">
+			<img
+				class="mx-auto rounded-full w-[100px] h-[100px] h-50 mb-2 object-cover"
+				src="/images/users/user5.jpg"
+				alt="Square Img"
+				srcset=""
+			/>
+			<h1 class="font-bold text-center">My Squares</h1>
+		</div>
+
+		<div class="flex justify-center items-center flex-col gap-4">
+			<div class="bg-primary rounded-lg">
+				<div class="flex justify-between items-center">
+					<h1 class="text-white px-4">Small Business Owners</h1>
+					<img
+						class="px-20"
+						src="/images/icons/greyEllipse.svg"
+						alt="grey Ellipse"
+					/>
+				</div>
+				<p class="text-white px-4">Member since Sep 2022</p>
+			</div>
+		</div>
+	</body>
+</html>

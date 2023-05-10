@@ -78,3 +78,15 @@ li:hover svg > path {
 li:hover a > span {
 	@apply text-primary;
 }
+
+.like-icon {
+	@apply cursor-pointer hover:fill-primary;
+}
+
+.like-icon path {
+	@apply stroke-primary;
+}
+
+.like-icon.liked path {
+	@apply fill-primary;
+}

@@ -8,10 +8,10 @@ import {
 } from "../services/item";
 import { requiresAuth } from "express-openid-connect";
 
-import { checkIfUserLiked, likeItem, unlikeItem } from "../services/user";
+import { checkIfUserLiked } from "../services/user";
 
 import multer from "multer";
-import { Item, Like, User } from "@prisma/client";
+import { Category, Item, Like, User } from "@prisma/client";
 import { uploadFile, deleteFile, getObjectSignedUrl } from "../s3";
 import crypto from "crypto";
 
@@ -47,7 +47,7 @@ items.get("/all", async (req, res) => {
 
 items
   .route("/create")
-  .get(requiresAuth(), (req, res) => {
+  .get((req, res) => {
     res.render("components/createListing");
   })
   .post(upload.single("image"), async (req, res) => {
@@ -76,6 +76,7 @@ items.get("/my-item/:id", async (req, res) => {
   const url = await getObjectSignedUrl(item.imgName);
   (
     item as Item & {
+      category: Category;
       likeCount: number;
       user: User;
       likes: Like[];
@@ -84,6 +85,7 @@ items.get("/my-item/:id", async (req, res) => {
   ).imgUrl = url;
   (
     item as Item & {
+      category: Category;
       liked: boolean;
       likeCount: number;
       user: User;
@@ -126,6 +128,7 @@ items.get("/view/:id", async (req, res) => {
   const url = await getObjectSignedUrl(item.imgName);
   (
     item as Item & {
+      category: Category;
       likeCount: number;
       user: User;
       likes: Like[];
@@ -140,14 +143,6 @@ items.get("/view/:id", async (req, res) => {
   ).liked = await checkIfUserLiked(9, item.id);
 
   res.render("pages/item", { item });
-});
-
-items.post("/view/:id/like", requiresAuth(), async (req, res) => {
-  const itemId = +req.params.id;
-  const userId = 9;
-  const liked = await checkIfUserLiked(userId, itemId);
-  liked ? await unlikeItem(userId, itemId) : await likeItem(userId, itemId);
-  res.redirect("back");
 });
 
 export default items;

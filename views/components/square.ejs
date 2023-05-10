@@ -6,13 +6,21 @@
   />
   <h3 class="mt-4"><%= square.name %></h3>
   <p class="my-2"><%= square.description %></p>
-  <button class="join-btn btn-primary rounded-full py-2.5 px-5 mt-2 mr-2">Join</button>
-  <a href="/squares/postcomponent">
+
+  <% if (!square.joined) { %>
+  <button
+    class="join-btn btn-primary rounded-full py-2.5 px-5 mt-2 mr-2"
+    data-square-id="<%= square.id %>"
+  >
+    Join
+  </button>
+  <% } %>
+
+  <a href="/squares/<%= square.id %>">
     <button
       class="bg-white text-primary rounded-full py-2 px-6 mt-2 border-2 border-solid border-primary"
     >
       See More
     </button>
-
   </a>
 </article>
