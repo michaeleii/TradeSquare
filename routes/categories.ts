@@ -1,54 +1,22 @@
 import express from "express";
-
 import { getAllCategories, getItemsByCategoryId } from "../services/categories";
-
-import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
-
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-
-import { z } from "zod";
 import { Item, User } from "@prisma/client";
-
-const envVariables = z.object({
-  BUCKET_NAME: z.string(),
-  BUCKET_REGION: z.string(),
-  ACCESS_KEY: z.string(),
-  SECRET_ACCESS_KEY: z.string(),
-});
-
-envVariables.parse(process.env);
-
-declare global {
-  namespace NodeJS {
-    interface ProcessEnv extends z.infer<typeof envVariables> {
-      BUCKET_NAME: string;
-      BUCKET_REGION: string;
-      ACCESS_KEY: string;
-      SECRET_ACCESS_KEY: string;
-    }
-  }
-}
-
-const bucketName = process.env.BUCKET_NAME;
-const bucketRegion = process.env.BUCKET_REGION;
-const accessKey = process.env.ACCESS_KEY;
-const secretAccessKey = process.env.SECRET_ACCESS_KEY;
-
-const s3 = new S3Client({
-  credentials: {
-    accessKeyId: accessKey,
-    secretAccessKey: secretAccessKey,
-  },
-  region: bucketRegion,
-});
+import { getObjectSignedUrl } from "../s3";
+import { getUserByAuth0Id } from "../services/user";
 
 const categories = express.Router();
+
+getUserByAuth0Id;
 
 categories.get("/all", async (req, res) => {
   const categories = await getAllCategories();
   if (categories) {
+    const user = req.oidc.user
+      ? await getUserByAuth0Id(req.oidc.user.sub)
+      : null;
     res.render("pages/categories", {
       categories,
+      user,
     });
   } else {
     res.status(404).send("No categories found");
@@ -56,16 +24,11 @@ categories.get("/all", async (req, res) => {
 });
 
 categories.get("/:id", async (req, res) => {
-  const categoryId = Number(req.params.id);
+  const categoryId = +req.params.id;
   const category = await getItemsByCategoryId(categoryId);
   if (category) {
     for (const item of category.items) {
-      const getObjectParams = {
-        Bucket: bucketName,
-        Key: item.imgName,
-      };
-      const command = new GetObjectCommand(getObjectParams);
-      const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+      const url = await getObjectSignedUrl(item.imgName);
       (
         item as Item & {
           user: User | null;
@@ -73,7 +36,11 @@ categories.get("/:id", async (req, res) => {
         }
       ).imgUrl = url;
     }
-    res.render("pages/category", { category });
+
+    const user = req.oidc.user
+      ? await getUserByAuth0Id(req.oidc.user.sub)
+      : null;
+    res.render("pages/category", { category, user });
   } else {
     res.status(404).send("No categories found");
   }

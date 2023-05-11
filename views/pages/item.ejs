@@ -26,6 +26,7 @@
 				<h4 class="text-darkgrey mt-8"><%= item.category.name %></h4>
 			<div class="flex justify-between">
 				<h1 class="font-bold mb-2"><%= item.name %></h1>
+				<% if (user) { %>
 					<svg
 							width="40"
 							height="45"
@@ -42,6 +43,7 @@
 								stroke-linejoin="round"
 							/>
 						</svg>
+						<% } %>
 			</div>
 
 			<div class="flex gap-5 justify-start mt-5">

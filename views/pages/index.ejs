@@ -9,9 +9,11 @@
 	</head>
 	<body>
 		<div class="mx-auto w-[90%] md:w-[50%] mt-5">
-			<%- include('../components/header.ejs') %>
+			<%- include('../components/header.ejs', {isAuthenticated}) %>
+			<% if (isAuthenticated) { %>
 			<h1 class="text-3xl mb-2">Welcome,</h1>
-			<p class="text-darkgrey">Hello Username 👋</p>
+			<p class="text-darkgrey">Hello <%= user.f_name %> <%= user.l_name %> 👋</p>
+			<% } %>			
 			<section class="my-10">
 				<div class="flex justify-between items-center mb-3">
 					<h2>Popular Categories</h2>
@@ -107,6 +109,6 @@
 			</div>
 			</div>
 			</div>
-			<%- include('../components/navigationBar') %>	
+			<%- include('../components/navigationBar', { user }) %>	
 	</body>
 </html>
