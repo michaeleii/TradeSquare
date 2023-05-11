@@ -104,7 +104,7 @@ items.get("/my-item/:id", async (req, res) => {
     ).liked = await checkIfUserLiked(user.id, item.id);
   }
 
-  res.render("pages/editItem", { item, profileImg: req.oidc.user?.picture });
+  res.render("pages/editItem", { item });
 });
 
 items.get("/delete/:id", async (req, res) => {
