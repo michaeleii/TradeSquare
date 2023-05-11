@@ -12,6 +12,7 @@ import itemsRouter from "./routes/items";
 import usersRouter from "./routes/users";
 import categories from "./routes/categories";
 import apiRouter from "./routes/api";
+import testRouter from "./routes/test";
 
 dotenv.config();
 const app = express();
@@ -87,6 +88,8 @@ app.use("/categories", categories);
 app.use("/users", usersRouter);
 
 app.use("/api", apiRouter);
+
+app.use("/test", testRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
