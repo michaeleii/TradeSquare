@@ -20,7 +20,7 @@ users.get("/profile/:id", requiresAuth(), async (req, res) => {
     });
     return;
   }
-  res.render("pages/profile", { user });
+  res.render("pages/profile", { user, profileImg: req.oidc.user?.picture });
 });
 
 users.get("/my-items", async (req, res) => {
