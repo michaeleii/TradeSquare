@@ -1,11 +1,11 @@
 <article class="p-8 bg-offwhite rounded-md sm:text-center mb-8">
   <img
-    class="w-[290px] h-[200px] sm:mx-auto sm:w-[580px] sm:h-[400px]"
+    class="w-[350px] h-[200px] mx-auto sm:w-[580px] sm:h-[400px] object-cover"
     src="/images/squares/square<%= square.id %>.jpg"
     alt=""
   />
   <h3 class="mt-4"><%= square.name %></h3>
-  <p class="my-2"><%= square.description %></p>
+  <p class="my-2 text-darkgrey"><%= square.description %></p>
 
   <% if (!square.joined) { %>
   <button
