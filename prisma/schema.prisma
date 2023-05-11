@@ -12,16 +12,17 @@ datasource db {
 }
 
 model User {
-  id      Int            @id @default(autoincrement())
-  email   String         @unique
-  f_name  String
-  l_name  String
-  auth0Id String?        @unique @map("auth0_id")
-  rating  Float          @default(0)
-  items   Item[]
-  posts   Post[]
-  likes   Like[]
-  squares SquaresUsers[]
+  id         Int            @id @default(autoincrement())
+  email      String         @unique
+  f_name     String
+  l_name     String
+  profilePic String         @map("profile_pic")
+  auth0Id    String?        @unique @map("auth0_id")
+  rating     Float          @default(0)
+  items      Item[]
+  posts      Post[]
+  likes      Like[]
+  squares    SquaresUsers[]
 }
 
 model Item {

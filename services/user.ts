@@ -40,6 +40,7 @@ async function checkIfUserExists(
         auth0Id: user.sub,
         f_name: user.f_name,
         l_name: user.l_name,
+        profilePic: user.picture,
         email: user.email,
       },
     });
