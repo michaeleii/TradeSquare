@@ -8,7 +8,7 @@ import {
 } from "../services/item";
 import { requiresAuth } from "express-openid-connect";
 
-import { checkIfUserLiked } from "../services/user";
+import { checkIfUserLiked, getUserByAuth0Id } from "../services/user";
 
 import multer from "multer";
 import { Category, Item, Like, User } from "@prisma/client";
@@ -39,7 +39,11 @@ items.get("/all", async (req, res) => {
         }
       ).imgUrl = url;
     }
-    res.render("pages/itemList", { items });
+
+    const user = req.oidc.user
+      ? await getUserByAuth0Id(req.oidc.user.sub)
+      : null;
+    res.render("pages/itemList", { items, user });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -47,7 +51,7 @@ items.get("/all", async (req, res) => {
 
 items
   .route("/create")
-  .get((req, res) => {
+  .get(requiresAuth(), (req, res) => {
     res.render("components/createListing");
   })
   .post(upload.single("image"), async (req, res) => {
@@ -58,9 +62,11 @@ items
     try {
       const imgName = randomImageName();
       await uploadFile(req.file.buffer, imgName, req.file.mimetype);
-
       req.body.imgName = imgName;
-      req.body.userId = 9;
+
+      const user = await getUserByAuth0Id(req.oidc.user?.sub);
+      if (!user) return res.status(404).send("User not found");
+      req.body.userId = user.id;
       req.body.categoryId = +req.body.categoryId;
       const item = await createItem(req.body);
 
@@ -83,16 +89,21 @@ items.get("/my-item/:id", async (req, res) => {
       imgUrl: string;
     }
   ).imgUrl = url;
-  (
-    item as Item & {
-      category: Category;
-      liked: boolean;
-      likeCount: number;
-      user: User;
-      likes: Like[];
-      imgUrl: string;
-    }
-  ).liked = await checkIfUserLiked(9, item.id);
+
+  const user = req.oidc.user ? await getUserByAuth0Id(req.oidc.user.sub) : null;
+  if (user) {
+    (
+      item as Item & {
+        category: Category;
+        liked: boolean;
+        likeCount: number;
+        user: User;
+        likes: Like[];
+        imgUrl: string;
+      }
+    ).liked = await checkIfUserLiked(user.id, item.id);
+  }
+
   res.render("pages/editItem", { item });
 });
 
@@ -136,13 +147,15 @@ items.get("/view/:id", async (req, res) => {
     }
   ).imgUrl = url;
 
-  (
-    item.user as User & {
-      liked: boolean;
-    }
-  ).liked = await checkIfUserLiked(9, item.id);
-
-  res.render("pages/item", { item });
+  const user = req.oidc.user ? await getUserByAuth0Id(req.oidc.user.sub) : null;
+  if (user) {
+    (
+      item.user as User & {
+        liked: boolean;
+      }
+    ).liked = await checkIfUserLiked(user.id, item.id);
+  }
+  res.render("pages/item", { item, user });
 });
 
 export default items;

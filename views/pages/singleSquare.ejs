@@ -13,7 +13,8 @@
       <%- include('../components/subNavigation.ejs') %>
     </div>
     <div>
-      <%- include('../components/Square_Title_and_Description.ejs', {square}) %>
+      <%- include('../components/Square_Title_and_Description.ejs', {square,
+      user}) %>
     </div>
     <div class="flex flex-col items-center mt-10" id="postsContainer">
       <div class="grid grid-cols-1 gap-5 justify-center">
@@ -25,7 +26,8 @@
         <% } %>
       </div>
     </div>
-    <%- include('../components/navigationBar') %> <% if (!square.joined) { %>
+    <%- include('../components/navigationBar', {user}) %> <% if (!square.joined)
+    { %>
     <script src="/src/joinBtn.js"></script>
     <% } else { %>
     <script src="/src/unjoinBtn.js"></script>

@@ -1,13 +1,20 @@
 import express from "express";
 import dotenv from "dotenv";
 
-dotenv.config();
-const app = express();
-
 import { getAllItems } from "./services/item";
+import { checkIfUserExists, getUserByAuth0Id } from "./services/user";
 import { getObjectSignedUrl } from "./s3";
 import { Item, Like, User } from "@prisma/client";
 import { auth } from "express-openid-connect";
+
+import squaresRouter from "./routes/squares";
+import itemsRouter from "./routes/items";
+import usersRouter from "./routes/users";
+import categories from "./routes/categories";
+import apiRouter from "./routes/api";
+
+dotenv.config();
+const app = express();
 
 const config = {
   authRequired: false,
@@ -28,7 +35,7 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
-app.get("/", async (req, res) => {
+app.get("/", checkIfUserExists, async (req, res) => {
   try {
     const items = await getAllItems();
     if (!items) {
@@ -49,7 +56,15 @@ app.get("/", async (req, res) => {
         }
       ).imgUrl = url;
     }
-    res.render("pages/index", { items });
+
+    const user = req.oidc.user
+      ? await getUserByAuth0Id(req.oidc.user.sub)
+      : null;
+    res.render("pages/index", {
+      items,
+      isAuthenticated: req.oidc.isAuthenticated(),
+      user,
+    });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -57,19 +72,11 @@ app.get("/", async (req, res) => {
 app
   .route("/userCredentials")
   .get((req, res) => {
-    console.log("STATE", req.query.state);
     res.render("pages/credentials", { state: req.query.state });
   })
   .post((req, res) => {
-    console.log("BODY", req.body);
     res.send("OKKKKK");
   });
-
-import squaresRouter from "./routes/squares";
-import itemsRouter from "./routes/items";
-import usersRouter from "./routes/users";
-import categories from "./routes/categories";
-import apiRouter from "./routes/api";
 
 app.use("/squares", squaresRouter);
 
