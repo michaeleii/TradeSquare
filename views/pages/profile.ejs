@@ -7,10 +7,10 @@
   </head>
 
   <body>
-    <article class="w-[90%] mx-auto md:w-[60%] mb-10">
+    <article class="w-[90%] mx-auto md:w-[60%]">
       <%- include('../components/subNavigation.ejs') %>
 
-      <div class="h-full flex flex-col justify-between">
+      <div class="flex flex-col justify-between">
         <div class="mb-10">
           <img
             src="/images/users/user<%= user.id %>.jpg"
@@ -128,7 +128,6 @@
         </a>
       </div>
     </article>
-
     <%- include('../components/navigationBar.ejs', {user}) %>
   </body>
 </html>
