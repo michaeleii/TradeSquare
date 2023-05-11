@@ -19,4 +19,8 @@ test.get("/credentials", (req, res) =>
   res.render("pages/credentials", { state: null })
 );
 
+test.get('/message', (req, res) => {
+    res.render('pages/myMessage');
+});
+
 export default test;
