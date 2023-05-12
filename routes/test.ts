@@ -14,4 +14,9 @@ test.get('/message', async (req, res) => {
     }
 });
 
+
+test.get('/featureMessagePage', (req, res) => {
+    res.render("pages/featurePageMessage");
+})
+
 export default test;
