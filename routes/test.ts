@@ -23,4 +23,9 @@ test.get('/message', (req, res) => {
     res.render('pages/myMessage');
 });
 
+test.get('/introlikes', (req, res) => {
+    res.render('pages/introLikes');
+
+})
+
 export default test;
