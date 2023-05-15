@@ -5,88 +5,43 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/styles/styles.css" rel="stylesheet" />
+    <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.2.2.min.js"></script>
     <title>Message Page</title>
   </head>
   <body>
     <div class="flex justify-start px-5">
       <%- include('../components/subNavigation.ejs') %>
     </div>
-
     <div class="flex flex-auto px-6">
       <img
+        id="profilePic"
         class="rounded-full w-[90px] h-[90px] object-cover"
-        src="/images/users/user1.jpg"
-        alt="user1"
+        src="<%= user.profilePic %>"
+        alt="User Profile Picture"
       />
       <div class="pt-5 pl-5">
-        <h2>Veronica</h2>
+        <h2 id="userFullName"><%= user.f_name %> <%= user.l_name %></h2>
       </div>
     </div>
-
-    <div class="flex justify-end px-8">
-      <div class="flex justify-center place-items-center bg-primary rounded-full text-white px-5 h-[70px]">
-        <p class="">Hi is this available?</p>
-      </div>
-      <div class="pl-5">
-        <img
-          class="rounded-full w-[80px] h-[80px] object-cover"
-          src="/images/users/user4.jpg"
-          alt=""
-        />
-      </div>
-    </div>
-
-    <div class="flex justify-start py-8 px-8">
-      <div class="pr-5">
-        <img
-          class="rounded-full object-cover w-[80px] h-[80px]"
-          src="/images/users/user1.jpg"
-          alt=""
-        />
-      </div>
-      <div
-        class="flex justify-center place-items-center h-[70px] bg-slate-400 rounded-full py-8 px-2"
-      >
-        <p class="py-2 pl-2">Yes, It's available</p>
-      </div>
-    </div>
-
-    <div class="flex justify-start py-8 px-8">
-      <div class="pr-5">
-        <img
-          class="rounded-full object-cover w-[80px] h-[80px]"
-          src="/images/users/user1.jpg"
-          alt=""
-        />
-      </div>
-      <div
-        class="flex justify-center place-items-center h-[70px] bg-slate-400 rounded-full py-8 px-2"
-      >
-        <p class="py-2 pl-2">What's your offer.</p>
-      </div>
-    </div>
-
-    <div class="flex justify-end px-8">
-      <div
-        class="flex justify-center place-items-center h-[70px] bg-primary text-white rounded-full py-2 px-5"
-      >
-        <p class="">I have a retro computer to trade.</p>
-      </div>
-      <div class="pl-5">
-        <img
-          class="rounded-full w-[80px] h-[80px] object-cover"
-          src="/images/users/user4.jpg"
-          alt=""
-        />
-      </div>
-    </div>
-    
-    <div class="py-8 px-8">
-        <div class="flex justify-start bg-slate-200 rounded-full py-4">
-          <div class="  pl-5">
-            <input class=" bg-slate-200 rounded-sm"type="text" placeholder="" />
-          </div>
-        </div>
-    </div>
+    <div id="msgContainer" class="p-5 h-96 overflow-auto"></div>
+    <form class="flex gap-5 p-10 fixed bottom-0 w-full" id="chatInputForm">
+      <input
+        class="bg-slate-200 rounded-full pl-5 py-4 w-full focus:outline-none"
+        type="text"
+        placeholder=""
+        id="chatInput"
+      />
+      <button class="btn-primary-outline rounded-full w-[150px]" id="sendBtn">
+        Send
+      </button>
+    </form>
+    <script>
+      let pubnub = new PubNub({
+        publishKey: "pub-c-e1940c4d-880f-4331-9252-3ee8d4b82b0f",
+        subscribeKey: "sub-c-eb8a5e05-e54f-4ede-8583-4f5301612ab2",
+        userId: "<%= user.sid %>",
+      });
+    </script>
+    <script src="/src/chat.js"></script>
   </body>
 </html>
