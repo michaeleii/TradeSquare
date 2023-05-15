@@ -19,13 +19,22 @@ test.get("/credentials", (req, res) =>
   res.render("pages/credentials", { state: null })
 );
 
-test.get('/message', (req, res) => {
-    res.render('pages/myMessage');
+test.get('/message', async (req, res) => {
+    const user = req.oidc.user ? await getUserByAuth0Id(req.oidc.user.sub): null;
+    if (!user) {
+        res.status(404).send("User not found");
+    } else {
+        res.render('pages/myMessage');
+    }
 });
 
 test.get('/introlikes', (req, res) => {
-    res.render('pages/introLikes');
+    res.render("pages/introLikes");
+})
 
+
+test.get('/featureMessagePage', (req, res) => {
+    res.render("pages/featurePageMessage");
 })
 
 export default test;
