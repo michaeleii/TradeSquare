@@ -24,7 +24,7 @@ test.get("/message", async (req, res) => {
     res.status(404).send("User not found");
   } else {
     (user as any).sid = req.oidc.user?.sid;
-    res.render("pages/myMessage", { user });
+    res.render("pages/myMessage", { user, channelId: "test" });
   }
 });
 

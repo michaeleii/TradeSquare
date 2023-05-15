@@ -1,38 +1,37 @@
 let msgContainer = document.getElementById("msgContainer");
 let chatInput = document.getElementById("chatInput");
 let sendBtn = document.getElementById("sendBtn");
-let profileImg = document.getElementById("profilePic").src;
-let userFullName = document.getElementById("userFullName").innerText;
 let chatForm = document.getElementById("chatInputForm");
+let typingIndicator = document.getElementById("typingIndicator");
 
 function createMessage({ sender, text, timestamp }) {
   //create the DOM nodes to print the message to the screen
   let checkIfSenderIsUser = sender.name === userFullName;
   const msgElement = checkIfSenderIsUser
-    ? `<div class="flex justify-start py-8 px-8">
-        <div class="pr-5">
+    ? `<div class="flex justify-start items-center py-8 px-8">
+        <div class="w-[80px] pr-5">
           <img
-            class="rounded-full object-cover w-[80px] h-[80px]"
+            class="rounded-full"
             src="${sender.img}"
             alt=""
           />
         </div>
         <div
-          class="flex justify-center place-items-center h-[70px] bg-slate-400 rounded-full py-8 px-5 text-white"
+          class="flex justify-center place-items-center bg-slate-400 rounded-3xl px-5 py-2 text-white"
         >
           <span>${text}</span>
         </div>
       </div>`
     : `
-     <div class="flex justify-end px-8 py-8">
+     <div class="flex justify-end px-8 py-8 items-center">
         <div
-          class="flex justify-center place-items-center h-[70px] bg-primary text-white rounded-full py-2 px-5"
+          class="flex justify-center place-items-center bg-primary text-white rounded-3xl px-5 py-2"
         >
           <p class="">${text}</p>
         </div>
-        <div class="pl-5">
+       <div class="w-[80px] pl-5">
           <img
-            class="rounded-full w-[80px] h-[80px] object-cover"
+            class="rounded-full"
             src="${sender.img}"
             alt=""
           />
@@ -46,8 +45,11 @@ function createMessage({ sender, text, timestamp }) {
 }
 
 pubnub.subscribe({
-  channels: ["chatroom-1"],
+  channels: [channelId],
 });
+
+let isTyping = false;
+let typingTimeout;
 
 // add listener
 const listener = {
@@ -59,14 +61,30 @@ const listener = {
   message: ({ message }) => {
     createMessage(message);
   },
+  signal: ({ message }) => {
+    if (message.sender === userFullName) return;
+    typingIndicator.innerText = message.typing
+      ? `${message.sender} is typing a message...`
+      : "";
+  },
 };
 pubnub.addListener(listener);
 
 // send message
 
 async function publishMessage(msg) {
+  clearTimeout(typingTimeout);
+  isTyping = false;
+
+  await pubnub.signal({
+    channel: channelId,
+    message: {
+      sender: userFullName,
+      typing: false,
+    },
+  });
   await pubnub.publish({
-    channel: "chatroom-1",
+    channel: channelId,
     message: {
       sender: {
         name: userFullName,
@@ -74,14 +92,6 @@ async function publishMessage(msg) {
       },
       text: msg,
       timestamp: Date.now(),
-    },
-    signal: ({ message }) => {
-      if (message.sender === msgSender.value) return;
-      if (message.typing) {
-        feedback.innerHTML = `<p><em>${message.sender} is typing a message...</em></p>`;
-      } else {
-        feedback.innerHTML = "";
-      }
     },
   });
 }
@@ -94,9 +104,6 @@ chatForm.addEventListener("submit", async (e) => {
   chatInput.value = "";
 });
 
-let isTyping = false;
-let typingTimeout;
-
 chatInput.addEventListener("keydown", async (e) => {
   if (e.key === "Backspace" || e.key === "Delete") {
     // User removed the message they were typing
@@ -104,9 +111,9 @@ chatInput.addEventListener("keydown", async (e) => {
     isTyping = false;
 
     await pubnub.signal({
-      channel: "chatroom-1",
+      channel: channelId,
       message: {
-        sender: msgSender.value,
+        sender: userFullName,
         typing: false,
       },
     });
@@ -114,9 +121,9 @@ chatInput.addEventListener("keydown", async (e) => {
     // User is typing a message
     if (!isTyping) {
       await pubnub.signal({
-        channel: "chatroom-1",
+        channel: channelId,
         message: {
-          sender: msgSender.value,
+          sender: userFullName,
           typing: true,
         },
       });
@@ -127,9 +134,9 @@ chatInput.addEventListener("keydown", async (e) => {
     clearTimeout(typingTimeout);
     typingTimeout = setTimeout(async () => {
       await pubnub.signal({
-        channel: "chatroom-1",
+        channel: channelId,
         message: {
-          sender: msgSender.value,
+          sender: userFullName,
           typing: false,
         },
       });
