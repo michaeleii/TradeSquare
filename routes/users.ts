@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import {
   getUserByAuth0Id,
   getUserById,
@@ -11,7 +11,7 @@ import { requiresAuth } from "express-openid-connect";
 
 const users = express.Router();
 
-users.get("/profile/:id", requiresAuth(), async (req, res) => {
+users.get("/profile/:id", requiresAuth(), async (req, res, next) => {
   const id = +req.params.id;
   const user = await getUserById(id);
   if (!user) {
@@ -39,6 +39,8 @@ users.get("/my-items", requiresAuth(), async (req, res) => {
   }
   res.render("pages/myLists", { items });
 });
+
+
 
 users.get("/my-squares", requiresAuth(), async (req, res) => {
   const user = await getUserByAuth0Id(req.oidc.user?.sub);
