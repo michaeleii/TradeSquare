@@ -24,6 +24,7 @@ test.get("/message", async (req, res) => {
     res.status(404).send("User not found");
   } else {
     (user as any).sid = req.oidc.user?.sid;
+    console.log(user);
     res.render("components/message.ejs", { user, channelId: "test" });
   }
 });
