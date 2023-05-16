@@ -23,19 +23,19 @@ test.get("/message", async (req, res) => {
   if (!user) {
     res.status(404).send("User not found");
   } else {
+    res.render("pages/myMessage");
     (user as any).sid = req.oidc.user?.sid;
     res.render("components/message.ejs", { user, channelId: "test" });
+
   }
 });
 
-test.get('/featureLikePage', (req, res) => {
-    res.render("pages/featurePageLike");
-})
+test.get("/featureMessagePage", (req, res) => {
+  res.render("pages/featurePageMessage");
+});
 
-
-test.get('/featureMessagePage', (req, res) => {
-    res.render("pages/featurePageMessage");
-})
+test.get("/preFeatureProfile", (req, res) => {
+  res.render("pages/preFeatureProfilePage");
 
 test.get("/categoriesCarousel", (req, res) => {
     res.render("pages/categoriesCarousel");
@@ -52,5 +52,6 @@ test.post('/editprofile/:id', async (req, res) => {
     const newUserInfo = await editUserProfile(req.body, id);
     res.redirect(`/users/profile/${id}`)
 })
+
 
 export default test;
