@@ -3,8 +3,15 @@ import { getUserByAuth0Id, getUserById, editUserProfile } from "../services/user
 
 const test = express.Router();
 
+const authenticateMessage = (req: any, res: any, next: any) => {
+  if (req.oidc.user) {
+    return next();
+  }
+  res.redirect(`/test/featureMessagePage`);
+};
+
 // Do test.get(/<component name>/) for each component you want to test
-test.get("/mailbox", async (req, res) => {
+test.get("/mailbox", authenticateMessage, async (req, res, next) => {
   const user = req.oidc.user ? await getUserByAuth0Id(req.oidc.user.sub) : null;
   if (user) {
     res.render("pages/mailbox", { user });
