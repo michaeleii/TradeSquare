@@ -22,4 +22,8 @@ test.get("/preFeatureProfile", (req, res) => {
   res.render("pages/preFeatureProfilePage");
 });
 
+test.get("/preFeatureItem", (req, res) => {
+  res.render("pages/preFeatureItemPage");
+});
+
 export default test;
