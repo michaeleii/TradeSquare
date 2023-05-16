@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import {
   getUserByAuth0Id,
   getUserById,
@@ -11,7 +11,7 @@ import { requiresAuth } from "express-openid-connect";
 
 const users = express.Router();
 
-users.get("/profile/:id", requiresAuth(), async (req, res) => {
+users.get("/profile/:id", requiresAuth(), async (req, res, next) => {
   const id = +req.params.id;
   const user = await getUserById(id);
   if (!user) {
