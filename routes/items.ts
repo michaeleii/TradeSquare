@@ -76,7 +76,7 @@ items
     }
   });
 
-items.get("/my-item/:id", async (req, res) => {
+items.get("/my-item/:id", requiresAuth(), async (req, res) => {
   const item = await getItemByItemId(+req.params.id);
   if (!item) return res.status(404).send("Item not found");
   const url = await getObjectSignedUrl(item.imgName);
@@ -107,7 +107,7 @@ items.get("/my-item/:id", async (req, res) => {
   res.render("pages/editItem", { item });
 });
 
-items.get("/delete/:id", async (req, res) => {
+items.get("/delete/:id", requiresAuth(), async (req, res) => {
   try {
     const item = await getItemByItemId(+req.params.id);
     if (!item) return res.status(404).send("Item not found");
@@ -121,7 +121,7 @@ items.get("/delete/:id", async (req, res) => {
 
 items
   .route("/edit/:id")
-  .get(async (req, res) => {
+  .get(requiresAuth(), async (req, res) => {
     const item = await getItemByItemId(+req.params.id);
     if (!item) return res.status(404).send("Item not found");
     res.render("pages/editListing", { item });

@@ -6,6 +6,7 @@ import { getAllPosts, createPost, getPostsBySquareId } from "../services/posts";
 import { checkIfUserJoined, getUserByAuth0Id } from "../services/user";
 import { Square, Category, Item, Like, User, Post } from "@prisma/client";
 import { uploadFile, deleteFile, getObjectSignedUrl } from "../s3";
+import { requiresAuth } from "express-openid-connect";
 
 const squares = express.Router();
 
@@ -53,7 +54,7 @@ squares.get("/:id", async (req, res) => {
 
 squares
   .route("/create/:id")
-  .get(async (req, res) => {
+  .get(requiresAuth(), async (req, res) => {
     const squareId = +req.params.id;
     const square = await getSquareById(squareId);
     if (!square) {
