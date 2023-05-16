@@ -23,7 +23,7 @@ users.get("/profile/:id", requiresAuth(), async (req, res) => {
   res.render("pages/profile", { user });
 });
 
-users.get("/my-items", async (req, res) => {
+users.get("/my-items", requiresAuth(), async (req, res) => {
   const user = await getUserByAuth0Id(req.oidc.user?.sub);
   if (!user) return res.status(404).send("User not found");
   const items = user.items;
@@ -40,7 +40,7 @@ users.get("/my-items", async (req, res) => {
   res.render("pages/myLists", { items });
 });
 
-users.get("/my-squares", async (req, res) => {
+users.get("/my-squares", requiresAuth(), async (req, res) => {
   const user = await getUserByAuth0Id(req.oidc.user?.sub);
   if (!user) return res.status(404).send("User not found");
   const userSquares = await getUserSquares(user.id);
@@ -50,6 +50,7 @@ users.get("/my-squares", async (req, res) => {
   }
   res.render("pages/mySquares", { userSquares });
 });
+
 users.get("/likes", requiresAuth(), async (req, res) => {
   try {
     const user = await getUserByAuth0Id(req.oidc.user?.sub);
