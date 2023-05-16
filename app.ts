@@ -13,6 +13,8 @@ import usersRouter from "./routes/users";
 import categories from "./routes/categories";
 import apiRouter from "./routes/api";
 import testRouter from "./routes/test";
+import { getAllSortedCategories } from "./services/categories";
+import { getAllSortedSquares } from "./services/squares";
 
 dotenv.config();
 const app = express();
@@ -46,6 +48,12 @@ app.get("/", checkIfUserExists, async (req, res) => {
       return;
     }
 
+    const sortedCategories = await getAllSortedCategories();
+    console.log("SORTED CATEGORIES", sortedCategories);
+
+    const sortedSquares = await getAllSortedSquares();
+    console.log("SORTED SQUARES", sortedSquares);
+
     for (const item of items) {
       const url = await getObjectSignedUrl(item.imgName);
       (
@@ -63,6 +71,8 @@ app.get("/", checkIfUserExists, async (req, res) => {
       : null;
     res.render("pages/index", {
       items,
+      sortedCategories,
+      sortedSquares,
       isAuthenticated: req.oidc.isAuthenticated(),
       user,
     });

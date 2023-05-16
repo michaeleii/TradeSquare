@@ -24,39 +24,25 @@
 						Show All
 					</a>
 				</div>
-				<div class="grid grid-cols-3 gap-5">
-					<a href="/categories/1">
-          <div class="bg-primary hover:bg-primary-dark transition-colors rounded-lg py-5">
-						<img
-							src="/images/icons/category_1.svg"
-							alt=""
-							class="w-[43px] h-[43px] mx-auto"
-						/>
-						<p class="text-center text-white mt-2">Furniture</p>
-					</div>
-          </a>
-					<a href="/categories/3">
-        <div class="bg-primary hover:bg-primary-dark transition-colors rounded-lg py-5">
-						<img
-							src="/images/icons/category_3.svg"
-							alt=""
-							class="w-[43px] h-[43px] mx-auto"
-						/>
-						<p class="text-center text-white mt-2">Shoes</p>
-					</div>
-          </a>
-					<a href="/categories/4">
-          <div class="bg-primary hover:bg-primary-dark transition-colors rounded-lg py-5">
-						<img
-							src="/images/icons/category_4.svg"
-							alt=""
-							class="w-[43px] h-[43px] mx-auto"
-						/>
-						<p class="text-center text-white mt-2">Art</p>
-					</div>
+			
+				<div class="carousel rounded-box gap-5">
+					<% sortedCategories.forEach(category => { %>
+						<div class="carousel-item w-1/3">
+							<a class="w-full" href="/categories/<%= category.id %>">
+								<div class="bg-primary hover:bg-primary-dark transition-colors rounded-lg py-5">
+									<img
+										src="/images/icons/category_<%= category.id %>.svg"
+										alt=""
+										class="w-[43px] h-[43px] mx-auto"
+									/>
+									<p class="text-center text-white mt-2"><%= category.name %></p>
+								</div>
+							</a>
+						</div>
+					<% }) %>
 				</div>
-          </a>
 			</section>
+			
 			<section class="my-10">
 				<div class="flex justify-between items-center mb-3">
 					<h2>Featured Squares</h2>
@@ -65,30 +51,22 @@
 					</a>
 				</div>
 
-				<div class="grid grid-cols-3 gap-5">
-					<a href="/squares/1">
-						<div
-							class="p-5 bg-primary hover:bg-primary-dark transition-colors rounded-lg h-[100px] flex justify-center items-center"
-						>
-							<p class="text-center text-white">Art Collector</p>
+				<!-- tempt -->
+				<div class="carousel rounded-box gap-5">
+					<% sortedSquares.forEach(square => { %>
+						<div class="carousel-item w-1/3">
+							<a class="w-full" href="/squares/<%= square.id %>">
+								<div
+									class="p-5 bg-primary hover:bg-primary-dark transition-colors rounded-lg h-[100px] flex justify-center items-center"
+								>
+									<p class="text-center text-white"><%= square.name %></p>
+								</div>
+							</a>
 						</div>
-					</a>
-					<a href="/squares/2">
-						<div
-							class="p-5 bg-primary hover:bg-primary-dark transition-colors rounded-lg h-[100px] flex justify-center items-center"
-						>
-							<p class="text-center text-white">Sustainable Living Enthusiasts</p>
-						</div>
-					</a>
-					<a href="/squares/3">
-						<div
-							class="p-5 bg-primary hover:bg-primary-dark transition-colors rounded-lg h-[100px] flex justify-center items-center"
-						>
-							<p class="text-center text-white">Small Business Owners</p>
-						</div>
-					</a>
+					<% }) %>
 				</div>
 			</section>
+			
 			<div class="flex justify-between items-center mb-3">
 				<h2 class="mb-3">Recommended for you</h2>
 					<a
