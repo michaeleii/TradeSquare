@@ -1,5 +1,5 @@
 import express from "express";
-import { getUserByAuth0Id } from "../services/user";
+import { getUserByAuth0Id, getUserById, editUserProfile } from "../services/user";
 
 const test = express.Router();
 
@@ -34,12 +34,24 @@ test.get("/featureMessagePage", (req, res) => {
   res.render("pages/featurePageMessage");
 });
 
-
 test.get("/preFeatureProfile", (req, res) => {
   res.render("pages/preFeatureProfilePage");
 
 test.get("/categoriesCarousel", (req, res) => {
-  res.render("pages/categoriesCarousel");
+    res.render("pages/categoriesCarousel");
 });
+
+test.get('/editprofile/:id', async (req, res) => {
+    const id = +req.params.id;
+    const user = await getUserById(id);
+    res.render("pages/profileform", { user });
+})
+
+test.post('/editprofile/:id', async (req, res) => {
+    const id = +req.params.id;
+    const newUserInfo = await editUserProfile(req.body, id);
+    res.redirect(`/users/profile/${id}`)
+})
+
 
 export default test;

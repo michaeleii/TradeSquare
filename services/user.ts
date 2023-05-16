@@ -1,5 +1,6 @@
 import prisma from "../client";
 import { Request, Response, NextFunction } from "express";
+import { User } from "@prisma/client";
 
 async function getUserById(id: number) {
   try {
@@ -179,6 +180,25 @@ async function unjoinSquare(userId: number, squareId: number) {
   }
 }
 
+async function editUserProfile(formData: User, userId: number) {
+  try {
+    const user = await prisma.user.update({
+      where: {
+        id: userId
+      },
+      data: {
+        f_name: formData.f_name,
+        l_name: formData.l_name,
+        location: formData.location,
+        // profilePic: formDate.profilePic
+      }
+    })
+    return user
+  } catch (error) {
+    throw error
+  }
+}
+
 export {
   getUserById,
   checkIfUserExists,
@@ -191,4 +211,5 @@ export {
   checkIfUserJoined,
   joinSquare,
   unjoinSquare,
+  editUserProfile,
 };

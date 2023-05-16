@@ -19,6 +19,7 @@ model User {
   profilePic String         @map("profile_pic")
   auth0Id    String?        @unique @map("auth0_id")
   rating     Float          @default(0)
+  location   String?        @default("")
   items      Item[]
   posts      Post[]
   likes      Like[]

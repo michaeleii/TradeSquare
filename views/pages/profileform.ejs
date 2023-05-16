@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Profile</title>
+    <link href="/styles/styles.css" rel="stylesheet" />
+</head>
+
+<body>
+    <article class="mx-auto w-[90%] md:w-[50%] my-5">
+        <%- include('../components/subNavigation.ejs') %>
+            <div class="inline-block">
+                <h1 class="border border-b-grey border-x-0 border-t-0 text-[42px] mb-3">
+                    Edit Your Profile
+                </h1>
+            </div>
+
+            <form class="flex flex-col" action="/test/editprofile/<%= user.id %>" method="POST">
+            
+                <label class="text-[23px] font-bold" for="username">
+                    First Name
+                </label>
+                <input class="p-3 border-2 border-darkgrey rounded-md placeholder:text-grey" type="text" name="f_name"
+                    id="listingTitle" placeholder="..." value="<%=user.f_name%>" />
+            
+                <label class="mt-10 text-[23px] font-bold" for="listingDescription">
+                    Last Name
+                </label>
+                <input class="p-3 border-2 border-darkgrey rounded-md placeholder:text-grey" type="text" name="l_name" id="listingTitle"
+                    placeholder="..." value="<%=user.l_name%>" />
+
+                <label class="mt-10 text-[23px] font-bold" for="listingDescription">
+                    Add Your Location
+                </label>
+                <input class="p-3 border-2 border-darkgrey rounded-md placeholder:text-grey" type="text" name="location" id="listingTitle"
+                    placeholder="..." value="<%=user.location%>" />
+                
+                <!-- <label class="mt-10 text-[23px] font-bold" for="listingDescription">
+                    Change Your Avatar
+                </label>
+                <label for="image" class="flex items-center gap-1 h-full">
+                    <img id="preview" class="w-[330px] h-[170px] object-cover rounded-lg hidden" src="#" alt="">
+                    <img class="w-[150px] h-[150px] input-icon mt-[20px]" src="/images/icons/Image.svg" alt="" />
+                </label>
+                
+                <input type="file" id="image" name="image" accept="image/png, image/jpeg" class="hidden"> -->
+                    
+                
+                
+                
+                <div class="flex justify-center mt-10">
+                    <button class="bg-success w-[235px] h-[50px] rounded-xl text-white py-2.5 px-5 mt-2 mr-2 block">
+                        Edit
+                    </button>
+
+                    <button class="bg-danger w-[235px] h-[50px] rounded-xl text-white py-2.5 px-5 mt-2 mr-2 block"
+                        formaction="/users/profile/<%= user.id %>" formmethod="get">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+    </article>
+    </article>
+</body>
+
+</html>
