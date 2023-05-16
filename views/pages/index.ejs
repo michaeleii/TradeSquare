@@ -24,39 +24,25 @@
 						Show All
 					</a>
 				</div>
-				<div class="grid grid-cols-3 gap-5">
-					<a href="/categories/1">
-          <div class="bg-primary hover:bg-primary-dark transition-colors rounded-lg py-5">
-						<img
-							src="/images/icons/category_1.svg"
-							alt=""
-							class="w-[43px] h-[43px] mx-auto"
-						/>
-						<p class="text-center text-white mt-2">Furniture</p>
-					</div>
-          </a>
-					<a href="/categories/3">
-        <div class="bg-primary hover:bg-primary-dark transition-colors rounded-lg py-5">
-						<img
-							src="/images/icons/category_3.svg"
-							alt=""
-							class="w-[43px] h-[43px] mx-auto"
-						/>
-						<p class="text-center text-white mt-2">Shoes</p>
-					</div>
-          </a>
-					<a href="/categories/4">
-          <div class="bg-primary hover:bg-primary-dark transition-colors rounded-lg py-5">
-						<img
-							src="/images/icons/category_4.svg"
-							alt=""
-							class="w-[43px] h-[43px] mx-auto"
-						/>
-						<p class="text-center text-white mt-2">Art</p>
-					</div>
+			
+				<div class="carousel rounded-box gap-5">
+					<% sortedCategories.forEach(category => { %>
+						<div class="carousel-item w-1/3">
+							<a class="w-full" href="/categories/<%= category.id %>">
+								<div class="bg-primary hover:bg-primary-dark transition-colors rounded-lg py-5">
+									<img
+										src="/images/icons/category_<%= category.id %>.svg"
+										alt=""
+										class="w-[43px] h-[43px] mx-auto"
+									/>
+									<p class="text-center text-white mt-2"><%= category.name %></p>
+								</div>
+							</a>
+						</div>
+					<% }) %>
 				</div>
-          </a>
 			</section>
+			
 			<section class="my-10">
 				<div class="flex justify-between items-center mb-3">
 					<h2>Featured Squares</h2>
