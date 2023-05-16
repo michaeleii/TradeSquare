@@ -40,6 +40,8 @@ users.get("/my-items", requiresAuth(), async (req, res) => {
   res.render("pages/myLists", { items });
 });
 
+
+
 users.get("/my-squares", requiresAuth(), async (req, res) => {
   const user = await getUserByAuth0Id(req.oidc.user?.sub);
   if (!user) return res.status(404).send("User not found");
