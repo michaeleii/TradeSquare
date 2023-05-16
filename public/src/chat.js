@@ -8,34 +8,30 @@ function createMessage({ sender, text, timestamp }) {
   //create the DOM nodes to print the message to the screen
   let checkIfSenderIsUser = sender.name === userFullName;
   const msgElement = checkIfSenderIsUser
-    ? `<div class="flex justify-start items-center py-8 px-8">
-        <div class="w-[80px] pr-5">
+    ? `<div class="flex justify-start items-center py-8 px-8 gap-4">
           <img
-            class="rounded-full"
+            class="rounded-full w-[40px] object-cover"
             src="${sender.img}"
             alt=""
           />
-        </div>
         <div
-          class="flex justify-center place-items-center bg-slate-400 rounded-3xl px-5 py-2 text-white"
+          class="flex justify-center place-items-center bg-slate-400 text-white rounded-3xl px-5 py-2"
         >
-          <span>${text}</span>
+          <p>${text}</p>
         </div>
       </div>`
     : `
-     <div class="flex justify-end px-8 py-8 items-center">
+     <div class="flex justify-end px-8 py-8 items-center gap-4">
         <div
           class="flex justify-center place-items-center bg-primary text-white rounded-3xl px-5 py-2"
         >
           <p class="">${text}</p>
         </div>
-       <div class="w-[80px] pl-5">
           <img
-            class="rounded-full"
+            class="rounded-full w-[40px] object-cover"
             src="${sender.img}"
             alt=""
           />
-        </div>
       </div>
     </div>
       `;
