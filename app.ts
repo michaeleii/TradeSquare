@@ -48,11 +48,8 @@ app.get("/", checkIfUserExists, async (req, res) => {
       return;
     }
 
-    const sortedCategories = await getAllSortedCategories();
-    console.log("SORTED CATEGORIES", sortedCategories);
-
-    const sortedSquares = await getAllSortedSquares();
-    console.log("SORTED SQUARES", sortedSquares);
+    const sortedCategories = (await getAllSortedCategories()).splice(0, 3);
+    const sortedSquares = (await getAllSortedSquares()).splice(0, 3);
 
     for (const item of items) {
       const url = await getObjectSignedUrl(item.imgName);
