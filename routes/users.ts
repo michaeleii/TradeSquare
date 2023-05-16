@@ -53,6 +53,7 @@ users.get("/my-squares", requiresAuth(), async (req, res) => {
   res.render("pages/mySquares", { userSquares });
 });
 
+
 users.get("/likes", requiresAuth(), async (req, res) => {
   try {
     const user = await getUserByAuth0Id(req.oidc.user?.sub);
@@ -69,8 +70,10 @@ users.get("/likes", requiresAuth(), async (req, res) => {
       ).imgUrl = url;
     }
     res.render("pages/likes", { likedItems });
-  } catch (error) {}
+  } catch (error) { }
 });
+
+
 
 users.get("/:id", async (req, res) => {
   const id = +req.params.id;
