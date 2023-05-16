@@ -1,5 +1,9 @@
 import express from "express";
-import { getUserByAuth0Id, getUserById, editUserProfile } from "../services/user";
+import {
+  getUserByAuth0Id,
+  getUserById,
+  editUserProfile,
+} from "../services/user";
 
 const test = express.Router();
 
@@ -26,7 +30,6 @@ test.get("/message", async (req, res) => {
     res.render("pages/myMessage");
     (user as any).sid = req.oidc.user?.sid;
     res.render("components/message.ejs", { user, channelId: "test" });
-
   }
 });
 
@@ -36,22 +39,22 @@ test.get("/featureMessagePage", (req, res) => {
 
 test.get("/preFeatureProfile", (req, res) => {
   res.render("pages/preFeatureProfilePage");
-
-test.get("/categoriesCarousel", (req, res) => {
-    res.render("pages/categoriesCarousel");
 });
 
-test.get('/editprofile/:id', async (req, res) => {
-    const id = +req.params.id;
-    const user = await getUserById(id);
-    res.render("pages/profileform", { user });
-})
+test.get("/categoriesCarousel", (req, res) => {
+  res.render("pages/categoriesCarousel");
+});
 
-test.post('/editprofile/:id', async (req, res) => {
-    const id = +req.params.id;
-    const newUserInfo = await editUserProfile(req.body, id);
-    res.redirect(`/users/profile/${id}`)
-})
+test.get("/editprofile/:id", async (req, res) => {
+  const id = +req.params.id;
+  const user = await getUserById(id);
+  res.render("pages/profileform", { user });
+});
 
+test.post("/editprofile/:id", async (req, res) => {
+  const id = +req.params.id;
+  const newUserInfo = await editUserProfile(req.body, id);
+  res.redirect(`/users/profile/${id}`);
+});
 
 export default test;
