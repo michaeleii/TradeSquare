@@ -141,6 +141,6 @@ chatInput.addEventListener("keydown", async (e) => {
         },
       });
       isTyping = false;
-    }, 1000);
+    }, 10000);
   }
 });

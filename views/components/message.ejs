@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/styles/styles.css" rel="stylesheet" />
     <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.2.2.min.js"></script>
-    <title>Message Page</title>
+    <title>Chating with Shelly</title>
   </head>
   <body>
     <div class="pl-6"><%- include('../components/subNavigation.ejs') %></div>
@@ -27,15 +27,12 @@
     <div id="typingIndicator" class="text-right pr-8 pb-8"></div>
     <form class="flex gap-5 p-5 fixed bottom-0 w-full" id="chatInputForm">
       <input
-        class="bg-slate-200 rounded-full pl-5 py-4 w-full focus:outline-none"
+        class="bg-slate-200 rounded-full px-5 w-full focus:outline-none"
         type="text"
         placeholder=""
         id="chatInput"
       />
-      <button
-        class="btn-primary-outline rounded-3xl w-[200px] text-lg font-bold"
-        id="sendBtn"
-      >
+      <button class="btn-primary rounded-3xl w-[100px] text-lg" id="sendBtn">
         Send
       </button>
     </form>
