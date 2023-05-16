@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import {
   getUserByAuth0Id,
   getUserById,
@@ -11,23 +11,7 @@ import { requiresAuth } from "express-openid-connect";
 
 const users = express.Router();
 
-// Middleware function for authentication
-
-const authenticate = (req: any, res: any, next: any) => {
-  if (req.oidc.user) {
-    return next();
-  }
-  res.redirect(`/test/featureLikePage`);
-};
-
-
-// Example route that requires authentication
-// users.get('/secret', authenticate, (req, res) => {
-//   // This route will only be accessible to authenticated users
-// })
-
-
-users.get("/profile/:id", authenticate, async (req, res, next) => {
+users.get("/profile/:id", requiresAuth(), async (req, res, next) => {
   const id = +req.params.id;
   const user = await getUserById(id);
   if (!user) {
@@ -56,6 +40,8 @@ users.get("/my-items", requiresAuth(), async (req, res) => {
   res.render("pages/myLists", { items });
 });
 
+
+
 users.get("/my-squares", requiresAuth(), async (req, res) => {
   const user = await getUserByAuth0Id(req.oidc.user?.sub);
   if (!user) return res.status(404).send("User not found");
@@ -68,7 +54,7 @@ users.get("/my-squares", requiresAuth(), async (req, res) => {
 });
 
 
-users.get("/likes", authenticate, async (req, res, next) => {
+users.get("/likes", requiresAuth(), async (req, res) => {
   try {
     const user = await getUserByAuth0Id(req.oidc.user?.sub);
     if (!user) return res.status(404).send("User not found");
@@ -87,24 +73,7 @@ users.get("/likes", authenticate, async (req, res, next) => {
   } catch (error) { }
 });
 
-// users.get("/likes", requiresAuth(), async (req, res) => {
-//   try {
-//     const user = await getUserByAuth0Id(req.oidc.user?.sub);
-//     if (!user) return res.status(404).send("User not found");
-//     const likedItems = await getUserLikedItems(user.id);
-//     if (!likedItems) return res.status(404).json({ message: "User not found" });
-//     for (const { item } of likedItems) {
-//       const url = await getObjectSignedUrl(item.imgName);
-//       (
-//         item as Item & {
-//           category: Category;
-//           imgUrl: string;
-//         }
-//       ).imgUrl = url;
-//     }
-//     res.render("pages/likes", { likedItems });
-//   } catch (error) {}
-// });
+
 
 users.get("/:id", async (req, res) => {
   const id = +req.params.id;

@@ -14,6 +14,7 @@ import categories from "./routes/categories";
 import apiRouter from "./routes/api";
 import testRouter from "./routes/test";
 import { getAllSortedCategories } from "./services/categories";
+import { getAllSortedSquares } from "./services/squares";
 
 dotenv.config();
 const app = express();
@@ -47,8 +48,8 @@ app.get("/", checkIfUserExists, async (req, res) => {
       return;
     }
 
-    const sortedCategories = await getAllSortedCategories();
-    console.log("SORTED", sortedCategories);
+    const sortedCategories = (await getAllSortedCategories()).splice(0, 3);
+    const sortedSquares = (await getAllSortedSquares()).splice(0, 3);
 
     for (const item of items) {
       const url = await getObjectSignedUrl(item.imgName);
@@ -68,6 +69,7 @@ app.get("/", checkIfUserExists, async (req, res) => {
     res.render("pages/index", {
       items,
       sortedCategories,
+      sortedSquares,
       isAuthenticated: req.oidc.isAuthenticated(),
       user,
     });

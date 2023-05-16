@@ -1,5 +1,9 @@
 import express from "express";
-import { getUserByAuth0Id, getUserById, editUserProfile } from "../services/user";
+import {
+  getUserByAuth0Id,
+  getUserById,
+  editUserProfile,
+} from "../services/user";
 
 const test = express.Router();
 
@@ -35,29 +39,32 @@ test.get("/message", async (req, res) => {
   }
 });
 
-test.get('/featureLikePage', (req, res) => {
-    res.render("pages/featurePageLike");
-})
-
-
-test.get('/featureMessagePage', (req, res) => {
-    res.render("pages/featurePageMessage");
-})
-
-test.get("/categoriesCarousel", (req, res) => {
-    res.render("pages/categoriesCarousel");
+test.get("/featureMessagePage", (req, res) => {
+  res.render("pages/featurePageMessage");
 });
 
-test.get('/editprofile/:id', async (req, res) => {
-    const id = +req.params.id;
-    const user = await getUserById(id);
-    res.render("pages/profileform", { user });
-})
+test.get("/featureLikePage", (req, res) => {
+  res.render("pages/featurePageLike");
+});
 
-test.post('/editprofile/:id', async (req, res) => {
-    const id = +req.params.id;
-    const newUserInfo = await editUserProfile(req.body, id);
-    res.redirect(`/users/profile/${id}`)
-})
+test.get("/preFeatureProfile", (req, res) => {
+  res.render("pages/preFeatureProfilePage");
+});
+
+test.get("/categoriesCarousel", (req, res) => {
+  res.render("pages/categoriesCarousel");
+});
+
+test.get("/editprofile/:id", async (req, res) => {
+  const id = +req.params.id;
+  const user = await getUserById(id);
+  res.render("pages/profileform", { user });
+});
+
+test.post("/editprofile/:id", async (req, res) => {
+  const id = +req.params.id;
+  const newUserInfo = await editUserProfile(req.body, id);
+  res.redirect(`/users/profile/${id}`);
+});
 
 export default test;
