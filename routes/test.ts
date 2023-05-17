@@ -15,10 +15,10 @@ const authenticateMessage = (req: any, res: any, next: any) => {
 };
 
 // Do test.get(/<component name>/) for each component you want to test
-test.get("/mailbox", authenticateMessage, async (req, res, next) => {
+test.get("/mailbox", authenticateMessage, async (req, res) => {
   const user = req.oidc.user ? await getUserByAuth0Id(req.oidc.user.sub) : null;
   if (user) {
-    res.render("pages/mailbox", { user });
+    res.render("pages/mailbox", { user, channel: "test-chat" });
   } else {
     res.status(404).send("Users not found");
     return;
@@ -35,7 +35,7 @@ test.get("/message", async (req, res) => {
     res.status(404).send("User not found");
   } else {
     (user as any).sid = req.oidc.user?.sid;
-    res.render("components/message.ejs", { user, channelId: "test" });
+    res.render("components/message.ejs", { user, channel: "test-chat" });
   }
 });
 

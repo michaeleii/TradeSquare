@@ -37,14 +37,15 @@
       </button>
     </form>
     <script>
+      let userId = "<%= user.auth0Id %>";
       let pubnub = new PubNub({
         publishKey: "pub-c-e1940c4d-880f-4331-9252-3ee8d4b82b0f",
         subscribeKey: "sub-c-eb8a5e05-e54f-4ede-8583-4f5301612ab2",
-        userId: "<%= user.sid %>",
+        userId,
       });
       let profileImg = "<%= user.profilePic %>";
       let userFullName = "<%= user.f_name %> <%= user.l_name %>";
-      let channelId = "<%= channelId %>";
+      let channel = "<%= channel %>";
     </script>
     <script src="/src/chat.js"></script>
   </body>

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/styles/styles.css" rel="stylesheet" />
-
+    <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.2.2.min.js"></script>
     <title><%= user.f_name %>'s Mailbox</title>
 </head>
 
@@ -37,7 +37,22 @@
     </div>
     </article>
     <%- include('../components/navigationBar.ejs', {user}) %>
+<script>
+    let pubnub = new PubNub({
+        publishKey: "pub-c-e1940c4d-880f-4331-9252-3ee8d4b82b0f",
+        subscribeKey: "sub-c-eb8a5e05-e54f-4ede-8583-4f5301612ab2",
+        userId: "<%= user.auth0Id %>",
+      });
+      let profileImg = "<%= user.profilePic %>";
+      let userFullName = "<%= user.f_name %> <%= user.l_name %>";
+      let channel = "<%= channel %>";
 
+      pubnub.objects.getChannelMetadata({
+        channel
+      }, (status, response) => {
+        console.log(response);
+      });
+</script>
 </body>
 
 </html>

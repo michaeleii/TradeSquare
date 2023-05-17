@@ -41,7 +41,7 @@ function createMessage({ sender, text, timestamp }) {
 }
 
 pubnub.subscribe({
-  channels: [channelId],
+  channels: [channel],
 });
 
 let isTyping = false;
@@ -63,9 +63,23 @@ const listener = {
       ? `${message.sender} is typing a message...`
       : "";
   },
+  objects: (objectEvent) => {
+    console.log(objectEvent);
+  },
 };
 pubnub.addListener(listener);
 
+pubnub.objects.setChannelMetadata({
+  channel,
+  data: {
+    name: channel,
+    custom: {
+      id: userId,
+      name: userFullName,
+      img: profileImg,
+    },
+  },
+});
 // send message
 
 async function publishMessage(msg) {
@@ -73,14 +87,14 @@ async function publishMessage(msg) {
   isTyping = false;
 
   await pubnub.signal({
-    channel: channelId,
+    channel,
     message: {
       sender: userFullName,
       typing: false,
     },
   });
   await pubnub.publish({
-    channel: channelId,
+    channel,
     message: {
       sender: {
         name: userFullName,
@@ -107,7 +121,7 @@ chatInput.addEventListener("keydown", async (e) => {
     isTyping = false;
 
     await pubnub.signal({
-      channel: channelId,
+      channel,
       message: {
         sender: userFullName,
         typing: false,
@@ -117,7 +131,7 @@ chatInput.addEventListener("keydown", async (e) => {
     // User is typing a message
     if (!isTyping) {
       await pubnub.signal({
-        channel: channelId,
+        channel,
         message: {
           sender: userFullName,
           typing: true,
@@ -130,7 +144,7 @@ chatInput.addEventListener("keydown", async (e) => {
     clearTimeout(typingTimeout);
     typingTimeout = setTimeout(async () => {
       await pubnub.signal({
-        channel: channelId,
+        channel,
         message: {
           sender: userFullName,
           typing: false,
