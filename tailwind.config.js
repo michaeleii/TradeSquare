@@ -26,13 +26,6 @@ module.exports = {
     },
   },
   plugins: [],
-
-  extend: {
-    dark: {
-      bg: "#414141",
-      text: "#F6F6F6",
-    },
-  }
 };
 
 
