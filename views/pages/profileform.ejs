@@ -9,7 +9,7 @@
     <link href="/styles/styles.css" rel="stylesheet" />
 </head>
 
-<body>
+<body class="bg-bkg text-content">
     <article class="mx-auto w-[90%] md:w-[50%] my-5">
         <%- include('../components/subNavigation.ejs') %>
             <div class="inline-block">
@@ -23,19 +23,19 @@
                 <label class="text-[23px] font-bold" for="username">
                     First Name
                 </label>
-                <input class="p-3 border-2 border-darkgrey rounded-md placeholder:text-grey" type="text" name="f_name"
+                <input class="p-3 border-2 border-darkgrey rounded-md placeholder:text-content dark:bg-[#272727]" type="text" name="f_name"
                     id="listingTitle" placeholder="..." value="<%=user.f_name%>" />
             
                 <label class="mt-10 text-[23px] font-bold" for="listingDescription">
                     Last Name
                 </label>
-                <input class="p-3 border-2 border-darkgrey rounded-md placeholder:text-grey" type="text" name="l_name" id="listingTitle"
+                <input class="p-3 border-2 border-darkgrey rounded-md placeholder:text-content dark:bg-[#272727]" type="text" name="l_name" id="listingTitle"
                     placeholder="..." value="<%=user.l_name%>" />
 
                 <label class="mt-10 text-[23px] font-bold" for="listingDescription">
                     Add Your Location
                 </label>
-                <input class="p-3 border-2 border-darkgrey rounded-md placeholder:text-grey" type="text" name="location" id="listingTitle"
+                <input class="p-3 border-2 border-darkgrey rounded-md placeholder:text-content dark:bg-[#272727]" type="text" name="location" id="listingTitle"
                     placeholder="..." value="<%=user.location%>" />
                 
                 <!-- <label class="mt-10 text-[23px] font-bold" for="listingDescription">

@@ -4,89 +4,101 @@
 @tailwind components;
 @tailwind utilities;
 
-h1 {
-	@apply font-semibold text-[32px];
-}
+@layer base {
+  :root {
+    --color-bkg: 255 255 255;
+    --color-content: 0 0 0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-bkg: 65 65 65;
+      --color-content: 255 255 255;
+    }
+  }
+  h1 {
+    @apply font-semibold text-[32px];
+  }
 
-h2 {
-	@apply font-semibold text-[26px];
-}
+  h2 {
+    @apply font-semibold text-[26px];
+  }
 
-h3 {
-	@apply font-semibold text-[22px];
-}
+  h3 {
+    @apply font-semibold text-[22px];
+  }
 
-.btn-primary {
-	@apply bg-primary text-white py-2 px-4 transition-colors ease-in-out;
-}
-.btn-primary:hover {
-	@apply bg-primary-dark text-white py-2 px-4;
-}
+  .btn-primary {
+    @apply bg-primary text-white py-2 px-4 transition-colors ease-in-out;
+  }
+  .btn-primary:hover {
+    @apply bg-primary-dark text-white py-2 px-4;
+  }
 
-.btn-primary-outline {
-	@apply bg-white text-primary border border-primary py-2 px-4 transition-colors ease-in-out;
-}
-.btn-primary-outline:hover {
-	@apply bg-primary text-white border border-primary py-2 px-4;
-}
+  .btn-primary-outline {
+    @apply bg-white text-primary border border-primary py-2 px-4 transition-colors ease-in-out;
+  }
+  .btn-primary-outline:hover {
+    @apply bg-primary text-white border border-primary py-2 px-4;
+  }
 
-.btn-danger {
-	@apply bg-danger text-white py-2 px-4 transition-colors ease-in-out;
-}
+  .btn-danger {
+    @apply bg-danger text-white py-2 px-4 transition-colors ease-in-out;
+  }
 
-.btn-danger:hover {
-	@apply bg-danger-dark text-white py-2 px-4;
-}
+  .btn-danger:hover {
+    @apply bg-danger-dark text-white py-2 px-4;
+  }
 
-.btn-danger-outline {
-	@apply bg-white text-danger border border-danger py-2 px-4 transition-colors ease-in-out;
-}
+  .btn-danger-outline {
+    @apply bg-white text-danger border border-danger py-2 px-4 transition-colors ease-in-out;
+  }
 
-.btn-danger-outline:hover {
-	@apply bg-danger text-white border border-danger py-2 px-4;
-}
+  .btn-danger-outline:hover {
+    @apply bg-danger text-white border border-danger py-2 px-4;
+  }
 
-.btn-success {
-	@apply bg-success text-white py-2 px-4 transition-colors ease-in-out;
-}
+  .btn-success {
+    @apply bg-success text-white py-2 px-4 transition-colors ease-in-out;
+  }
 
-.btn-success:hover {
-	@apply bg-success-dark text-white py-2 px-4;
-}
+  .btn-success:hover {
+    @apply bg-success-dark text-white py-2 px-4;
+  }
 
-.btn-success-outline {
-	@apply bg-white text-success border border-success py-2 px-4 transition-colors ease-in-out;
-}
+  .btn-success-outline {
+    @apply bg-white text-success border border-success py-2 px-4 transition-colors ease-in-out;
+  }
 
-.btn-success-outline:hover {
-	@apply bg-success text-white border border-success py-2 px-4;
-}
+  .btn-success-outline:hover {
+    @apply bg-success text-white border border-success py-2 px-4;
+  }
 
-.notification-icon:hover path {
-	@apply fill-primary-dark;
-}
+  .notification-icon:hover path {
+    @apply fill-primary-dark;
+  }
 
-.notification-icon:hover,
-.like-icon:hover {
-	@apply cursor-pointer;
-}
+  .notification-icon:hover,
+  .like-icon:hover {
+    @apply cursor-pointer;
+  }
 
-li:hover svg > path {
-	@apply stroke-primary;
-}
+  li:hover svg > path {
+    @apply stroke-primary;
+  }
 
-li:hover a > span {
-	@apply text-primary;
-}
+  li:hover a > span {
+    @apply text-primary;
+  }
 
-.like-icon {
-	@apply cursor-pointer hover:fill-primary;
-}
+  .like-icon {
+    @apply cursor-pointer hover:fill-primary;
+  }
 
-.like-icon path {
-	@apply stroke-primary;
-}
+  .like-icon path {
+    @apply stroke-primary;
+  }
 
-.like-icon.liked path {
-	@apply fill-primary;
+  .like-icon.liked path {
+    @apply fill-primary;
+  }
 }

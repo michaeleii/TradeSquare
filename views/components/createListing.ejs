@@ -7,7 +7,7 @@
 		<title>Document</title>
 		<link href="/styles/styles.css" rel="stylesheet" />
 	</head>
-	<body>
+	<body class="bg-bkg text-content">
 		<article class="mx-auto w-[90%] md:w-[50%] my-5">
 				<%- include('../components/subNavigation.ejs') %>
 			<div class="inline-block">
@@ -66,7 +66,7 @@
 				<label class="mt-10 text-[23px] font-bold" for="category">
 					Category
 				</label>
-				<select class="p-3 border-2 border-darkgrey rounded-md" name="categoryId" id="category">
+				<select class="p-3 border-2 border-darkgrey rounded-md dark:bg-[#272727]" name="categoryId" id="category">
 					<option value="">--Please choose a category--</option>
 					<option value="1">Home Furniture / Organizer</option>
 					<option value="2">Cloth / Accessories</option>

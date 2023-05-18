@@ -1,6 +1,6 @@
 <div class="block h-[125px]"></div>
 <nav
-  class="block w-full bg-slate-50 p-5 px-10 fixed bottom-0 border-t-2 border border-x-0 border-b-0 drop-shadow-lg"
+  class="block w-full bg-white dark:bg-[#272727] text-content p-5 px-10 fixed bottom-0 border-t-2 border border-x-0 border-b-0 dark:border-t-0 drop-shadow-lg"
 >
   <ul class="flex justify-between md:justify-evenly items-center">
     <li>
@@ -15,17 +15,20 @@
         >
           <path
             d="M2 11.2639V23.7222C2 24.4279 2.57207 25 3.27778 25H8.93651C9.64221 25 10.2143 24.4279 10.2143 23.7222V15.1428H16.7857V23.7222C16.7857 24.4279 17.3577 25 18.0635 25H23.7222C24.4279 25 25 24.4279 25 23.7222V11.2639C25 10.8617 24.8106 10.483 24.4889 10.2417L13.5 2L2.51111 10.2417C2.18935 10.483 2 10.8617 2 11.2639Z"
-            class="stroke-grey"
+            class="stroke-grey dark:stroke-white"
             stroke-width="2.4"
             stroke-linecap="round"
             stroke-linejoin="round"
           />
         </svg>
-        <span class="text-grey hidden md:inline-block">Home</span>
+        <span class="hidden md:inline-block">Home</span>
       </a>
     </li>
     <li>
-      <a href="<%= user ? '/users/likes' : '/test/featureLikePage' %>" class="flex flex-col items-center">
+      <a
+        href="<%= user ? '/users/likes' : '/test/featureLikePage' %>"
+        class="flex flex-col items-center"
+      >
         <svg
           width="27"
           height="24"
@@ -36,13 +39,13 @@
         >
           <path
             d="M23.2265 3.77351C22.6645 3.21126 21.9972 2.76524 21.2628 2.46093C20.5284 2.15663 19.7412 2 18.9463 2C18.1513 2 17.3641 2.15663 16.6297 2.46093C15.8953 2.76524 15.228 3.21126 14.666 3.77351L13.4997 4.93985L12.3334 3.77351C11.1982 2.63833 9.65854 2.00059 8.05315 2.00059C6.44775 2.00059 4.90811 2.63833 3.77293 3.77351C2.63774 4.9087 2 6.44834 2 8.05374C2 9.65913 2.63774 11.1988 3.77293 12.334L4.93926 13.5003L13.4997 22.0607L22.0602 13.5003L23.2265 12.334C23.7887 11.772 24.2348 11.1047 24.5391 10.3703C24.8434 9.63588 25 8.8487 25 8.05374C25 7.25877 24.8434 6.4716 24.5391 5.73719C24.2348 5.00277 23.7887 4.33551 23.2265 3.77351Z"
-            class="stroke-grey"
+            class="stroke-grey dark:stroke-white"
             stroke-width="2.20063"
             stroke-linecap="round"
             stroke-linejoin="round"
           />
         </svg>
-        <span class="text-grey hidden md:inline-block">Likes</span>
+        <span class="hidden md:inline-block">Likes</span>
       </a>
     </li>
     <li>
@@ -56,7 +59,10 @@
     </li>
 
     <li>
-      <a href="<%= user ? '/test/mailbox' : '/test/featureMessagePage' %>" class="flex flex-col items-center">
+      <a
+        href="<%= user ? '/test/mailbox' : '/test/featureMessagePage' %>"
+        class="flex flex-col items-center"
+      >
         <svg
           width="21"
           height="16"
@@ -67,12 +73,12 @@
         >
           <path
             d="M9.76118 11.1028L10.2084 11.3264L10.6556 11.1028L19.4168 6.72223V14.3126H1V6.72223L9.76118 11.1028ZM10.2084 6.53827L1 1.93407V1H19.4168V1.93407L10.2084 6.53827Z"
-            class="stroke-grey"
+            class="stroke-grey dark:stroke-white"
             stroke-width="2"
           />
         </svg>
 
-        <span class="text-grey hidden md:inline-block">Messages</span>
+        <span class="hidden md:inline-block">Messages</span>
       </a>
     </li>
     <li>
@@ -90,12 +96,12 @@
         >
           <path
             d="M17.5285 14.5051L17.5298 14.5057C18.0105 14.7517 18.3821 15.0772 18.6284 15.4358C18.873 15.792 18.9889 16.172 18.988 16.5429V16.5449V19.2514H1.20488L1.20488 16.5449L1.20488 16.5428C1.20399 16.1719 1.31989 15.792 1.56447 15.4358C1.81077 15.0772 2.18233 14.7517 2.66309 14.5057L2.66436 14.5051L6.52676 12.5211L7.40549 12.0697L6.84432 11.2567L5.38858 9.14766C5.38847 9.1475 5.38835 9.14733 5.38824 9.14717C5.38821 9.14713 5.38819 9.14709 5.38816 9.14705C5.14168 8.78906 5.02407 8.40702 5.02363 8.0338C5.02363 8.03365 5.02363 8.0335 5.02363 8.03335L5.02363 4.6944C5.02363 3.75418 5.49497 2.79755 6.43388 2.05556C7.37787 1.30956 8.69352 0.86747 10.0964 0.86747C11.4994 0.86747 12.815 1.30956 13.759 2.05556C14.6979 2.79755 15.1692 3.75418 15.1692 4.6944V8.03336C15.1689 8.40691 15.0512 8.78932 14.8043 9.1476L13.3486 11.2567L12.7874 12.0697L13.6661 12.5211L17.5285 14.5051Z"
-            class="stroke-grey"
+            class="stroke-grey dark:stroke-white"
             stroke-width="1.73494"
           />
         </svg>
 
-        <span class="text-grey hidden md:inline-block">Profile</span>
+        <span class="hidden md:inline-block">Profile</span>
       </a>
     </li>
   </ul>
