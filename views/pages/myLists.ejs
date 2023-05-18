@@ -1,39 +1,39 @@
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/styles/styles.css" rel="stylesheet" />
 
     <title>User lists</title>
-</head>
+  </head>
 
-<body>
+  <body class="bg-bkg text-content">
     <article class="w-[90%] mx-auto md:w-[60%] mb-10">
-        <div class="pt-5"><%- include('../components/subNavigation.ejs') %></div>
+      <div class="pt-5"><%- include('../components/subNavigation.ejs') %></div>
 
-        <h1 class="font-bold mt-0 mb-2">Your Lists</h1>
+      <h1 class="font-bold mt-0 mb-2">Your Lists</h1>
 
-        <div class="grid grid-col grid-cols-2 gap-4">
-            <% items.forEach(function(item){ %>
-                <a href="/items/my-item/<%= item.id %>">
-                    <div class="relative">
-                        <img src="<%= item.imgUrl %>" class="mx-auto opacity-50 aspect-video rounded-lg object-cover mb-5" alt="" />
-                        <p class="text-sm absolute top-0 left-0 p-4 text-black text-center">
-                            <%= item.category.name %>
-                        </p>
-                        <p class="absolute  top-5 left-0 p-4 text-black  text-lg font-bold">
-                            <%= item.name %>
-                        </p>
-                    </div>
-                </a>
+      <div class="grid grid-col grid-cols-2 gap-4">
+        <% items.forEach(function(item){ %>
+        <a href="/items/my-item/<%= item.id %>">
+          <div class="relative">
+            <img
+              src="<%= item.imgUrl %>"
+              class="mx-auto opacity-50 aspect-video rounded-lg object-cover mb-5"
+              alt=""
+            />
+            <p class="text-sm absolute top-0 left-0 p-4 text-black text-center">
+              <%= item.category.name %>
+            </p>
+            <p class="absolute top-5 left-0 p-4 text-black text-lg font-bold">
+              <%= item.name %>
+            </p>
+          </div>
+        </a>
 
-                <% }) %>
-
- 
-        </div>
+        <% }) %>
+      </div>
     </article>
-</body>
-
+  </body>
 </html>

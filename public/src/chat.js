@@ -57,6 +57,21 @@ pubnub.objects.getAllChannelMetadata({}, (status, response) => {
     channels: [currentChannel],
   });
 
+  pubnub.fetchMessages(
+    {
+      channels: [currentChannel],
+      count: 25,
+    },
+    function (status, response) {
+      const { channels } = response;
+      const channel = channels[currentChannel.split("|").join("%7C")];
+      channel.forEach(({ message }) => {
+        createMessage(message);
+      });
+      msgContainer.scrollTop = msgContainer.scrollHeight;
+    }
+  );
+
   // //=========== set channel metadata ==============
   // pubnub.objects.setChannelMetadata({
   //   channel: currentChannel,

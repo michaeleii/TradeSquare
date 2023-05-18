@@ -9,14 +9,14 @@
     <link href="/styles/styles.css" rel="stylesheet" />
 </head>
 
-<body>
+<body class="bg-bkg text-input">
     <article class="mx-auto w-[90%] md:w-[50%] my-5">
         <%- include('../components/subNavigation.ejs') %>
             <div class="inline-block">
 				<h1 class="text-primary text-[42px] mb-3">
 					<%= square.name  %>
 				</h1>
-                <h2 class="border border-b-grey border-x-0 border-t-0 text-[35px] mb-3">
+                <h2 class="border border-b-grey border-x-0 border-t-0 text-[35px] mb-3 text-content">
                     Create a Post
                 </h2>
             </div>
@@ -24,7 +24,7 @@
             <form class="flex flex-col" action="" method="POST" enctype="multipart/form-data">
                 <div class="flex justify-center md:justify-normal">
                     <div
-                        class="flex justify-center items-center w-[340px] h-[175px] bg-offwhite border-grey border-2 rounded-lg">
+                        class="flex justify-center items-center w-[340px] h-[175px] bg-offwhite border-grey  border-2 rounded-lg">
                         <label for="image" class="flex items-center gap-1 h-full">
                             <img id="preview" class="w-[330px] h-[170px] object-cover rounded-lg hidden" src="#" alt="">
                             <img class="w-[13px] h-[11px] input-icon mb-1" src="/images/icons/Plus.svg" alt="" />
@@ -36,14 +36,14 @@
 
                 <input type="file" id="image" name="image" accept="image/png, image/jpeg" class="hidden">
                 <div class="my-5">
-                    <h2 class="text-[23px]">Add Photos</h2>
-                    <p class="text-[16px]">
+                    <h2 class="text-[23px] text-content">Add Photos</h2>
+                    <p class="text-[16px] text-content">
                         Be sure to include quality photos. Listings with poorly taken photos
                         will be reviewed and may be taken down.
                     </p>
                 </div>
 
-                <label class="mt-10 text-[23px] font-bold" for="postDescription">
+                <label class="mt-10 text-[23px] font-bold text-content" for="postDescription">
 					Description
                 </label>
                 <textarea class="border-2 p-2 border-darkgrey rounded-md placeholder:text-grey" name="description"
@@ -64,7 +64,7 @@
                 </select> -->
 
                 
-                <h1 class="mt-10 sm:text-center">You're All Done!</h1>
+                <h1 class="mt-10 sm:text-center text-content">You're All Done!</h1>
                 <div class="flex sm:justify-center">
                     <button class="bg-primary w-[235px] h-[50px] rounded-xl text-white py-2.5 px-5 mt-2 mr-2 block">
                         Post
