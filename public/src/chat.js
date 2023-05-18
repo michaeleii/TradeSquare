@@ -40,117 +40,164 @@ function createMessage({ sender, text, timestamp }) {
   msgContainer.scrollTop = msgContainer.scrollHeight;
 }
 
-pubnub.subscribe({
-  channels: [channel],
-});
+pubnub.objects.getAllChannelMetadata({}, (status, response) => {
+  const { data: receiverChannels } = response;
+  const filteredReceiverChannel = receiverChannels
+    .filter(
+      (receiverChannel) =>
+        receiverChannel.name === `${userId}${receiverId}` ||
+        receiverChannel.name === `${receiverId}${userId}`
+    )
+    .map((filteredChannel) => filteredChannel.name);
+  const currentChannel = filteredReceiverChannel.length
+    ? filteredReceiverChannel[0]
+    : `${userId}${receiverId}`;
 
-let isTyping = false;
-let typingTimeout;
-
-// add listener
-const listener = {
-  status: (statusEvent) => {
-    if (statusEvent.category === "PNConnectedCategory") {
-      console.log("Connected");
-    }
-  },
-  message: ({ message }) => {
-    createMessage(message);
-  },
-  signal: ({ message }) => {
-    if (message.sender === userFullName) return;
-    typingIndicator.innerText = message.typing
-      ? `${message.sender} is typing a message...`
-      : "";
-  },
-  objects: (objectEvent) => {
-    console.log(objectEvent);
-  },
-};
-pubnub.addListener(listener);
-
-pubnub.objects.setChannelMetadata({
-  channel,
-  data: {
-    name: channel,
-    custom: {
-      id: userId,
-      name: userFullName,
-      img: profileImg,
-    },
-  },
-});
-// send message
-
-async function publishMessage(msg) {
-  clearTimeout(typingTimeout);
-  isTyping = false;
-
-  await pubnub.signal({
-    channel,
-    message: {
-      sender: userFullName,
-      typing: false,
-    },
+  pubnub.subscribe({
+    channels: [currentChannel],
   });
-  await pubnub.publish({
-    channel,
-    message: {
-      sender: {
-        name: userFullName,
-        img: profileImg,
-      },
-      text: msg,
-      timestamp: Date.now(),
+
+  // //=========== set channel metadata ==============
+  // pubnub.objects.setChannelMetadata({
+  //   channel: currentChannel,
+  //   data: {
+  //     name: currentChannel,
+  //     custom: {
+  //       userId,
+  //       userFullName,
+  //       userProfileImg,
+  //       receiverId,
+  //       receiverFullName,
+  //       receiverProfileImg,
+  //     },
+  //   },
+  // });
+
+  // //=========== add receiver to channel ==============
+  // pubnub.objects.setChannelMembers({
+  //   channel: currentChannel,
+  //   uuids: [receiverId],
+  // });
+
+  let isTyping = false;
+  let typingTimeout;
+
+  // add listener
+  const listener = {
+    status: (statusEvent) => {
+      if (statusEvent.category === "PNConnectedCategory") {
+        console.log("Connected");
+      }
     },
-  });
-}
+    message: ({ message }) => {
+      createMessage(message);
+    },
+    signal: ({ message }) => {
+      if (message.sender === userFullName) return;
+      typingIndicator.innerText = message.typing
+        ? `${message.sender} is typing a message...`
+        : "";
+    },
+    objects: (objectEvent) => {
+      console.log(objectEvent);
+    },
+  };
+  pubnub.addListener(listener);
 
-chatForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const msg = chatInput.value;
-  if (!msg.trim().length) return;
-  await publishMessage(msg);
-  chatInput.value = "";
-});
-
-chatInput.addEventListener("keydown", async (e) => {
-  if (e.key === "Backspace" || e.key === "Delete") {
-    // User removed the message they were typing
+  // send message
+  async function publishMessage(msg) {
     clearTimeout(typingTimeout);
     isTyping = false;
 
     await pubnub.signal({
-      channel,
+      channel: currentChannel,
       message: {
         sender: userFullName,
         typing: false,
       },
     });
-  } else {
-    // User is typing a message
-    if (!isTyping) {
-      await pubnub.signal({
-        channel,
-        message: {
-          sender: userFullName,
-          typing: true,
+    await pubnub.publish({
+      channel: currentChannel,
+      message: {
+        sender: {
+          name: userFullName,
+          img: userProfileImg,
         },
-      });
-    }
+        text: msg,
+        timestamp: Date.now(),
+      },
+    });
+  }
 
-    isTyping = true;
+  chatForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-    clearTimeout(typingTimeout);
-    typingTimeout = setTimeout(async () => {
+    //=========== set channel metadata ==============
+    pubnub.objects.setChannelMetadata({
+      channel: currentChannel,
+      data: {
+        name: currentChannel,
+        custom: {
+          userId,
+          userFullName,
+          userProfileImg,
+          receiverId,
+          receiverFullName,
+          receiverProfileImg,
+        },
+      },
+    });
+
+    //=========== add receiver to channel ==============
+    pubnub.objects.setChannelMembers({
+      channel: currentChannel,
+      uuids: [receiverId],
+    });
+
+    const msg = chatInput.value;
+    if (!msg.trim().length) return;
+    await publishMessage(msg);
+    chatInput.value = "";
+  });
+
+  chatInput.addEventListener("keydown", async (e) => {
+    if (e.key === "Backspace" || e.key === "Delete") {
+      // User removed the message they were typing
+      clearTimeout(typingTimeout);
+      isTyping = false;
+
       await pubnub.signal({
-        channel,
+        channel: currentChannel,
         message: {
           sender: userFullName,
           typing: false,
         },
       });
-      isTyping = false;
-    }, 5000);
-  }
+    } else {
+      // User is typing a message
+      if (!isTyping) {
+        await pubnub.signal({
+          channel: currentChannel,
+          message: {
+            sender: userFullName,
+            typing: true,
+          },
+        });
+      }
+
+      isTyping = true;
+
+      clearTimeout(typingTimeout);
+      typingTimeout = setTimeout(async () => {
+        await pubnub.signal({
+          channel: currentChannel,
+          message: {
+            sender: userFullName,
+            typing: false,
+          },
+        });
+        isTyping = false;
+      }, 5000);
+    }
+  });
 });

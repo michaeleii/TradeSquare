@@ -18,7 +18,7 @@ const authenticateMessage = (req: any, res: any, next: any) => {
 test.get("/mailbox", authenticateMessage, async (req, res) => {
   const user = req.oidc.user ? await getUserByAuth0Id(req.oidc.user.sub) : null;
   if (user) {
-    res.render("pages/mailbox", { user, channel: "test-chat" });
+    res.render("pages/mailbox", { user });
   } else {
     res.status(404).send("Users not found");
     return;
@@ -29,13 +29,17 @@ test.get("/credentials", (req, res) =>
   res.render("pages/credentials", { state: null })
 );
 
-test.get("/message", async (req, res) => {
+test.get("/message/:receiverAuth0Id", async (req, res) => {
   const user = req.oidc.user ? await getUserByAuth0Id(req.oidc.user.sub) : null;
   if (!user) {
     res.status(404).send("User not found");
   } else {
+    const receiver = await getUserByAuth0Id(req.params.receiverAuth0Id);
     (user as any).sid = req.oidc.user?.sid;
-    res.render("components/message.ejs", { user, channel: "test-chat" });
+    res.render("components/message.ejs", {
+      user,
+      receiver,
+    });
   }
 });
 
