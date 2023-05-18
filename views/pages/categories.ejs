@@ -8,7 +8,7 @@
     <title>Categories</title>
   </head>
 
-  <body>
+  <body class="bg-bkg text-content">
     <article class="w-[90%] mx-auto md:w-[60%]">
       <%- include('../components/subNavigation.ejs') %>
 
@@ -18,7 +18,7 @@
 
       <a href="/categories/<%= category.id %>">
         <div
-          class="flex gap-5 justify-start p-5 mt-5 bg-offwhite rounded-md hover:bg-gray-300 transition-colors shadow-lg"
+          class="flex gap-5 justify-start p-5 mt-5 bg-offwhite rounded-md hover:bg-gray-300 dark:bg-[#272727] dark:hover:bg-[#1e293b] transition-colors shadow-lg"
         >
           <div
             class="bg-primary w-[100px] h-[100px] flex justify-center items-center rounded"
@@ -31,7 +31,7 @@
             />
           </div>
 
-          <p class="text-black font-bold place-self-center">
+          <p class="text-content font-bold place-self-center">
             <%= category.name %>
           </p>
         </div>

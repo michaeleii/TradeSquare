@@ -6,7 +6,7 @@
     <link href="/styles/styles.css" rel="stylesheet" />
   </head>
 
-  <body>
+  <body class="bg-bkg">
     <article class="w-[90%] mx-auto md:w-[60%]">
       <%- include('../components/subNavigation.ejs') %>
 
@@ -35,18 +35,18 @@
             alt=""
           />
         </div>
-        <h2 class="mb-2 mx-auto"><%= user.f_name %> <%= user.l_name %></h2>
-        <p class="text-darkgrey mx-auto">A little bit about me...</p>
+        <h2 class="text-content mb-2 mx-auto"><%= user.f_name %> <%= user.l_name %></h2>
+        <p class="text-content mx-auto">A little bit about me...</p>
 
-        <h3 class="mt-5">About</h3>
+        <h3 class="mt-5 text-content">About</h3>
         <div class="mb-2">
-          <p class="text-darkgrey"><%= user.location  %></p>
+          <p class="text-content"><%= user.location  %></p>
         </div>
 
-        <h3 class="mt-5">Your Analytics</h3>
+        <h3 class="mt-5 text-content">Your Analytics</h3>
         <div class="mb-2">
           <div class="flex">
-            <p class="text-darkgrey">Total transactions:&nbsp;</p>
+            <p class="text-content">Total transactions:&nbsp;</p>
             <p class="text-primary">21</p>
           </div>
         </div>
@@ -73,7 +73,7 @@
           />
           <% } %> <% } %>
         </div>
-        <p class="text-darkgrey text-xs">
+        <p class="text-content text-xs">
           <%= user.rating %> Stars (20 reviews)
         </p>
 
