@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/styles/styles.css" rel="stylesheet" />
-
+    <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.2.2.min.js"></script>
     <title><%= user.f_name %>'s Mailbox</title>
 </head>
 
@@ -15,29 +15,68 @@
 
         <h1 class="font-bold mb-3">Messages</h1>
 
-        <div class="flex flex-col">
-                <a href="/test/message" class="flex bg-slate-200 hover:bg-slate-300 transition-colors ease-in-out duration-300 w-full h-[110px] rounded-lg p-2" >
-                    <img src="/images/users/user2.jpg" alt="Empty Mailbox" class="w-[90px] rounded-full object-cover">
-                    <p class="text-xl font-bold p-4 text-primary text-center">Shelly Doe</p>
-
-                    <!-- <div class="absolute top-[35px] right-[50px] rounded-full bg-primary w-[50px] h-[50px] object-cover flex justify-center items-center">
-                        <p class="text-offwhite font-bold">1</p>
-                    </div> -->
-                  </a>
-       
-                <!-- <div class="absolute top-[30px] right-[2px]  p-4 ">
-                    <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M7.41235 17.089C7.18715 16.8561 7.16668 16.4915 7.35093 16.2346L7.41235 16.161L12.8839 10.5L7.41235 4.83904C7.18715 4.60606 7.16668 4.24148 7.35093 3.98456L7.41235 3.91096C7.63755 3.67798 7.98996 3.6568 8.23828 3.84742L8.30943 3.91096L14.2298 10.036C14.455 10.2689 14.4755 10.6335 14.2913 10.8904L14.2298 10.964L8.30943 17.089C8.06171 17.3453 7.66007 17.3453 7.41235 17.089Z"
-                            fill="#506DF6" />
-                    </svg>
-                </div> -->
-            </div>
+        <div id="mailboxContainer" class="flex flex-col gap-5"></div>
         
     </div>
     </article>
     <%- include('../components/navigationBar.ejs', {user}) %>
+<script>
+    let mailboxContainer = document.getElementById("mailboxContainer");
+    function createReceiverMsgBox (receiverAuth0Id, receiverProfileImg, receiverName) {
+        const msgBox = `<a href="/test/message/${receiverAuth0Id}" class="flex bg-slate-200 hover:bg-slate-300 transition-colors ease-in-out duration-300 w-full h-[110px] rounded-lg p-2" >
+            <img src="${receiverProfileImg}" alt="Empty Mailbox" class="w-[90px] rounded-full object-cover">
+            <p class="text-xl font-bold p-4 text-primary text-center">${receiverName}</p>
+        </a>`
 
+        mailboxContainer.innerHTML += msgBox;
+        mailboxContainer.scrollTop = mailboxContainer.scrollHeight;
+    }
+
+    let userId = "<%= user.auth0Id %>";
+    let pubnub = new PubNub({
+        publishKey: "pub-c-e1940c4d-880f-4331-9252-3ee8d4b82b0f",
+        subscribeKey: "sub-c-eb8a5e05-e54f-4ede-8583-4f5301612ab2",
+        userId,
+      });
+      let profileImg = "<%= user.profilePic %>";
+      let userFullName = "<%= user.f_name %> <%= user.l_name %>";
+
+      pubnub.objects.getAllChannelMetadata({
+        include: {
+          customFields: true,
+          totalCount: true,
+        }
+      }, (status, response) => {
+        const {data: receiverChannels} = response;
+        const filteredReceiverChannels = receiverChannels.filter(receiverChannel => receiverChannel.name.includes(userId));
+        filteredReceiverChannels.forEach(receiverChannel => {
+            const userData = receiverChannel.custom;
+            if (userData.userId === userId) {
+                const {receiverId, receiverProfileImg, receiverFullName} = userData;
+                const msgBox = createReceiverMsgBox(receiverId, receiverProfileImg, receiverFullName);
+            } else {
+                const {userId, userProfileImg, userFullName} = userData;
+                const msgBox = createReceiverMsgBox(userId, userProfileImg, userFullName);
+            }
+        })
+      });
+
+// remove all channel metadata
+// pubnub.objects.getAllChannelMetadata()
+//   .then(response => {
+//     const channels = response.data;
+//     const channelNames = channels.map(channel => channel.id);
+
+//     channelNames.forEach(channelName => {
+//       pubnub.objects.removeChannelMetadata({
+//         channel: channelName,
+//       });
+//     });
+//   })
+//   .catch(error => {
+//     console.log('Error retrieving channel metadata:', error);
+//   });
+</script>
 </body>
 
 </html>
