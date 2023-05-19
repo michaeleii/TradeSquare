@@ -11,84 +11,78 @@
     <!-- This will be the profile page of the user 
     -->
 
-    <div class="flex justify-center items-center py-9">
-      <div class="px-10">
-        <img
-          class="rounded-full object-contain w-52"
-          src="/images/users/user3.jpg"
-          alt=""
-        />
-      </div>
+    <div
+      class="flex flex-col sm:flex-row sm:justify-center items-center gap-10 py-9"
+    >
+      <img
+        class="rounded-full object-cover w-48 h-48"
+        src="/images/users/user7.jpg"
+        alt=""
+      />
 
-      <div class="flex justify-center items-center py-5 text-content">
-        <div class="px-2">
-          <h3 class="px-8">1324</h3>
-          <h3 class="px-3">Followers</h3>
-        </div>
+      <div class="grid grid-cols-2 gap-x-5 place-items-center text-content">
+        <h3>1324</h3>
 
-        <div>
-          <h3 class="px-8">235</h3>
-          <h3>Following</h3>
+        <div class="flex justify-center gap-1">
+          <img src="/images/icons/FullStar.svg" alt="Full Star" />
+          <img src="/images/icons/FullStar.svg" alt="Full Star" />
+          <img src="/images/icons/FullStar.svg" alt="Full Star" />
+          <img src="/images/icons/FullStar.svg" alt="Full Star" />
+          <img src="/images/icons/FullStar.svg" alt="Full Star" />
         </div>
-
-        <div>
-          <div class="flex justify-center my-auto">
-            <img src="/images/icons/FullStar.svg" alt="Full Star" />
-            <img src="/images/icons/FullStar.svg" alt="Full Star" />
-            <img src="/images/icons/FullStar.svg" alt="Full Star" />
-            <img src="/images/icons/FullStar.svg" alt="Full Star" />
-            <img src="/images/icons/FullStar.svg" alt="Full Star" />
-          </div>
-          <div class="flex justify-center my-auto">
-            <h3>Ratings</h3>
-          </div>
-        </div>
+        <h3>Transcations</h3>
+        <h3>Ratings</h3>
       </div>
     </div>
 
     <!--This will be the picture of the user that is displayed -->
+    <div class="flex justify-center">
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 place-items-center py-10 gap-5"
+      >
+        <img
+          class="rounded-lg w-[300px] h-[300px] object-cover"
+          src="/images/memes/meme2.jpg"
+          alt="game cartridge"
+        />
+        <img
+          class="rounded-lg w-[300px] h-[300px] object-cover"
+          src="/images/memes/meme3.jpg"
+          alt="paint"
+        />
 
-    <div class="flex justify-evenly mx-12 py-10">
-      <img
-        class="rounded-lg h-[300px]"
-        src="/images/memes/meme2.jpg"
-        alt="game cartridge"
-      />
-      <img
-        class="rounded-md h-[300px]"
-        src="/images/memes/meme3.jpg"
-        alt="paint"
-      />
-
-      <img
-        class="rounded-md h-[300px]"
-        src="/images/memes/meme4.jpg"
-        alt="cat toy"
-      />
+        <img
+          class="rounded-lg w-[300px] h-[300px] object-cover"
+          src="/images/memes/meme4.jpg"
+          alt="cat toy"
+        />
+      </div>
     </div>
 
     <!---->
 
-    <div class="flex flex-col items-center">
-      <h1>
-        <span class="text-primary text-7xl">
-          Want Something Gone? Just Trade!
-        </span>
+    <div class="text-center">
+      <h1 class="text-primary text-5xl my-5">
+        Want Something Gone? Just Trade!
       </h1>
-      <h3 class="text-content">
+      <h3 class="text-content mb-5">
         Trade with other people in the world with our Bartering app
       </h3>
     </div>
     <div class="flex justify-center pt-5">
-      <div class="flex flex-col items-center bg-primary rounded-xl w-[200px]">
+      <div class="btn-primary rounded-full w-[200px]">
         <p class="text-white">Get the Bartering app</p>
       </div>
     </div>
 
     <div class="flex justify-center items-center py-3">
-      <a href="/login" class="text-primary px-2">log in</a>
+      <a href="/login" class="text-primary hover:text-primary-dark px-2">
+        Log in
+      </a>
       <span class="text-content">or</span>
-      <a href="/login" class="text-primary px-2">sign up</a>
+      <a href="/login" class="text-primary hover:text-primary-dark px-2">
+        Sign up
+      </a>
     </div>
   </body>
 </html>
