@@ -63,9 +63,13 @@ pubnub.objects.getAllChannelMetadata({}, (status, response) => {
       count: 25,
     },
     function (status, response) {
-      console.log("HEREEEE", response);
+      if (status.error) {
+        console.log(status);
+        return;
+      }
+      if (!response.channels) return;
       const { channels } = response;
-      const channel = channels[currentChannel];
+      const channel = channels[currentChannel.split("|").join("%7C")];
       channel.forEach(({ message }) => {
         createMessage(message);
       });
