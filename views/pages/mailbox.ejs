@@ -89,20 +89,20 @@
         retrieveAllChannelMetadata();
 
 // remove all channel metadata
-pubnub.objects.getAllChannelMetadata()
-  .then(response => {
-    const channels = response.data;
-    const channelNames = channels.map(channel => channel.id);
+// pubnub.objects.getAllChannelMetadata()
+//   .then(response => {
+//     const channels = response.data;
+//     const channelNames = channels.map(channel => channel.id);
 
-    channelNames.forEach(channelName => {
-      pubnub.objects.removeChannelMetadata({
-        channel: channelName,
-      });
-    });
-  })
-  .catch(error => {
-    console.log('Error retrieving channel metadata:', error);
-  });
+//     channelNames.forEach(channelName => {
+//       pubnub.objects.removeChannelMetadata({
+//         channel: channelName,
+//       });
+//     });
+//   })
+//   .catch(error => {
+//     console.log('Error retrieving channel metadata:', error);
+//   });
 </script>
 </body>
 
