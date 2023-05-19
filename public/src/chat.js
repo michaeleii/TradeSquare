@@ -45,39 +45,17 @@ pubnub.objects.getAllChannelMetadata({}, (status, response) => {
   const filteredReceiverChannel = receiverChannels
     .filter(
       (receiverChannel) =>
-        receiverChannel.name === `${userId}${receiverId}` ||
-        receiverChannel.name === `${receiverId}${userId}`
+        receiverChannel.name === `tradesquare.${userId}${receiverId}` ||
+        receiverChannel.name === `tradesquare.${receiverId}${userId}`
     )
     .map((filteredChannel) => filteredChannel.name);
   const currentChannel = filteredReceiverChannel.length
     ? filteredReceiverChannel[0]
-    : `${userId}${receiverId}`;
+    : `tradesquare.${userId}${receiverId}`;
 
   pubnub.subscribe({
     channels: [currentChannel],
   });
-
-  // //=========== set channel metadata ==============
-  // pubnub.objects.setChannelMetadata({
-  //   channel: currentChannel,
-  //   data: {
-  //     name: currentChannel,
-  //     custom: {
-  //       userId,
-  //       userFullName,
-  //       userProfileImg,
-  //       receiverId,
-  //       receiverFullName,
-  //       receiverProfileImg,
-  //     },
-  //   },
-  // });
-
-  // //=========== add receiver to channel ==============
-  // pubnub.objects.setChannelMembers({
-  //   channel: currentChannel,
-  //   uuids: [receiverId],
-  // });
 
   let isTyping = false;
   let typingTimeout;
@@ -93,13 +71,11 @@ pubnub.objects.getAllChannelMetadata({}, (status, response) => {
       createMessage(message);
     },
     signal: ({ message }) => {
-      if (message.sender === userFullName) return;
-      typingIndicator.innerText = message.typing
-        ? `${message.sender} is typing a message...`
-        : "";
-    },
-    objects: (objectEvent) => {
-      console.log(objectEvent);
+      if (!(message.sender === userFullName)) {
+        typingIndicator.innerText = message.typing
+          ? `${message.sender} is typing a message...`
+          : "";
+      }
     },
   };
   pubnub.addListener(listener);
@@ -116,6 +92,7 @@ pubnub.objects.getAllChannelMetadata({}, (status, response) => {
         typing: false,
       },
     });
+
     await pubnub.publish({
       channel: currentChannel,
       message: {
@@ -152,6 +129,14 @@ pubnub.objects.getAllChannelMetadata({}, (status, response) => {
     pubnub.objects.setChannelMembers({
       channel: currentChannel,
       uuids: [receiverId],
+    });
+
+    // =========== send signal for live Mailbox update ==============
+    await pubnub.signal({
+      channel: currentChannel,
+      message: {
+        updateMailbox: true,
+      },
     });
 
     const msg = chatInput.value;
