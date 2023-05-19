@@ -8,7 +8,7 @@
     <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.2.2.min.js"></script>
     <title>Chating with <%= receiver.f_name %></title>
   </head>
-  <body>
+  <body class="bg-bkg text-content">
     <div class="pl-6"><%- include('../components/subNavigation.ejs') %></div>
     <div class="flex px-6 pb-6 items-start">
       <img
@@ -27,7 +27,7 @@
     <div id="typingIndicator" class="text-right pr-8 pb-8"></div>
     <form class="flex gap-5 p-5 fixed bottom-0 w-full" id="chatInputForm">
       <input
-        class="bg-slate-200 rounded-full px-5 w-full focus:outline-none"
+        class="bg-slate-200 dark:bg-[#272727] rounded-full px-5 w-full focus:outline-none"
         type="text"
         placeholder=""
         id="chatInput"
