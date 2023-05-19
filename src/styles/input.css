@@ -101,4 +101,7 @@
   .like-icon.liked path {
     @apply fill-primary;
   }
+  .swal2-popup {
+    @apply bg-white dark:bg-neutral-900 !important;
+  }
 }
