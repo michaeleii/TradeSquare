@@ -28,8 +28,10 @@
             <p class="text-xl font-bold p-4 text-content text-center">${receiverName}</p>
         </a>`
 
-        mailboxContainer.innerHTML += msgBox;
-        mailboxContainer.scrollTop = mailboxContainer.scrollHeight;
+        // const firstChild = mailboxContainer.firstChild;
+        // mailboxContainer.insertBefore(msgBox, firstChild);
+        mailboxContainer.insertAdjacentHTML("afterbegin", msgBox);
+        console.log(mailboxContainer);
     }
 
     let userId = "<%= user.auth0Id %>";
@@ -38,28 +40,53 @@
         subscribeKey: "sub-c-eb8a5e05-e54f-4ede-8583-4f5301612ab2",
         userId,
       });
-      let profileImg = "<%= user.profilePic %>";
-      let userFullName = "<%= user.f_name %> <%= user.l_name %>";
 
-      pubnub.objects.getAllChannelMetadata({
+    function retrieveAllChannelMetadata() {
+        pubnub.objects.getAllChannelMetadata({
         include: {
-          customFields: true,
-          totalCount: true,
+            customFields: true,
+            totalCount: true,
         }
-      }, (status, response) => {
-        const {data: receiverChannels} = response;
-        const filteredReceiverChannels = receiverChannels.filter(receiverChannel => receiverChannel.name.includes(userId));
-        filteredReceiverChannels.forEach(receiverChannel => {
-            const userData = receiverChannel.custom;
-            if (userData.userId === userId) {
-                const {receiverId, receiverProfileImg, receiverFullName} = userData;
-                const msgBox = createReceiverMsgBox(receiverId, receiverProfileImg, receiverFullName);
-            } else {
-                const {userId, userProfileImg, userFullName} = userData;
-                const msgBox = createReceiverMsgBox(userId, userProfileImg, userFullName);
-            }
-        })
-      });
+        }, (status, response) => {
+            const {data: receiverChannels} = response;
+            const filteredReceiverChannels = receiverChannels.filter(receiverChannel => receiverChannel.name.includes(userId));
+            filteredReceiverChannels.forEach(receiverChannel => {
+                const userData = receiverChannel.custom;
+                if (userData.userId === userId) {
+                    const {receiverId, receiverProfileImg, receiverFullName} = userData;
+                    const msgBox = createReceiverMsgBox(receiverId, receiverProfileImg, receiverFullName);
+                } else {
+                    const {userId, userProfileImg, userFullName} = userData;
+                    const msgBox = createReceiverMsgBox(userId, userProfileImg, userFullName);
+                }
+            })
+        });
+    }
+
+            pubnub.subscribe({
+            channels: ["tradesquare.*"],
+            });
+
+            // add listener
+            const listener = {
+                status: (statusEvent) => {
+                if (statusEvent.category === "PNConnectedCategory") {
+                    console.log("Connected");
+                }
+                },
+                signal: ({ channel, message }) => {
+                    console.log("GOT SIGNAL!");
+                if (message.updateMailbox && channel.includes(userId)) {
+                    console.log("INSIDE IF STATEMENT");
+                    mailboxContainer.innerHTML = "";
+                    retrieveAllChannelMetadata();
+                };
+                
+                },
+            };
+            pubnub.addListener(listener);
+
+        retrieveAllChannelMetadata();
 
 // remove all channel metadata
 // pubnub.objects.getAllChannelMetadata()
