@@ -8,6 +8,7 @@
     <title><%= category.name %></title>
   </head>
   <body class="bg-bkg text-content">
+    <div class="mt-5"><%- include('../components/searchBar.ejs') %></div>
     <div class="flex flex-col items-center">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-5 justify-center">
         <div class="self-start">
@@ -15,12 +16,13 @@
         </div>
         <h1 class="col-span-2 md:col-span-4"><%= category.name %></h1>
         <% category.items.forEach(item => { %>
-        <a href="/items/view/<%= item.id %>">
+        <a href="/items/view/<%= item.id %>" class="item-card">
           <%- include('../components/itemCard.ejs', {item}) %>
         </a>
         <% }) %>
       </div>
     </div>
     <%- include('../components/navigationBar', {user}) %>
+    <script src="/src/search.js" type="module"></script>
   </body>
 </html>
