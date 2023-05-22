@@ -15,7 +15,7 @@ users.get("/profile/:id", requiresAuth(), async (req, res, next) => {
   try {
     const id = +req.params.id;
     const user = await getUserById(id);
-    if (!user) throw new Error("User not found");
+    if (!user) throw new Error("Please login to view your profile");
     res.render("pages/profile", { user });
   } catch (error) {
     next(error);
@@ -25,7 +25,7 @@ users.get("/profile/:id", requiresAuth(), async (req, res, next) => {
 users.get("/my-items", requiresAuth(), async (req, res, next) => {
   try {
     const user = await getUserByAuth0Id(req.oidc.user?.sub);
-    if (!user) throw new Error("User not found");
+    if (!user) throw new Error("Please login to view your items");
     const items = user.items;
 
     for (const item of items) {
@@ -58,7 +58,7 @@ users.get("/my-squares", requiresAuth(), async (req, res, next) => {
 users.get("/likes", requiresAuth(), async (req, res, next) => {
   try {
     const user = await getUserByAuth0Id(req.oidc.user?.sub);
-    if (!user) throw new Error("User not found");
+    if (!user) throw new Error("Please login to view your liked items");
     const likedItems = await getUserLikedItems(user.id);
     if (!likedItems) throw new Error("Cannot find liked items");
     for (const { item } of likedItems) {

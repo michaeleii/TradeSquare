@@ -22,17 +22,16 @@ squares.get("/all", async (req, res, next) => {
     const user = req.oidc.user
       ? await getUserByAuth0Id(req.oidc.user.sub)
       : null;
-    if (!user) throw new Error("User not found");
-
-    for (const square of squares) {
-      const joined = await checkIfUserJoined(user.id, square.id);
-      (
-        square as Square & {
-          joined: boolean;
-        }
-      ).joined = joined;
+    if (user) {
+      for (const square of squares) {
+        const joined = await checkIfUserJoined(user.id, square.id);
+        (
+          square as Square & {
+            joined: boolean;
+          }
+        ).joined = joined;
+      }
     }
-
     res.render("pages/squares", { squares, user });
   } catch (error) {
     next(error);
@@ -50,10 +49,9 @@ squares.get("/:id", async (req, res, next) => {
     const user = req.oidc.user
       ? await getUserByAuth0Id(req.oidc.user.sub)
       : null;
-    if (!user) throw new Error("User not found");
-
-    (square as any).joined = await checkIfUserJoined(user.id, square.id);
-
+    if (user) {
+      (square as any).joined = await checkIfUserJoined(user.id, square.id);
+    }
     res.render("pages/singleSquare", { square, user });
   } catch (error) {
     next(error);
@@ -81,7 +79,7 @@ squares
       req.body.imageName = imageName;
 
       const user = await getUserByAuth0Id(req.oidc.user?.sub);
-      if (!user) throw new Error("User not found");
+      if (!user) throw new Error("Please log in to create a post");
       req.body.userId = user.id;
       req.body.squareId = +req.params.id;
 

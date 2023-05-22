@@ -96,9 +96,14 @@ app.use("/test", testRouter);
 
 app.use("/admin", adminRouter);
 
-app.use((error: Error, req: any, res: any, next: NextFunction) => {
+app.use(async (error: Error, req: any, res: any, next: NextFunction) => {
   console.log(error);
-  res.render("pages/error", { error });
+  const user = req.oidc.user ? await getUserByAuth0Id(req.oidc.user.sub) : null;
+  res.render("pages/error", {
+    error,
+    user,
+    isAuthenticated: req.oidc.isAuthenticated(),
+  });
 });
 
 app.listen(PORT, () => {

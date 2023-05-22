@@ -25,7 +25,7 @@ api.post("/item/like", async (req, res, next) => {
   try {
     const { itemId } = req.body;
     const user = await getUserByAuth0Id(req.oidc.user?.sub);
-    if (!user) throw new Error("User not found");
+    if (!user) throw new Error("Please log in to like items");
     const userId = user.id;
     const liked = await checkIfUserLiked(userId, +itemId);
     liked ? await unlikeItem(userId, +itemId) : await likeItem(userId, +itemId);
@@ -38,7 +38,7 @@ api.post("/square/join", async (req, res, next) => {
   try {
     const { squareId } = req.body;
     const user = await getUserByAuth0Id(req.oidc.user?.sub);
-    if (!user) throw new Error("User not found");
+    if (!user) throw new Error("Please log in to join squares");
     const userId = user.id;
     const joined = await checkIfUserJoined(userId, +squareId);
     if (!joined) {
@@ -53,7 +53,7 @@ api.post("/square/leave", async (req, res, next) => {
   try {
     const { squareId } = req.body;
     const user = await getUserByAuth0Id(req.oidc.user?.sub);
-    if (!user) throw new Error("User not found");
+    if (!user) throw new Error("Please log in to leave squares");
     const userId = user.id;
     const joined = await checkIfUserJoined(userId, +squareId);
     if (joined) {

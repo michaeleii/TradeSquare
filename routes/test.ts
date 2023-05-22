@@ -34,7 +34,7 @@ test.get("/message/:receiverAuth0Id", async (req, res, next) => {
     const user = req.oidc.user
       ? await getUserByAuth0Id(req.oidc.user.sub)
       : null;
-    if (!user) throw new Error("User not found");
+    if (!user) throw new Error("Please log in to send a message");
 
     const receiver = await getUserByAuth0Id(req.params.receiverAuth0Id);
     (user as any).sid = req.oidc.user?.sid;

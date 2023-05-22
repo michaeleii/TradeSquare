@@ -61,7 +61,7 @@ items
       await uploadFile(req.file.buffer, imgName, req.file.mimetype);
       req.body.imgName = imgName;
       const user = await getUserByAuth0Id(req.oidc.user?.sub);
-      if (!user) throw new Error("User not found");
+      if (!user) throw new Error("Please log in to create an item");
       req.body.userId = user.id;
       req.body.categoryId = +req.body.categoryId;
       const item = await createItem(req.body);
@@ -89,19 +89,18 @@ items.get("/my-item/:id", requiresAuth(), async (req, res, next) => {
     const user = req.oidc.user
       ? await getUserByAuth0Id(req.oidc.user.sub)
       : null;
-    if (!user) throw new Error("User not found");
-
-    (
-      item as Item & {
-        category: Category;
-        liked: boolean;
-        likeCount: number;
-        user: User;
-        likes: Like[];
-        imgUrl: string;
-      }
-    ).liked = await checkIfUserLiked(user.id, item.id);
-
+    if (user) {
+      (
+        item as Item & {
+          category: Category;
+          liked: boolean;
+          likeCount: number;
+          user: User;
+          likes: Like[];
+          imgUrl: string;
+        }
+      ).liked = await checkIfUserLiked(user.id, item.id);
+    }
     res.render("pages/editItem", { item });
   } catch (error) {
     next(error);
@@ -145,7 +144,6 @@ items.get("/view/:id", async (req, res, next) => {
   try {
     const item = await getItemByItemId(+req.params.id);
     if (!item) throw new Error("Item not found");
-
     const url = await getObjectSignedUrl(item.imgName);
     (
       item as Item & {
@@ -160,14 +158,13 @@ items.get("/view/:id", async (req, res, next) => {
     const user = req.oidc.user
       ? await getUserByAuth0Id(req.oidc.user.sub)
       : null;
-    if (!user) throw new Error("User not found");
-
-    (
-      item.user as User & {
-        liked: boolean;
-      }
-    ).liked = await checkIfUserLiked(user.id, item.id);
-
+    if (user) {
+      (
+        item.user as User & {
+          liked: boolean;
+        }
+      ).liked = await checkIfUserLiked(user.id, item.id);
+    }
     res.render("pages/item", { item, user });
   } catch (error) {
     next(error);
