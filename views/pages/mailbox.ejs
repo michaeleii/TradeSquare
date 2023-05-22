@@ -28,8 +28,6 @@
             <p class="text-xl font-bold p-4 text-content text-center">${receiverName}</p>
         </a>`
 
-        // const firstChild = mailboxContainer.firstChild;
-        // mailboxContainer.insertBefore(msgBox, firstChild);
         mailboxContainer.insertAdjacentHTML("afterbegin", msgBox);
         console.log(mailboxContainer);
     }
@@ -93,8 +91,17 @@
 //   .then(response => {
 //     const channels = response.data;
 //     const channelNames = channels.map(channel => channel.id);
+//     console.log("CHANNEL NAMES", channelNames);
 
 //     channelNames.forEach(channelName => {
+//         pubnub.deleteMessages(
+//         {
+//             channel: channelName,
+//         },
+//         function (status, response) {
+//             console.log(status, response);
+//         });
+
 //       pubnub.objects.removeChannelMetadata({
 //         channel: channelName,
 //       });
