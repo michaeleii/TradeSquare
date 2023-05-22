@@ -6,6 +6,21 @@ let typingIndicator = document.getElementById("typingIndicator");
 
 function createMessage({ sender, text, timestamp }) {
   //create the DOM nodes to print the message to the screen
+  const dayOfWeek = document.querySelector("#msgContainer > p:last-of-type");
+  const msgDayOfWeek = new Date(timestamp).toLocaleString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "2-digit",
+  });
+  msgContainer.innerHTML +=
+    !dayOfWeek || dayOfWeek.innerText !== msgDayOfWeek
+      ? `<p class="text-md text-darkgrey flex justify-center mt-2 ml-16">${msgDayOfWeek}</p>`
+      : "";
+  const dateOfMessage = new Date(timestamp).toLocaleString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  });
   let checkIfSenderIsUser = sender.name === userFullName;
   const msgElement = checkIfSenderIsUser
     ? `<div class="flex flex-col py-8 px-8 items-end justify-end">
@@ -21,16 +36,7 @@ function createMessage({ sender, text, timestamp }) {
             alt=""
           />
               </div>
-           <p class="text-sm text-grey justify-start mt-2 mr-16">${new Date(
-             timestamp
-           ).toLocaleString("en-US", {
-             hour: "numeric",
-             minute: "numeric",
-             month: "numeric",
-             day: "numeric",
-             year: "numeric",
-             hour12: true,
-           })}</p>
+           <p class="text-sm text-grey justify-start mt-2 mr-16">${dateOfMessage}</p>
        
       </div>
      
@@ -49,16 +55,7 @@ function createMessage({ sender, text, timestamp }) {
           <p class="">${text}</p>
         </div>
     </div>
-     <p class="text-sm text-grey justify-start mt-2 ml-16">${new Date(
-       timestamp
-     ).toLocaleString("en-US", {
-       hour: "numeric",
-       minute: "numeric",
-       month: "numeric",
-       day: "numeric",
-       year: "numeric",
-       hour12: true,
-     })}</p>
+     <p class="text-sm text-grey justify-start mt-2 ml-16">${dateOfMessage}</p>
     </div>
       `;
   //add the message to the DOM
