@@ -62,7 +62,7 @@ squares
       return;
     }
 
-    res.render("components/createPost", { square });
+    res.render("pages/createPost", { square });
   })
   .post(upload.single("image"), async (req, res) => {
     if (!req.file) {

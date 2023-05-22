@@ -36,7 +36,7 @@ test.get("/message/:receiverAuth0Id", async (req, res) => {
   } else {
     const receiver = await getUserByAuth0Id(req.params.receiverAuth0Id);
     (user as any).sid = req.oidc.user?.sid;
-    res.render("components/message.ejs", {
+    res.render("pages/message.ejs", {
       user,
       receiver,
     });

@@ -52,7 +52,7 @@ items.get("/all", async (req, res) => {
 items
   .route("/create")
   .get(requiresAuth(), (req, res) => {
-    res.render("components/createListing");
+    res.render("pages/createListing");
   })
   .post(upload.single("image"), async (req, res) => {
     if (!req.file) {
