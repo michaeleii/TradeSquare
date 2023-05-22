@@ -9,6 +9,9 @@ module.exports = {
       colors: {
         bkg: "rgb(var(--color-bkg) / <alpha-value>)",
         content: "rgb(var(--color-content) / <alpha-value>)",
+        secondary: "rgb(var(--color-secondary-bkg) / <alpha-value>)",
+        heading: "rgb(var(--color-content-heading) / <alpha-value>)",
+        stroke: "rgb(var(--color-stroke) / <alpha-value>)",
         primary: {
           DEFAULT: "#506DF6",
           dark: "#3B4BDB",
