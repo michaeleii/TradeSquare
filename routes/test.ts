@@ -7,10 +7,8 @@ import {
 
 const test = express.Router();
 
-const authenticateMessage = (req: any, res: any, next: any) => {
-  if (req.oidc.user) next();
-  res.redirect(`/test/featureMessagePage`);
-};
+const authenticateMessage = (req: any, res: any, next: any) =>
+  !req.oidc.user ? res.redirect(`/test/featureMessagePage`) : next();
 
 // Do test.get(/<component name>/) for each component you want to test
 test.get("/mailbox", authenticateMessage, async (req, res, next) => {
@@ -34,7 +32,7 @@ test.get("/message/:receiverAuth0Id", async (req, res, next) => {
     const user = req.oidc.user
       ? await getUserByAuth0Id(req.oidc.user.sub)
       : null;
-    if (!user) throw new Error("Please log in to send a message");
+    if (!user) throw new Error("Can't send message to invalid user");
 
     const receiver = await getUserByAuth0Id(req.params.receiverAuth0Id);
     (user as any).sid = req.oidc.user?.sid;
