@@ -5,15 +5,18 @@ async function getAllItems(currentUserAuth0Id: string) {
   try {
     const allItems = await prisma.item
       .findMany({
+        where: {
+          user: {
+            auth0Id: { not: currentUserAuth0Id },
+          },
+        },
         include: {
           user: true,
           likes: true,
         },
       })
       .then((items) => {
-        return items
-          .map((item) => ({ ...item, likeCount: item.likes.length }))
-          .filter((item) => item.user.auth0Id !== currentUserAuth0Id);
+        return items.map((item) => ({ ...item, likeCount: item.likes.length }));
       });
     return allItems;
   } catch (error) {
