@@ -4,17 +4,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/styles/styles.css" rel="stylesheet" />
-
+    <link rel="icon" type="image/x-icon" href="/images/icons/favicon.svg" />
     <title><%= item.name %></title>
   </head>
   <body class="bg-bkg text-content">
-    <!-- <header class="p-10 flex justify-between">
-			<div class="flex justify-normal gap-2">
-				<img src="/images/icons/BackArrow.svg" alt="Backward Icon" srcset="" />
-				<h3 class="text-primary">Back</h3>
-			</div>
-			<img src="/images/icons/Bell.svg" alt="Bell Icon" srcset="" />
-		</header> -->
     <article class="w-[90%] mx-auto md:w-[60%] mb-10">
       <%- include('../components/subNavigation.ejs') %>
       <img
@@ -23,13 +16,6 @@
         alt="Item Img"
         srcset=""
       />
-
-      <!-- <div class="flex justify-between"> -->
-      <!-- <h4></h4> -->
-      <!-- <h4 class="text-content">Home</h4> -->
-      <!-- <img src="/images/icons/Like.svg" alt="Like Icon" srcset="" /> -->
-      <!-- </div> -->
-
       <h1 class="font-bold mt-0 mb-2 text-content"><%= item.name %></h1>
 
       <div class="flex gap-5 justify-start mt-5">
