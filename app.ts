@@ -41,7 +41,7 @@ const PORT = process.env.PORT || 3000;
 
 app.get("/", checkIfUserExists, async (req, res) => {
   try {
-    const items = await getAllItems();
+    const items = await getAllItems(req.oidc.user?.sub);
     if (!items) {
       res.status(404).json({
         message: "Items not found",

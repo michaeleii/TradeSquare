@@ -24,7 +24,7 @@ const items = express.Router();
 
 items.get("/all", async (req, res) => {
   try {
-    const items = await getAllItems();
+    const items = await getAllItems(req.oidc.user?.sub);
 
     if (!items) return res.status(404).send("Items not found");
 
