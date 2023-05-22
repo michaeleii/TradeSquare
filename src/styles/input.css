@@ -7,12 +7,18 @@
 @layer base {
   :root {
     --color-bkg: 255 255 255;
+    --color-secondary-bkg: 246 246 246;
     --color-content: 0 0 0;
+    --color-content-hl: 0 0 0;
+    --color-stroke: 255 255 255;
   }
   @media (prefers-color-scheme: dark) {
     :root {
       --color-bkg: 65 65 65;
+      --color-secondary-bkg: 15 15 15;
       --color-content: 255 255 255;
+      --color-content-hl: 255 255 255;
+      --color-stroke: 255 255 255;
     }
   }
   h1 {
