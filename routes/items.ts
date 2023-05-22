@@ -22,11 +22,11 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 const items = express.Router();
 
-items.get("/all", async (req, res) => {
+items.get("/all", async (req, res, next) => {
   try {
     const items = await getAllItems(req.oidc.user?.sub);
 
-    if (!items) return res.status(404).send("Items not found");
+    if (!items) throw new Error("No items found");
 
     for (const item of items) {
       const url = await getObjectSignedUrl(item.imgName);
@@ -45,7 +45,7 @@ items.get("/all", async (req, res) => {
       : null;
     res.render("pages/itemList", { items, user });
   } catch (error) {
-    res.status(500).send(error);
+    next(error);
   }
 });
 
@@ -54,108 +54,121 @@ items
   .get(requiresAuth(), (req, res) => {
     res.render("pages/createListing");
   })
-  .post(upload.single("image"), async (req, res) => {
-    if (!req.file) {
-      return res.status(400).send("No file uploaded");
-    }
-
+  .post(upload.single("image"), async (req, res, next) => {
+    if (!req.file) throw new Error("No file uploaded");
     try {
       const imgName = randomImageName();
       await uploadFile(req.file.buffer, imgName, req.file.mimetype);
       req.body.imgName = imgName;
-
       const user = await getUserByAuth0Id(req.oidc.user?.sub);
-      if (!user) return res.status(404).send("User not found");
+      if (!user) throw new Error("Please log in to create an item");
       req.body.userId = user.id;
       req.body.categoryId = +req.body.categoryId;
       const item = await createItem(req.body);
-
       res.redirect(`/items/view/${item.id}`);
-    } catch (error: any) {
-      res.status(500).send(error.message);
+    } catch (error) {
+      next(error);
     }
   });
 
-items.get("/my-item/:id", requiresAuth(), async (req, res) => {
-  const item = await getItemByItemId(+req.params.id);
-  if (!item) return res.status(404).send("Item not found");
-  const url = await getObjectSignedUrl(item.imgName);
-  (
-    item as Item & {
-      category: Category;
-      likeCount: number;
-      user: User;
-      likes: Like[];
-      imgUrl: string;
-    }
-  ).imgUrl = url;
-
-  const user = req.oidc.user ? await getUserByAuth0Id(req.oidc.user.sub) : null;
-  if (user) {
+items.get("/my-item/:id", requiresAuth(), async (req, res, next) => {
+  try {
+    const item = await getItemByItemId(+req.params.id);
+    if (!item) throw new Error("Item not found");
+    const url = await getObjectSignedUrl(item.imgName);
     (
       item as Item & {
         category: Category;
-        liked: boolean;
         likeCount: number;
         user: User;
         likes: Like[];
         imgUrl: string;
       }
-    ).liked = await checkIfUserLiked(user.id, item.id);
-  }
+    ).imgUrl = url;
 
-  res.render("pages/editItem", { item });
+    const user = req.oidc.user
+      ? await getUserByAuth0Id(req.oidc.user.sub)
+      : null;
+    if (user) {
+      (
+        item as Item & {
+          category: Category;
+          liked: boolean;
+          likeCount: number;
+          user: User;
+          likes: Like[];
+          imgUrl: string;
+        }
+      ).liked = await checkIfUserLiked(user.id, item.id);
+    }
+    res.render("pages/editItem", { item });
+  } catch (error) {
+    next(error);
+  }
 });
 
-items.get("/delete/:id", requiresAuth(), async (req, res) => {
+items.get("/delete/:id", requiresAuth(), async (req, res, next) => {
   try {
     const item = await getItemByItemId(+req.params.id);
-    if (!item) return res.status(404).send("Item not found");
+    if (!item) throw new Error("Item not found");
     await deleteFile(item.imgName);
     await deleteItem(+req.params.id);
     res.redirect("/items/all");
   } catch (error) {
-    res.status(500).send(error);
+    next(error);
   }
 });
 
 items
   .route("/edit/:id")
-  .get(requiresAuth(), async (req, res) => {
-    const item = await getItemByItemId(+req.params.id);
-    if (!item) return res.status(404).send("Item not found");
-    res.render("pages/editListing", { item });
+  .get(requiresAuth(), async (req, res, next) => {
+    try {
+      const item = await getItemByItemId(+req.params.id);
+      if (!item) throw new Error("Item not found");
+      res.render("pages/editListing", { item });
+    } catch (error) {
+      next(error);
+    }
   })
-  .post(async (req, res) => {
-    const [itemId, formData] = [+req.params.id, req.body];
-    await updateItem(itemId, formData);
-    res.redirect(`/items/my-item/${itemId}`);
+  .post(async (req, res, next) => {
+    try {
+      const [itemId, formData] = [+req.params.id, req.body];
+      await updateItem(itemId, formData);
+      res.redirect(`/items/my-item/${itemId}`);
+    } catch (error) {
+      next(error);
+    }
   });
 
-items.get("/view/:id", async (req, res) => {
-  const item = await getItemByItemId(+req.params.id);
-  if (!item) return res.status(404).send("Item not found");
-
-  const url = await getObjectSignedUrl(item.imgName);
-  (
-    item as Item & {
-      category: Category;
-      likeCount: number;
-      user: User;
-      likes: Like[];
-      imgUrl: string;
-    }
-  ).imgUrl = url;
-
-  const user = req.oidc.user ? await getUserByAuth0Id(req.oidc.user.sub) : null;
-  if (user) {
+items.get("/view/:id", async (req, res, next) => {
+  try {
+    const item = await getItemByItemId(+req.params.id);
+    if (!item) throw new Error("Item not found");
+    const url = await getObjectSignedUrl(item.imgName);
     (
-      item.user as User & {
-        liked: boolean;
+      item as Item & {
+        category: Category;
+        likeCount: number;
+        user: User;
+        likes: Like[];
+        imgUrl: string;
       }
-    ).liked = await checkIfUserLiked(user.id, item.id);
+    ).imgUrl = url;
+
+    const user = req.oidc.user
+      ? await getUserByAuth0Id(req.oidc.user.sub)
+      : null;
+    if (user) {
+      (
+        item.user as User & {
+          liked: boolean;
+        }
+      ).liked = await checkIfUserLiked(user.id, item.id);
+    }
+    res.render("pages/item", { item, user });
+  } catch (error) {
+    next(error);
   }
-  res.render("pages/item", { item, user });
 });
 
 export default items;

@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction } from "express";
 import dotenv from "dotenv";
 
 import { getAllItems } from "./services/item";
@@ -39,15 +39,10 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
-app.get("/", checkIfUserExists, async (req, res) => {
+app.get("/", checkIfUserExists, async (req, res, next) => {
   try {
     const items = await getAllItems(req.oidc.user?.sub);
-    if (!items) {
-      res.status(404).json({
-        message: "Items not found",
-      });
-      return;
-    }
+    if (!items) throw new Error("No items found");
 
     const sortedCategories = (await getAllSortedCategories()).splice(0, 3);
     const sortedSquares = (await getAllSortedSquares()).splice(0, 3);
@@ -75,7 +70,7 @@ app.get("/", checkIfUserExists, async (req, res) => {
       user,
     });
   } catch (error) {
-    res.status(500).send(error);
+    next(error);
   }
 });
 app
@@ -100,6 +95,16 @@ app.use("/api", apiRouter);
 app.use("/test", testRouter);
 
 app.use("/admin", adminRouter);
+
+app.use(async (error: Error, req: any, res: any, next: NextFunction) => {
+  console.log(error);
+  const user = req.oidc.user ? await getUserByAuth0Id(req.oidc.user.sub) : null;
+  res.render("pages/error", {
+    error,
+    user,
+    isAuthenticated: req.oidc.isAuthenticated(),
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
