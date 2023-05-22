@@ -6,8 +6,6 @@ import { getUserByAuth0Id } from "../services/user";
 
 const categories = express.Router();
 
-getUserByAuth0Id;
-
 categories.get("/all", async (req, res) => {
   const categories = await getAllCategories();
   if (categories) {

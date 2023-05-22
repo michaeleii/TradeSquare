@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.2.2.min.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Channel metadata removed</h1>
+    <script>
+      let userId = "<%= user.auth0Id %>";
+      let pubnub = new PubNub({
+        publishKey: "pub-c-e1940c4d-880f-4331-9252-3ee8d4b82b0f",
+        subscribeKey: "sub-c-eb8a5e05-e54f-4ede-8583-4f5301612ab2",
+        userId,
+      });
+
+      pubnub.objects
+        .getAllChannelMetadata()
+        .then((response) => {
+          const channels = response.data;
+          const channelNames = channels.map((channel) => channel.id);
+          console.log("CHANNEL NAMES", channelNames);
+
+          channelNames.forEach((channelName) => {
+            pubnub.deleteMessages(
+              {
+                channel: channelName,
+              },
+              function (status, response) {
+                console.log(status, response);
+              }
+            );
+
+            pubnub.objects.removeChannelMetadata({
+              channel: channelName,
+            });
+          });
+        })
+        .catch((error) => {
+          console.log("Error retrieving channel metadata:", error);
+        });
+    </script>
+  </body>
+</html>

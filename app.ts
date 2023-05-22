@@ -13,6 +13,7 @@ import usersRouter from "./routes/users";
 import categories from "./routes/categories";
 import apiRouter from "./routes/api";
 import testRouter from "./routes/test";
+import adminRouter from "./routes/admin";
 import { getAllSortedCategories } from "./services/categories";
 import { getAllSortedSquares } from "./services/squares";
 
@@ -97,6 +98,8 @@ app.use("/users", usersRouter);
 app.use("/api", apiRouter);
 
 app.use("/test", testRouter);
+
+app.use("/admin", adminRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
