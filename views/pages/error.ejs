@@ -8,5 +8,11 @@
     <link rel="icon" type="image/x-icon" href="/images/icons/favicon.svg" />
     <title>Error</title>
   </head>
-  <body></body>
+  <body class="bg-bkg text-content">
+    <div class="mx-auto w-[90%] md:w-[50%] mt-5">
+      <%- include("../components/header.ejs", { isAuthenticated }) %>
+      <h1 class="text-3xl mb-2">Error</h1>
+      <p class="text-heading"><%= error.message %></p>
+    </div>
+  </body>
 </html>

@@ -3,13 +3,15 @@ import { getUserByAuth0Id } from "../services/user";
 
 const admin = express.Router();
 
-admin.get("/removeChannels", async (req, res) => {
-  const user = req.oidc.user ? await getUserByAuth0Id(req.oidc.user.sub) : null;
-  if (user) {
+admin.get("/removeChannels", async (req, res, next) => {
+  try {
+    const user = req.oidc.user
+      ? await getUserByAuth0Id(req.oidc.user.sub)
+      : null;
+    if (!user) throw new Error("User not found");
     res.render("pages/removeChannels", { user });
-  } else {
-    res.status(404).send("Users not found");
-    return;
+  } catch (error) {
+    next(error);
   }
 });
 
