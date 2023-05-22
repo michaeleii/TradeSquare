@@ -1,24 +1,20 @@
-<article
-  class="p-8 bg-offwhite dark:bg-[#272727] rounded-md sm:text-center mb-8"
->
-  <img
-    class="w-[350px] h-[200px] mx-auto sm:w-[580px] sm:h-[400px] object-cover"
-    src="/images/squares/square<%= square.id %>.jpg"
-    alt=""
-  />
-  <h3 class="mt-4"><%= square.name %></h3>
-  <p class="my-2"><%= square.description %></p>
+<article class="p-8 text-content bg-secondary rounded-md sm:text-center mb-8">
+  <img class="w-[350px] h-[200px] mx-auto sm:w-[580px] sm:h-[400px] object-cover"
+    src="/images/squares/square<%= square.id %>.jpg" alt="" />
+  <h3 class="mt-4">
+    <%= square.name %>
+  </h3>
+  <p class="my-2">
+    <%= square.description %>
+  </p>
 
   <% if (!square.joined) { %>
-  <button
-    class="join-btn btn-primary rounded-full mr-2"
-    data-square-id="<%= square.id %>"
-  >
-    Join
-  </button>
-  <% } %>
+    <button class="join-btn btn-primary rounded-full mr-2" data-square-id="<%= square.id %>">
+      Join
+    </button>
+    <% } %>
 
-  <a href="/squares/<%= square.id %>">
-    <button class="rounded-full btn-primary-outline">See More</button>
-  </a>
+      <a href="/squares/<%= square.id %>">
+        <button class="rounded-full btn-primary-outline">See More</button>
+      </a>
 </article>
