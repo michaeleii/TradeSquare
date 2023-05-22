@@ -14,7 +14,7 @@
       <div class="grid grid-cols-2 md:grid-cols-4 gap-5 justify-center">
         <h1 class="col-span-2 md:col-span-4">All Items</h1>
         <% items.forEach(item => { %>
-        <a href="/items/view/<%= item.id %>">
+        <a href="/items/view/<%= item.id %>" class="item-card">
           <%- include('../components/itemCard.ejs', {item}) %>
         </a>
         <% }) %>
