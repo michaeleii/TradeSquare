@@ -14,7 +14,7 @@ function createMessage({ sender, text, timestamp }) {
   });
   msgContainer.innerHTML +=
     !dayOfWeek || dayOfWeek.innerText !== msgDayOfWeek
-      ? `<p class="text-md text-darkgrey flex justify-center mt-2 ml-16">${msgDayOfWeek}</p>`
+      ? `<p class="text-md text-grey flex justify-center mt-2 ml-16">${msgDayOfWeek}</p>`
       : "";
   const dateOfMessage = new Date(timestamp).toLocaleString("en-US", {
     hour: "numeric",
