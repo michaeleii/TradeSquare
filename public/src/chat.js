@@ -8,7 +8,8 @@ function createMessage({ sender, text, timestamp }) {
   //create the DOM nodes to print the message to the screen
   let checkIfSenderIsUser = sender.name === userFullName;
   const msgElement = checkIfSenderIsUser
-    ? `<div class="flex justify-end items-center py-8 px-8 gap-4">
+    ? `<div class="flex flex-col py-8 px-8 items-end justify-end">
+    <div class="flex items-center gap-4">
         <div
           class="flex justify-center place-items-center bg-primary text-white rounded-3xl px-5 py-2"
         >
@@ -19,9 +20,24 @@ function createMessage({ sender, text, timestamp }) {
             src="${sender.img}"
             alt=""
           />
-      </div>`
+              </div>
+           <p class="text-sm text-grey justify-start mt-2 mr-16">${new Date(
+             timestamp
+           ).toLocaleString("en-US", {
+             hour: "numeric",
+             minute: "numeric",
+             month: "numeric",
+             day: "numeric",
+             year: "numeric",
+             hour12: true,
+           })}</p>
+       
+      </div>
+     
+      `
     : `
-     <div class="flex justify-start items-center px-8 py-8 gap-4">
+    <div class="flex flex-col py-8 px-8 items-start justify-start">
+     <div class="flex items-center gap-4">
           <img
             class="rounded-full w-[40px] object-cover"
             src="${sender.img}"
@@ -32,7 +48,17 @@ function createMessage({ sender, text, timestamp }) {
         >
           <p class="">${text}</p>
         </div>
-      </div>
+    </div>
+     <p class="text-sm text-grey justify-start mt-2 ml-16">${new Date(
+       timestamp
+     ).toLocaleString("en-US", {
+       hour: "numeric",
+       minute: "numeric",
+       month: "numeric",
+       day: "numeric",
+       year: "numeric",
+       hour12: true,
+     })}</p>
     </div>
       `;
   //add the message to the DOM

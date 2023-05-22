@@ -113,4 +113,13 @@
   .swal2-popup {
     @apply bg-white dark:bg-neutral-900 !important;
   }
+  #msgContainer::-webkit-scrollbar {
+    width: 6px;
+  }
+  #msgContainer::-webkit-scrollbar-track {
+    @apply bg-secondary;
+  }
+  #msgContainer::-webkit-scrollbar-thumb {
+    @apply bg-content;
+  }
 }

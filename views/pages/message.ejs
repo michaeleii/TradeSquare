@@ -1,51 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/styles/styles.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="/images/icons/favicon.svg" />
+    <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.2.2.min.js"></script>
+    <title>Chating with <%= receiver.f_name %></title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="/styles/styles.css" rel="stylesheet" />
-  <link rel="icon" type="image/x-icon" href="/images/icons/favicon.svg" />
-  <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.2.2.min.js"></script>
-  <title>Chating with <%= receiver.f_name %>
-  </title>
-</head>
+  <body class="bg-bkg text-content h-screen">
+    <div class="pl-6"><%- include('../components/subNavigation.ejs') %></div>
+    <div class="flex px-6 pb-6 items-start">
+      <img
+        id="profilePic"
+        class="rounded-full w-[80px] h-[80px] object-cover"
+        src="<%= receiver.profilePic %>"
+        alt="User Profile Picture"
+      />
 
-<body class="bg-bkg text-content">
-  <div class="pl-6"><%- include('../components/subNavigation.ejs') %></div>
-  <div class="flex px-6 pb-6 items-start">
-    <img id="profilePic" class="rounded-full w-[80px] h-[80px] object-cover" src="<%= receiver.profilePic %>"
-      alt="User Profile Picture" />
+      <h2 id="userFullName" class="pt-5 pl-5">
+        <%= receiver.f_name %> <%= receiver.l_name %>
+      </h2>
+    </div>
 
-    <h2 id="userFullName" class="pt-5 pl-5">
-      <%= receiver.f_name %>
-        <%= receiver.l_name %>
-    </h2>
-  </div>
-
-  <div id="msgContainer" class="h-96 overflow-auto"></div>
-  <div id="typingIndicator" class="text-right pr-8 pb-8"></div>
-  <form class="flex gap-5 p-5 fixed bottom-0 w-full" id="chatInputForm">
-    <input class="bg-secondary rounded-full px-5 w-full focus:outline-none" type="text" placeholder="" id="chatInput" />
-    <button class="btn-primary rounded-3xl w-[100px] text-lg" id="sendBtn">
-      Send
-    </button>
-  </form>
-  <script>
-    let userId = "<%= user.auth0Id %>";
-    let pubnub = new PubNub({
-      publishKey: "pub-c-e1940c4d-880f-4331-9252-3ee8d4b82b0f",
-      subscribeKey: "sub-c-eb8a5e05-e54f-4ede-8583-4f5301612ab2",
-      userId,
-    });
-    let userProfileImg = "<%= user.profilePic %>";
-    let userFullName = "<%= user.f_name %> <%= user.l_name %>";
-    let receiverId = "<%= receiver.auth0Id %>";
-    let receiverFullName = "<%= receiver.f_name %> <%= receiver.l_name %>";
-    let receiverProfileImg = "<%= receiver.profilePic %>";
-  </script>
-  <script src="/src/chat.js"></script>
-</body>
-
+    <div id="msgContainer" class="h-96 flex-1 overflow-y-auto"></div>
+    <div id="typingIndicator" class="text-right pr-8 pb-2"></div>
+    <form class="flex gap-5 p-5 fixed bottom-0 w-full" id="chatInputForm">
+      <input
+        class="bg-secondary rounded-full px-5 w-full focus:outline-none"
+        type="text"
+        placeholder="Message..."
+        id="chatInput"
+      />
+      <button class="btn-primary rounded-3xl w-[100px] text-lg" id="sendBtn">
+        Send
+      </button>
+    </form>
+    <script>
+      let userId = "<%= user.auth0Id %>";
+      let pubnub = new PubNub({
+        publishKey: "pub-c-e1940c4d-880f-4331-9252-3ee8d4b82b0f",
+        subscribeKey: "sub-c-eb8a5e05-e54f-4ede-8583-4f5301612ab2",
+        userId,
+      });
+      let userProfileImg = "<%= user.profilePic %>";
+      let userFullName = "<%= user.f_name %> <%= user.l_name %>";
+      let receiverId = "<%= receiver.auth0Id %>";
+      let receiverFullName = "<%= receiver.f_name %> <%= receiver.l_name %>";
+      let receiverProfileImg = "<%= receiver.profilePic %>";
+    </script>
+    <script src="/src/chat.js"></script>
+  </body>
 </html>
