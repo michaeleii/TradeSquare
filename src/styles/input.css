@@ -9,7 +9,7 @@
     --color-bkg: 255 255 255;
     --color-secondary-bkg: 246 246 246;
     --color-content: 0 0 0;
-    --color-content-hl: 0 0 0;
+    --color-content-heading: 0 0 0;
     --color-stroke: 255 255 255;
   }
   @media (prefers-color-scheme: dark) {
