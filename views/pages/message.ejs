@@ -10,7 +10,7 @@
     <title>Chating with <%= receiver.f_name %></title>
   </head>
 
-  <body class="bg-bkg text-content">
+  <body class="bg-bkg text-content h-screen">
     <div class="pl-6"><%- include('../components/subNavigation.ejs') %></div>
     <div class="flex px-6 pb-6 items-start">
       <img
@@ -25,7 +25,7 @@
       </h2>
     </div>
 
-    <div id="msgContainer" class="h-96 overflow-y-auto"></div>
+    <div id="msgContainer" class="h-96 flex-1 overflow-y-auto"></div>
     <div id="typingIndicator" class="text-right pr-8 pb-2"></div>
     <form class="flex gap-5 p-5 fixed bottom-0 w-full" id="chatInputForm">
       <input
