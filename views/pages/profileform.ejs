@@ -20,25 +20,25 @@
             </div>
 
             <form class="flex flex-col" action="/test/editprofile/<%= user.id %>" method="POST">
-            
+
                 <label class="text-[23px] font-bold" for="username">
                     First Name
                 </label>
-                <input class="p-3 border-2 border-darkgrey rounded-md placeholder:text-content dark:bg-[#272727]" type="text" name="f_name"
-                    id="listingTitle" placeholder="..." value="<%=user.f_name%>" />
-            
+                <input class="p-3 border-2 border-darkgrey rounded-md placeholder:text-content bg-secondary" type="text"
+                    name="f_name" id="listingTitle" placeholder="..." value="<%=user.f_name%>" />
+
                 <label class="mt-10 text-[23px] font-bold" for="listingDescription">
                     Last Name
                 </label>
-                <input class="p-3 border-2 border-darkgrey rounded-md placeholder:text-content dark:bg-[#272727]" type="text" name="l_name" id="listingTitle"
-                    placeholder="..." value="<%=user.l_name%>" />
+                <input class="p-3 border-2 border-darkgrey rounded-md placeholder:text-content bg-secondary" type="text"
+                    name="l_name" id="listingTitle" placeholder="..." value="<%=user.l_name%>" />
 
                 <label class="mt-10 text-[23px] font-bold" for="listingDescription">
                     Add Your Location
                 </label>
-                <input class="p-3 border-2 border-darkgrey rounded-md placeholder:text-content dark:bg-[#272727]" type="text" name="location" id="listingTitle"
-                    placeholder="..." value="<%=user.location%>" />
-                
+                <input class="p-3 border-2 border-darkgrey rounded-md placeholder:text-content bg-secondary" type="text"
+                    name="location" id="listingTitle" placeholder="..." value="<%=user.location%>" />
+
                 <!-- <label class="mt-10 text-[23px] font-bold" for="listingDescription">
                     Change Your Avatar
                 </label>
@@ -48,10 +48,10 @@
                 </label>
                 
                 <input type="file" id="image" name="image" accept="image/png, image/jpeg" class="hidden"> -->
-                    
-                
-                
-                
+
+
+
+
                 <div class="flex justify-center mt-10">
                     <button class="bg-success w-[235px] h-[50px] rounded-xl text-white py-2.5 px-5 mt-2 mr-2 block">
                         Edit

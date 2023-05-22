@@ -1,43 +1,38 @@
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="/styles/styles.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="/images/icons/favicon.svg" />
-    <title>Categories</title>
-  </head>
 
-  <body class="bg-bkg text-content">
-    <article class="w-[90%] mx-auto md:w-[60%]">
-      <%- include('../components/subNavigation.ejs') %>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="/styles/styles.css" rel="stylesheet" />
+  <link rel="icon" type="image/x-icon" href="/images/icons/favicon.svg" />
+  <title>Categories</title>
+</head>
+
+<body class="bg-bkg text-content">
+  <article class="w-[90%] mx-auto md:w-[60%]">
+    <%- include('../components/subNavigation.ejs') %>
 
       <h1 class="font-bold mt-0 mb-2">Categories</h1>
 
-      <% categories.forEach(category => { %>
+      <% categories.forEach(category=> { %>
 
-      <a href="/categories/<%= category.id %>">
-        <div
-          class="flex gap-5 justify-start p-5 mt-5 bg-offwhite rounded-md hover:bg-gray-300 dark:bg-[#272727] dark:hover:bg-[#1e293b] transition-colors shadow-lg"
-        >
+        <a href="/categories/<%= category.id %>">
           <div
-            class="bg-primary w-[100px] h-[100px] flex justify-center items-center rounded"
-          >
-            <img
-              src="/images/icons/category_<%= category.id %>.svg"
-              alt="<%= category.name %> Icon"
-              srcset=""
-              class=""
-            />
-          </div>
+            class="flex gap-5 justify-start p-5 mt-5 rounded-md bg-secondary hover:bg-secondary-dark transition-colors shadow-lg">
+            <div class="bg-primary w-[100px] h-[100px] flex justify-center items-center rounded">
+              <img src="/images/icons/category_<%= category.id %>.svg" alt="<%= category.name %> Icon" srcset=""
+                class="" />
+            </div>
 
-          <p class="text-content font-bold place-self-center">
-            <%= category.name %>
-          </p>
-        </div>
-      </a>
-      <% }); %>
-    </article>
-    <%- include('../components/navigationBar', {user}) %>
-  </body>
+            <p class="text-content font-bold place-self-center">
+              <%= category.name %>
+            </p>
+          </div>
+        </a>
+        <% }); %>
+  </article>
+  <%- include('../components/navigationBar', {user}) %>
+</body>
+
 </html>

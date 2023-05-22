@@ -1,88 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link href="/styles/styles.css" rel="stylesheet" />
-		<link rel="icon" type="image/x-icon" href="/images/icons/favicon.svg">
-		<title>TradeSquare</title>
-	</head>
-	<body class="bg-bkg text-content">
-		<div class="mx-auto w-[90%] md:w-[50%] mt-5">
-			<%- include('../components/header.ejs', {isAuthenticated}) %>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link href="/styles/styles.css" rel="stylesheet" />
+	<link rel="icon" type="image/x-icon" href="/images/icons/favicon.svg">
+	<title>TradeSquare</title>
+</head>
+
+<body class="bg-bkg text-content">
+	<div class="mx-auto w-[90%] md:w-[50%] mt-5">
+		<%- include('../components/header.ejs', {isAuthenticated}) %>
 			<% if (isAuthenticated) { %>
-			<h1 class="text-3xl mb-2">Welcome,</h1>
-			<p class="text-darkgrey dark:text-gray-200">Hello <%= user.f_name %> <%= user.l_name %> 👋</p>
-			<% } %>			
-			<section class="my-10">
-				<div class="flex justify-between items-center mb-3">
-					<h2>Popular Categories</h2>
-					<a
-						href="/categories/all"
-						class="text-primary hover:text-primary-dark"
-					>
-						Show All
-					</a>
-				</div>
+				<h1 class="text-3xl mb-2">Welcome,</h1>
+				<p class="text-heading">Hello <%= user.f_name %>
+						<%= user.l_name %> 👋</p>
+				<% } %>
+					<section class="my-10">
+						<div class="flex justify-between items-center mb-3">
+							<h2>Popular Categories</h2>
+							<a href="/categories/all" class="text-primary hover:text-primary-dark">
+								Show All
+							</a>
+						</div>
 
-				<div class="grid grid-cols-3 gap-5">
-					<% sortedCategories.forEach(category => { %>
-						<a href="/categories/<%= category.id %>">
-							<div class="bg-primary hover:bg-primary-dark transition-colors rounded-lg py-5">
-								<img
-									src="/images/icons/category_<%= category.id %>.svg"
-									alt=""
-									class="w-[43px] h-[43px] mx-auto"
-								/>
-								<p class="text-center text-white mt-2"><%= category.name %></p>
-							</div>
-						</a>
-					<% }) %>
-		  		</div>
-			</section>
-			
-			<section class="my-10">
-				<div class="flex justify-between items-center mb-3">
-					<h2>Featured Squares</h2>
-					<a href="/squares/all" class="text-primary hover:text-primary-dark">
-						Show All
-					</a>
-				</div>
+						<div class="grid grid-cols-3 gap-5">
+							<% sortedCategories.forEach(category=> { %>
+								<a href="/categories/<%= category.id %>">
+									<div class="bg-primary hover:bg-primary-dark transition-colors rounded-lg py-5">
+										<img src="/images/icons/category_<%= category.id %>.svg" alt=""
+											class="w-[43px] h-[43px] mx-auto" />
+										<p class="text-center text-white mt-2">
+											<%= category.name %>
+										</p>
+									</div>
+								</a>
+								<% }) %>
+						</div>
+					</section>
 
-				<div class="grid grid-cols-3 gap-5">
-					<% sortedSquares.forEach(square => { %>
-						<a href="/squares/<%= square.id %>">
-							<div
-								class="p-5 bg-primary hover:bg-primary-dark transition-colors rounded-lg h-[100px] flex justify-center items-center"
-							>
-								<p class="text-center text-white"><%= square.name %></p>
-							</div>
+					<section class="my-10">
+						<div class="flex justify-between items-center mb-3">
+							<h2>Featured Squares</h2>
+							<a href="/squares/all" class="text-primary hover:text-primary-dark">
+								Show All
+							</a>
+						</div>
+
+						<div class="grid grid-cols-3 gap-5">
+							<% sortedSquares.forEach(square=> { %>
+								<a href="/squares/<%= square.id %>">
+									<div
+										class="p-5 bg-primary hover:bg-primary-dark transition-colors rounded-lg h-[100px] flex justify-center items-center">
+										<p class="text-center text-white">
+											<%= square.name %>
+										</p>
+									</div>
+								</a>
+								<% }) %>
+						</div>
+					</section>
+
+					<div class="flex justify-between items-center mb-3">
+						<h2 class="mb-3">Recommended for you</h2>
+						<a href="/items/all" class="text-primary hover:text-primary-dark">
+							Show All
 						</a>
-					<% }) %>
-				</div>
-			</section>
-			
-			<div class="flex justify-between items-center mb-3">
-				<h2 class="mb-3">Recommended for you</h2>
-					<a
-						href="/items/all"
-						class="text-primary hover:text-primary-dark"
-					>
-						Show All
-					</a>
-			</div>
-			<div class="flex justify-center md:block">
-				<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 justify-center">
-					 <% items.forEach(item => { %>
-						<a href="/items/view/<%= item.id %>">
-							<%- include('../components/itemCard', {item}) %>
-						   <% }) %>
-						</a>
-				</div>	
-			</div>
-			</div>
-			</div>
-			<%- include('../components/navigationBar', { user }) %>	
-	</body>
+					</div>
+					<div class="flex justify-center md:block">
+						<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 justify-center">
+							<% items.forEach(item=> { %>
+								<a href="/items/view/<%= item.id %>">
+									<%- include('../components/itemCard', {item}) %>
+										<% }) %>
+								</a>
+						</div>
+					</div>
+	</div>
+	</div>
+	<%- include('../components/navigationBar', { user }) %>
+</body>
+
 </html>
