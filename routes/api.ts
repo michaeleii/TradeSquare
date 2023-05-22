@@ -13,7 +13,7 @@ import {
 const api = express.Router();
 
 api.get("/items", async (req, res) => {
-  const items = await getAllItems();
+  const items = await getAllItems(req.oidc.user?.sub);
   res.json(items);
 });
 
