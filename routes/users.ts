@@ -16,7 +16,10 @@ users.get("/profile/:id", requiresAuth(), async (req, res, next) => {
     const id = +req.params.id;
     const user = await getUserById(id);
     if (!user) throw new Error("User not found");
-    res.render("pages/profile", { user });
+    res.render("pages/profile", {
+      user,
+      isAuthenticated: req.oidc.isAuthenticated(),
+    });
   } catch (error) {
     next(error);
   }

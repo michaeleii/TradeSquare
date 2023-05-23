@@ -9,13 +9,22 @@
 
   <body class="bg-bkg">
     <article class="w-[90%] mx-auto md:w-[60%]">
-      <%- include('../components/subNavigation.ejs') %>
+      <div class="pt-5"><%- include('../components/header.ejs', {isAuthenticated}) %></div>
 
-      <div class="flex justify-end">
-        <a href="/test/editprofile/<%= user.id %>"
-          class="w-full md:w-[45px] h-[45px] rounded-full flex justify-center items-center gap-5 ">
-      
-          <svg width="80" height="80" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <div class="flex flex-col justify-between">
+        
+          <img
+            src="<%= user.profilePic %>"
+            class="rounded-full w-[200px] h-[200px] mb-8 object-cover mx-auto"
+            alt=""
+          />
+        
+       
+        <div>
+        </div>
+        <div class="flex justify-end">
+  <a href="/test/editprofile/<%= user.id %>">
+          <svg class="w-[45px] h-[45px]" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M20.8333 12.5L9.59486 23.7385C9.38233 23.951 9.27606 24.0573 9.20619 24.1878C9.13633 24.3184 9.10685 24.4657 9.04791 24.7605L7.64709 31.7646C7.58057 32.0972 7.5473 32.2635 7.64191 32.3581C7.73652 32.4527 7.90283 32.4194 8.23544 32.3529L15.2395 30.9521L15.2396 30.9521C15.5343 30.8931 15.6816 30.8637 15.8122 30.7938C15.9427 30.7239 16.049 30.6177 16.2615 30.4052L16.2615 30.4051L27.5 19.1667L20.8333 12.5Z"
               fill="#506DF6" fill-opacity="0.66" />
@@ -26,33 +35,19 @@
           </svg>
 
         </a>
-      </div>
-
-      <div class="flex flex-col justify-between">
-        <div class="mb-10">
-          <img
-            src="<%= user.profilePic %>"
-            class="rounded-full w-[200px] h-[200px] object-cover mx-auto"
-            alt=""
-          />
         </div>
-        <h2 class="text-content mb-2 mx-auto"><%= user.f_name %> <%= user.l_name %></h2>
-        <p class="text-content mx-auto">A little bit about me...</p>
+         
+          <h2 class="text-content mb-2 text-center"><%= user.f_name %> <%= user.l_name %></h2>
+          <p class="text-heading text-center">A little bit about me...</p>
+      
 
         <h3 class="mt-5 text-content">About</h3>
         <div class="mb-2">
-          <p class="text-content"><%= user.location  %></p>
+          <p class="text-heading"><%= user.location  %></p>
         </div>
 
         <h3 class="mt-5 text-content">Your Analytics</h3>
-        <div class="mb-2">
-          <div class="flex">
-            <p class="text-content">Total transactions:&nbsp;</p>
-            <p class="text-primary">21</p>
-          </div>
-        </div>
-
-        <div class="flex items-center gap-2 mb-2">
+        <div class="flex items-center gap-2 mb-2 mt-2">
           <% for (var i=1; i <=5; i++) { %> <% if (i <=Math.floor(user.rating))
           { %>
           <img
