@@ -40,7 +40,7 @@ users.get("/my-items", requiresAuth(), async (req, res, next) => {
         }
       ).imgUrl = url;
     }
-    res.render("pages/myLists", { items });
+    res.render("pages/myLists", { items, user });
   } catch (error) {
     next(error);
   }
@@ -52,7 +52,7 @@ users.get("/my-squares", requiresAuth(), async (req, res, next) => {
     if (!user) throw new Error("User not found");
     const userSquares = await getUserSquares(user.id);
     if (!userSquares) throw new Error("Cannot find user squares");
-    res.render("pages/mySquares", { userSquares });
+    res.render("pages/mySquares", { userSquares, user });
   } catch (error) {
     next(error);
   }
