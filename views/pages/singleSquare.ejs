@@ -11,7 +11,7 @@
   </head>
   <body class="bg-bkg text-content">
     <div class="mx-auto w-[90%] lg:w-[70%]">
-      <%- include('../components/subNavigation.ejs') %> <%-
+      <%- include('../components/header.ejs', {isAuthenticated}) %> <%-
       include('../components/Square_Title_and_Description.ejs', {square, user})
       %>
 

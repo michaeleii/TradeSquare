@@ -17,7 +17,10 @@ test.get("/mailbox", authenticateMessage, async (req, res, next) => {
       ? await getUserByAuth0Id(req.oidc.user.sub)
       : null;
     if (!user) throw new Error("User not found");
-    res.render("pages/mailbox", { user });
+    res.render("pages/mailbox", {
+      user,
+      isAuthenticated: req.oidc.isAuthenticated(),
+    });
   } catch (error) {
     next(error);
   }

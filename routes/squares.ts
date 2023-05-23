@@ -32,7 +32,11 @@ squares.get("/all", async (req, res, next) => {
         ).joined = joined;
       }
     }
-    res.render("pages/squares", { squares, user });
+    res.render("pages/squares", {
+      squares,
+      user,
+      isAuthenticated: req.oidc.isAuthenticated(),
+    });
   } catch (error) {
     next(error);
   }
@@ -52,7 +56,11 @@ squares.get("/:id", async (req, res, next) => {
     if (user) {
       (square as any).joined = await checkIfUserJoined(user.id, square.id);
     }
-    res.render("pages/singleSquare", { square, user });
+    res.render("pages/singleSquare", {
+      square,
+      user,
+      isAuthenticated: req.oidc.isAuthenticated(),
+    });
   } catch (error) {
     next(error);
   }

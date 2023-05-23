@@ -16,7 +16,10 @@ users.get("/profile/:id", requiresAuth(), async (req, res, next) => {
     const id = +req.params.id;
     const user = await getUserById(id);
     if (!user) throw new Error("User not found");
-    res.render("pages/profile", { user });
+    res.render("pages/profile", {
+      user,
+      isAuthenticated: req.oidc.isAuthenticated(),
+    });
   } catch (error) {
     next(error);
   }
@@ -37,7 +40,7 @@ users.get("/my-items", requiresAuth(), async (req, res, next) => {
         }
       ).imgUrl = url;
     }
-    res.render("pages/myLists", { items });
+    res.render("pages/myLists", { items, user });
   } catch (error) {
     next(error);
   }
@@ -49,7 +52,7 @@ users.get("/my-squares", requiresAuth(), async (req, res, next) => {
     if (!user) throw new Error("User not found");
     const userSquares = await getUserSquares(user.id);
     if (!userSquares) throw new Error("Cannot find user squares");
-    res.render("pages/mySquares", { userSquares });
+    res.render("pages/mySquares", { userSquares, user });
   } catch (error) {
     next(error);
   }
@@ -70,7 +73,11 @@ users.get("/likes", requiresAuth(), async (req, res, next) => {
         }
       ).imgUrl = url;
     }
-    res.render("pages/likes", { likedItems });
+    res.render("pages/likes", {
+      likedItems,
+      user,
+      isAuthenticated: req.oidc.isAuthenticated(),
+    });
   } catch (error) {
     next(error);
   }
@@ -90,7 +97,10 @@ users.get("/:id", async (req, res, next) => {
         }
       ).imgUrl = url;
     }
-    res.render("pages/seller", { user });
+    res.render("pages/seller", {
+      user,
+      isAuthenticated: req.oidc.isAuthenticated(),
+    });
   } catch (error) {
     next(error);
   }

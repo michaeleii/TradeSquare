@@ -43,7 +43,11 @@ items.get("/all", async (req, res, next) => {
     const user = req.oidc.user
       ? await getUserByAuth0Id(req.oidc.user.sub)
       : null;
-    res.render("pages/itemList", { items, user });
+    res.render("pages/itemList", {
+      items,
+      user,
+      isAuthenticated: req.oidc.isAuthenticated(),
+    });
   } catch (error) {
     next(error);
   }
@@ -165,7 +169,11 @@ items.get("/view/:id", async (req, res, next) => {
         }
       ).liked = await checkIfUserLiked(user.id, item.id);
     }
-    res.render("pages/item", { item, user });
+    res.render("pages/item", {
+      item,
+      user,
+      isAuthenticated: req.oidc.isAuthenticated(),
+    });
   } catch (error) {
     next(error);
   }
