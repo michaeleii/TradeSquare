@@ -16,9 +16,9 @@
 
       <h1 class="font-bold mt-0 mb-2">Recently Liked items</h1>
 
-      <div class="grid grid-col grid-cols-3 gap-4">
+      <div class="grid grid-col grid-cols-2 gap-4 sm:grid-cols-3">
         <% likedItems.forEach(({item}) => { %>
-        <a href="/items/view/<%= item.id %>" class="w-[200px] h-[200px]">
+        <a href="/items/view/<%= item.id %>" class="w-full h-full">
           <img
             src="<%= item.imgUrl %>"
             alt="<%= item.name %>"
