@@ -16,6 +16,7 @@ categories.get("/all", async (req, res, next) => {
     res.render("pages/categories", {
       categories,
       user,
+      isAuthenticated: req.oidc.isAuthenticated(),
     });
   } catch (error) {
     next(error);
