@@ -1,12 +1,15 @@
-<article class="p-8 bg-secondary rounded-md mb-8 drop-shadow-lg">
+<article class="p-8 bg-secondary rounded-md mb-8 drop-shadow-lg z-[-1]">
   <div class="flex items-center gap-2 mb-3">
-    <img class="w-[35px] h-[35px] rounded-full object-cover" src="<%= post.user.profilePic %>" alt="" />
+    <img
+      class="w-[35px] h-[35px] rounded-full object-cover"
+      src="<%= post.user.profilePic %>"
+      alt=""
+    />
     <div class="">
-      <p class="font-medium">
-        <%= post.user.f_name %>
-      </p>
+      <p class="font-medium"><%= post.user.f_name %></p>
       <p class="font-normal text-sm">
-        <%= new Date(post.date).toLocaleString("en-US", { month: "short" , day: "numeric" , year: "numeric" , }) %>
+        <%= new Date(post.date).toLocaleString("en-US", { month: "short" , day:
+        "numeric" , year: "numeric" , }) %>
       </p>
     </div>
   </div>
@@ -14,8 +17,6 @@
     <img class="rounded-lg w-[900px] mx-auto" src="<%= post.imgUrl %>" alt="" />
   </div>
   <div>
-    <p class="text-md mt-5">
-      <%= post.description %>
-    </p>
+    <p class="text-md mt-5"><%= post.description %></p>
   </div>
 </article>
