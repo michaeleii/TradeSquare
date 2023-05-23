@@ -13,9 +13,8 @@
 </head>
 
 <body class="bg-bkg text-content">
-    <div class="pl-6"><%- include('../components/subNavigation.ejs') %></div>
     <div class="w-[90%] mx-auto md:w-[60%] mb-10">
-
+        <div class="pt-5"><%- include('../components/header.ejs', {isAuthenticated}) %></div>
         <h1 class="font-bold mb-3">Messages</h1>
 
         <div id="mailboxContainer" class="flex flex-col gap-5"></div>
