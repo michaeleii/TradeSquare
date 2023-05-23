@@ -1,7 +1,7 @@
 import express, { NextFunction } from "express";
 import dotenv from "dotenv";
 
-import { getAllItems } from "./services/item";
+import { getAllItems, sortItemsByLikes } from "./services/item";
 import { checkIfUserExists, getUserByAuth0Id } from "./services/user";
 import { getObjectSignedUrl } from "./s3";
 import { Item, Like, User } from "@prisma/client";
@@ -41,7 +41,7 @@ const PORT = process.env.PORT || 3000;
 
 app.get("/", checkIfUserExists, async (req, res, next) => {
   try {
-    const items = await getAllItems(req.oidc.user?.sub);
+    const items = await sortItemsByLikes(req.oidc.user?.sub);
     if (!items) throw new Error("No items found");
 
     const sortedCategories = (await getAllSortedCategories()).splice(0, 3);
