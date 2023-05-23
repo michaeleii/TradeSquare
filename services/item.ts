@@ -24,6 +24,34 @@ async function getAllItems(currentUserAuth0Id: string) {
   }
 }
 
+async function sortItemsByLikes(currentUserAuth0Id: string) {
+  try {
+    const sortedItems = await prisma.item
+      .findMany({
+        where: {
+          user: {
+            auth0Id: { not: currentUserAuth0Id },
+          },
+        },
+        include: {
+          user: true,
+          likes: true,
+        },
+        orderBy: {
+          likes: {
+            _count: "desc",
+          },
+        },
+      })
+      .then((items) => {
+        return items.map((item) => ({ ...item, likeCount: item.likes.length }));
+      });
+    return sortedItems;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function getItemByItemId(itemId: number) {
   try {
     const item = await prisma.item
@@ -93,4 +121,5 @@ async function updateItem(itemId: number, formData: Item) {
   }
 }
 
-export { getAllItems, getItemByItemId, createItem, updateItem, deleteItem };
+export { getAllItems, getItemByItemId, createItem, updateItem, deleteItem, sortItemsByLikes };
+
