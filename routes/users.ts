@@ -70,7 +70,11 @@ users.get("/likes", requiresAuth(), async (req, res, next) => {
         }
       ).imgUrl = url;
     }
-    res.render("pages/likes", { likedItems });
+    res.render("pages/likes", {
+      likedItems,
+      user,
+      isAuthenticated: req.oidc.isAuthenticated(),
+    });
   } catch (error) {
     next(error);
   }

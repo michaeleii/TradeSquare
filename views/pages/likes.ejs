@@ -10,7 +10,9 @@
 
   <body class="bg-bkg text-content">
     <article class="w-[90%] mx-auto md:w-[60%] mb-10">
-      <div class="pt-5"><%- include('../components/subNavigation.ejs') %></div>
+      <div class="pt-5">
+        <%- include('../components/header.ejs', {isAuthenticated}) %>
+      </div>
 
       <h1 class="font-bold mt-0 mb-2">Recently Liked items</h1>
 
@@ -28,5 +30,6 @@
         <% }) %>
       </div>
     </article>
+    <%- include('../components/navigationBar.ejs', {user}) %>
   </body>
 </html>
