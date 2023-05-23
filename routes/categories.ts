@@ -42,7 +42,11 @@ categories.get("/:id", async (req, res, next) => {
     const user = req.oidc.user
       ? await getUserByAuth0Id(req.oidc.user.sub)
       : null;
-    res.render("pages/category", { category, user });
+    res.render("pages/category", {
+      category,
+      user,
+      isAuthenticated: req.oidc.isAuthenticated(),
+    });
   } catch (error) {
     next(error);
   }
