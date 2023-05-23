@@ -4,67 +4,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/styles/styles.css" rel="stylesheet" />
-
+    <link rel="icon" type="image/x-icon" href="/images/icons/favicon.svg" />
     <title>Liked items</title>
   </head>
 
   <body class="bg-bkg text-content">
     <article class="w-[90%] mx-auto md:w-[60%] mb-10">
-      <div class="pt-5"><%- include('../components/subNavigation.ejs') %></div>
+      <div class="pt-5">
+        <%- include('../components/header.ejs', {isAuthenticated}) %>
+      </div>
 
       <h1 class="font-bold mt-0 mb-2">Recently Liked items</h1>
 
       <div class="grid grid-col grid-cols-3 gap-4">
         <% likedItems.forEach(({item}) => { %>
-        <a href="/items/view/<%= item.id %>">
-          <div class="flex gap-5 justify-start mt-5">
-            <img
-              src="<%= item.imgUrl %>"
-              alt="<%= item.name %>"
-              srcset=""
-              class="w-[200px] h-[200px] object-cover justify-start rounded-md"
-            />
-          </div>
+        <a href="/items/view/<%= item.id %>" class="w-[200px] h-[200px]">
+          <img
+            src="<%= item.imgUrl %>"
+            alt="<%= item.name %>"
+            srcset=""
+            class="w-[200px] h-[200px] object-cover justify-start rounded-md"
+          />
         </a>
 
         <% }) %>
-
-        <!-- <a href="/items/all" >
-                    <div class="flex gap-5 justify-start mt-5">
-                        <img src="/images/users/user1.jpg" alt="item 1" srcset="" class="w-[200px] h-[200px] object-cover justify-start rounded-md" />          
-                    </div>
-                </a>
-
-                <div class="flex gap-5 justify-start mt-5">
-                    <img src="/images/users/user2.jpg" alt="item 2" srcset=""
-                        class="w-[200px] h-[200px] object-cover justify-start rounded-md" />
-                </div>
-
-                <div class="flex gap-5 justify-start mt-5">
-                    <img src="/images/users/user3.jpg" alt="item 3" srcset=""
-                        class="w-[200px] h-[200px] object-cover justify-start rounded-md" />
-                </div>
-
-                <div class="flex gap-5 justify-start mt-5">
-                    <img src="/images/users/user4.jpg" alt="item 4" srcset=""
-                        class="w-[200px] h-[200px] object-cover justify-start rounded-md" />
-                </div>
-
-                <div class="flex gap-5 justify-start mt-5">
-                    <img src="/images/users/user5.jpg" alt="item 5" srcset=""
-                        class="w-[200px] h-[200px] object-cover justify-start rounded-md" />
-                </div>
-
-                <div class="flex gap-5 justify-start mt-5">
-                    <img src="/images/users/user6.jpg" alt="item 6" srcset=""
-                        class="w-[200px] h-[200px] object-cover justify-start rounded-md" />
-                </div>
-
-                <div class="flex gap-5 justify-start mt-5">
-                    <img src="/images/users/user7.jpg" alt="item 7" srcset=""
-                        class="w-[200px] h-[200px] object-cover justify-start rounded-md" />
-                </div> -->
       </div>
     </article>
+    <%- include('../components/navigationBar.ejs', {user}) %>
   </body>
 </html>

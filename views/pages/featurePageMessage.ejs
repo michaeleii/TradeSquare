@@ -5,48 +5,64 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/styles/styles.css" rel="stylesheet" />
-    <title>Document</title>
+    <link rel="icon" type="image/x-icon" href="/images/icons/favicon.svg" />
+    <title>Message a seller</title>
   </head>
   <body class="bg-bkg">
-      <div class="flex px-5 py-10">
-        <div class="flex self-end w-30 h-30 px-5">
+    <article class="w-[90%] mx-auto md:w-[70%] mt-10">
+      <div class="flex items-center mb-10 pr-5">
+        <div class="pr-5">
           <img
-            class="rounded-full w-[90px] h-[90px] object-cover"
+            class="rounded-full w-[80px] h-[80px] object-cover"
             src="/images/users/user8.jpg"
             alt="user 8"
           />
         </div>
+
         <img
-            class="rounded-xl w-[550px] object-contain"
-            src="/images/memes/meme1.jpg"
+          class="rounded-xl w-96 object-contain"
+          src="/images/memes/meme1.jpg"
+          alt=""
+        />
+      </div>
+
+      <div class="flex justify-end mb-5">
+        <div
+          class="flex justify-center place-items-center h-[70px]text-white text-6xl rounded-full pr-32"
+        >
+          <p>😍</p>
+        </div>
+      </div>
+
+      <div class="flex justify-end">
+        <div
+          class="flex justify-center place-items-center h-[70px] bg-primary text-white rounded-full py-8 px-2"
+        >
+          <p>Trade you that for my pikachu!</p>
+        </div>
+        <div class="pl-5">
+          <img
+            class="rounded-full object-cover w-[80px] h-[80px]"
+            src="/images/users/user3.jpg"
             alt=""
           />
         </div>
       </div>
 
-      <div class="flex justify-end px-10 py-8 ">
-        <div class="flex justify-center place-items-center h-[70px]text-white text-6xl rounded-full pr-32">
-           <p>😍</p>
-        </div>
-      </div>
+      <h1 class="text-5xl text-content text-center mt-20">
+        Send trade offers to
+        <span class="text-green-400">sellers</span>
+        for your favourite items.
+      </h1>
 
-
-      <div class="flex justify-end px-8 py-8 ">
-        <div class="flex justify-center place-items-center h-[70px] bg-primary text-white rounded-full py-8 px-2">
-           <p>Woaah, So cool !!!!!!</p>
-        </div>
-        <div class="pl-5">
-            <img class="rounded-full object-contain w-[80px] h-[80px]"src="/images/users/user3.jpg" alt="">
-        </div>
+      <div class="flex justify-center mt-8">
+        <a
+          class="text-3xl btn-primary rounded-full w-[400px] text-white text-center"
+          href="http://localhost:3000/login"
+        >
+          Log in
+        </a>
       </div>
-
-      <div class="flex justify-center py-8 px-8">
-        <h1 class="text-6xl text-content">Send messages to <span class="text-green-400">sellers and buyers </span></h1>
-      </div>
-      <div class="flex justify-center">
-          <div class="flex justify-center bg-primary rounded-full px-8 w-[400px]"> 
-            <a class=" text-3xl text-white" href="http://localhost:3000/login">Log in</a>
-          </div>
-      </div>
+    </article>
   </body>
 </html>

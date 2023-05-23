@@ -5,10 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/styles/styles.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="/images/icons/favicon.svg" />
     <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.2.2.min.js"></script>
     <title>Chating with <%= receiver.f_name %></title>
   </head>
-  <body class="bg-bkg text-content">
+
+  <body class="bg-bkg text-content h-screen">
     <div class="pl-6"><%- include('../components/subNavigation.ejs') %></div>
     <div class="flex px-6 pb-6 items-start">
       <img
@@ -23,13 +25,13 @@
       </h2>
     </div>
 
-    <div id="msgContainer" class="h-96 overflow-auto"></div>
-    <div id="typingIndicator" class="text-right pr-8 pb-8"></div>
+    <div id="msgContainer" class="h-96 overflow-y-auto"></div>
+    <div id="typingIndicator" class="text-right pr-8 pb-2"></div>
     <form class="flex gap-5 p-5 fixed bottom-0 w-full" id="chatInputForm">
       <input
-        class="bg-slate-200 rounded-full px-5 w-full focus:outline-none"
+        class="bg-secondary rounded-full px-5 w-full focus:outline-none"
         type="text"
-        placeholder=""
+        placeholder="Message..."
         id="chatInput"
       />
       <button class="btn-primary rounded-3xl w-[100px] text-lg" id="sendBtn">
@@ -39,8 +41,8 @@
     <script>
       let userId = "<%= user.auth0Id %>";
       let pubnub = new PubNub({
-        publishKey: "pub-c-e1940c4d-880f-4331-9252-3ee8d4b82b0f",
-        subscribeKey: "sub-c-eb8a5e05-e54f-4ede-8583-4f5301612ab2",
+        publishKey: "pub-c-aef98a66-a53a-4fa4-8670-5caef781e7ac",
+        subscribeKey: "sub-c-e24d3586-3673-498b-990d-4a19d2d466cd",
         userId,
       });
       let userProfileImg = "<%= user.profilePic %>";

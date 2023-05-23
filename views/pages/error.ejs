@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/styles/styles.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="/images/icons/favicon.svg" />
+    <title><%= error.message %></title>
+  </head>
+  <body class="bg-bkg text-content">
+    <div class="mx-auto w-[90%] md:w-[50%] mt-5">
+      <%- include("../components/header.ejs", { isAuthenticated }) %>
+    </div>
+    <h1 class="text-3xl mt-20 text-center"><%= error.message %></h1>
+    <%- include('../components/navigationBar', { user }) %>
+  </body>
+</html>

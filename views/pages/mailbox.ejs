@@ -5,69 +5,105 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/styles/styles.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="/images/icons/favicon.svg">
     <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.2.2.min.js"></script>
-    <title><%= user.f_name %>'s Mailbox</title>
+    <title>
+        <%= user.f_name %>'s Mailbox
+    </title>
 </head>
 
 <body class="bg-bkg text-content">
-    <div class="pl-6"><%- include('../components/subNavigation.ejs') %></div>
     <div class="w-[90%] mx-auto md:w-[60%] mb-10">
-
+        <div class="pt-5"><%- include('../components/header.ejs', {isAuthenticated}) %></div>
         <h1 class="font-bold mb-3">Messages</h1>
 
         <div id="mailboxContainer" class="flex flex-col gap-5"></div>
-        
+
     </div>
     </article>
     <%- include('../components/navigationBar.ejs', {user}) %>
-<script>
-    let mailboxContainer = document.getElementById("mailboxContainer");
-    function createReceiverMsgBox (receiverAuth0Id, receiverProfileImg, receiverName) {
-        const msgBox = `<a href="/test/message/${receiverAuth0Id}" class="flex bg-slate-200 hover:bg-slate-300 dark:bg-[#272727] dark:hover:bg-[#1e293b] transition-colors ease-in-out duration-300 w-full h-[110px] rounded-lg p-2" >
+        <script>
+            let mailboxContainer = document.getElementById("mailboxContainer");
+            function createReceiverMsgBox(receiverAuth0Id, receiverProfileImg, receiverName) {
+                const msgBox = `<a href="/test/message/${receiverAuth0Id}" class="flex hover:bg-secondary-dark bg-secondary transition-colors ease-in-out duration-300 w-full h-[110px] rounded-lg p-2" >
             <img src="${receiverProfileImg}" alt="Empty Mailbox" class="w-[90px] rounded-full object-cover">
             <p class="text-xl font-bold p-4 text-content text-center">${receiverName}</p>
         </a>`
 
-        mailboxContainer.innerHTML += msgBox;
-        mailboxContainer.scrollTop = mailboxContainer.scrollHeight;
-    }
-
-    let userId = "<%= user.auth0Id %>";
-    let pubnub = new PubNub({
-        publishKey: "pub-c-e1940c4d-880f-4331-9252-3ee8d4b82b0f",
-        subscribeKey: "sub-c-eb8a5e05-e54f-4ede-8583-4f5301612ab2",
-        userId,
-      });
-      let profileImg = "<%= user.profilePic %>";
-      let userFullName = "<%= user.f_name %> <%= user.l_name %>";
-
-      pubnub.objects.getAllChannelMetadata({
-        include: {
-          customFields: true,
-          totalCount: true,
-        }
-      }, (status, response) => {
-        const {data: receiverChannels} = response;
-        const filteredReceiverChannels = receiverChannels.filter(receiverChannel => receiverChannel.name.includes(userId));
-        filteredReceiverChannels.forEach(receiverChannel => {
-            const userData = receiverChannel.custom;
-            if (userData.userId === userId) {
-                const {receiverId, receiverProfileImg, receiverFullName} = userData;
-                const msgBox = createReceiverMsgBox(receiverId, receiverProfileImg, receiverFullName);
-            } else {
-                const {userId, userProfileImg, userFullName} = userData;
-                const msgBox = createReceiverMsgBox(userId, userProfileImg, userFullName);
+                mailboxContainer.insertAdjacentHTML("afterbegin", msgBox);
+                console.log(mailboxContainer);
             }
-        })
-      });
+
+            let userId = "<%= user.auth0Id %>";
+            let pubnub = new PubNub({
+                publishKey: "pub-c-aef98a66-a53a-4fa4-8670-5caef781e7ac",
+                subscribeKey: "sub-c-e24d3586-3673-498b-990d-4a19d2d466cd",
+                userId,
+            });
+
+            function retrieveAllChannelMetadata() {
+                pubnub.objects.getAllChannelMetadata({
+                    include: {
+                        customFields: true,
+                        totalCount: true,
+                    }
+                }, (status, response) => {
+                    const { data: receiverChannels } = response;
+                    const filteredReceiverChannels = receiverChannels.filter(receiverChannel => receiverChannel.name.includes(userId));
+                    filteredReceiverChannels.forEach(receiverChannel => {
+                        const userData = receiverChannel.custom;
+                        if (userData.userId === userId) {
+                            const { receiverId, receiverProfileImg, receiverFullName } = userData;
+                            const msgBox = createReceiverMsgBox(receiverId, receiverProfileImg, receiverFullName);
+                        } else {
+                            const { userId, userProfileImg, userFullName } = userData;
+                            const msgBox = createReceiverMsgBox(userId, userProfileImg, userFullName);
+                        }
+                    })
+                });
+            }
+
+            pubnub.subscribe({
+                channels: ["tradesquare.*"],
+            });
+
+            // add listener
+            const listener = {
+                status: (statusEvent) => {
+                    if (statusEvent.category === "PNConnectedCategory") {
+                        console.log("Connected");
+                    }
+                },
+                signal: ({ channel, message }) => {
+                    console.log("GOT SIGNAL!");
+                    if (message.updateMailbox && channel.includes(userId)) {
+                        console.log("INSIDE IF STATEMENT");
+                        mailboxContainer.innerHTML = "";
+                        retrieveAllChannelMetadata();
+                    };
+
+                },
+            };
+            pubnub.addListener(listener);
+
+            retrieveAllChannelMetadata();
 
 // remove all channel metadata
 // pubnub.objects.getAllChannelMetadata()
 //   .then(response => {
 //     const channels = response.data;
 //     const channelNames = channels.map(channel => channel.id);
+//     console.log("CHANNEL NAMES", channelNames);
 
 //     channelNames.forEach(channelName => {
+//         pubnub.deleteMessages(
+//         {
+//             channel: channelName,
+//         },
+//         function (status, response) {
+//             console.log(status, response);
+//         });
+
 //       pubnub.objects.removeChannelMetadata({
 //         channel: channelName,
 //       });
@@ -76,7 +112,7 @@
 //   .catch(error => {
 //     console.log('Error retrieving channel metadata:', error);
 //   });
-</script>
+        </script>
 </body>
 
 </html>

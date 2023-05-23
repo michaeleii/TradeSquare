@@ -4,7 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/styles/styles.css" rel="stylesheet" />
-
+    <link rel="icon" type="image/x-icon" href="/images/icons/favicon.svg" />
     <title>My Squares</title>
   </head>
 
@@ -16,14 +16,11 @@
       <% if (userSquares.length) { %>
       <div class="flex justify-center items-center flex-col gap-4">
         <% userSquares.forEach(({square}) => { %>
-        <a href="/squares/<%= square.id %>">
-          <button
-            class="p-5 bg-primary hover:bg-primary-dark transition-colors rounded-lg h-[100px] flex justify-center items-center"
-          >
-            <div class="flex">
-              <h1 class="text-white px-4"><%= square.name %></h1>
-            </div>
-          </button>
+        <a
+          href="/squares/<%= square.id %>"
+          class="p-5 bg-primary hover:bg-primary-dark transition-colors rounded-lg w-full md:w-[500px] text-center md:text-left"
+        >
+          <h1 class="text-white px-4"><%= square.name %></h1>
         </a>
 
         <% }) %>
@@ -35,5 +32,6 @@
       </p>
       <% } %>
     </article>
+    <%- include('../components/navigationBar', { user }) %>
   </body>
 </html>

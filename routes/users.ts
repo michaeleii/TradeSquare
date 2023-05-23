@@ -12,54 +12,58 @@ import { requiresAuth } from "express-openid-connect";
 const users = express.Router();
 
 users.get("/profile/:id", requiresAuth(), async (req, res, next) => {
-  const id = +req.params.id;
-  const user = await getUserById(id);
-  if (!user) {
-    res.status(404).json({
-      message: "User not found",
+  try {
+    const id = +req.params.id;
+    const user = await getUserById(id);
+    if (!user) throw new Error("User not found");
+    res.render("pages/profile", {
+      user,
+      isAuthenticated: req.oidc.isAuthenticated(),
     });
-    return;
+  } catch (error) {
+    next(error);
   }
-  res.render("pages/profile", { user });
 });
 
-users.get("/my-items", requiresAuth(), async (req, res) => {
-  const user = await getUserByAuth0Id(req.oidc.user?.sub);
-  if (!user) return res.status(404).send("User not found");
-  const items = user.items;
-
-  for (const item of items) {
-    const url = await getObjectSignedUrl(item.imgName);
-    (
-      item as Item & {
-        category: Category;
-        imgUrl: string;
-      }
-    ).imgUrl = url;
-  }
-  res.render("pages/myLists", { items });
-});
-
-
-
-users.get("/my-squares", requiresAuth(), async (req, res) => {
-  const user = await getUserByAuth0Id(req.oidc.user?.sub);
-  if (!user) return res.status(404).send("User not found");
-  const userSquares = await getUserSquares(user.id);
-  if (!userSquares) {
-    res.status(404).send("User not found");
-    return;
-  }
-  res.render("pages/mySquares", { userSquares });
-});
-
-
-users.get("/likes", requiresAuth(), async (req, res) => {
+users.get("/my-items", requiresAuth(), async (req, res, next) => {
   try {
     const user = await getUserByAuth0Id(req.oidc.user?.sub);
-    if (!user) return res.status(404).send("User not found");
+    if (!user) throw new Error("Please login to view your items");
+    const items = user.items;
+
+    for (const item of items) {
+      const url = await getObjectSignedUrl(item.imgName);
+      (
+        item as Item & {
+          category: Category;
+          imgUrl: string;
+        }
+      ).imgUrl = url;
+    }
+    res.render("pages/myLists", { items, user });
+  } catch (error) {
+    next(error);
+  }
+});
+
+users.get("/my-squares", requiresAuth(), async (req, res, next) => {
+  try {
+    const user = await getUserByAuth0Id(req.oidc.user?.sub);
+    if (!user) throw new Error("User not found");
+    const userSquares = await getUserSquares(user.id);
+    if (!userSquares) throw new Error("Cannot find user squares");
+    res.render("pages/mySquares", { userSquares, user });
+  } catch (error) {
+    next(error);
+  }
+});
+
+users.get("/likes", requiresAuth(), async (req, res, next) => {
+  try {
+    const user = await getUserByAuth0Id(req.oidc.user?.sub);
+    if (!user) throw new Error("Please login to view your liked items");
     const likedItems = await getUserLikedItems(user.id);
-    if (!likedItems) return res.status(404).json({ message: "User not found" });
+    if (!likedItems) throw new Error("Cannot find liked items");
     for (const { item } of likedItems) {
       const url = await getObjectSignedUrl(item.imgName);
       (
@@ -69,31 +73,37 @@ users.get("/likes", requiresAuth(), async (req, res) => {
         }
       ).imgUrl = url;
     }
-    res.render("pages/likes", { likedItems });
-  } catch (error) { }
+    res.render("pages/likes", {
+      likedItems,
+      user,
+      isAuthenticated: req.oidc.isAuthenticated(),
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
-
-
-users.get("/:id", async (req, res) => {
-  const id = +req.params.id;
-  const user = await getUserById(id);
-  if (!user) {
-    return res.status(404).json({
-      message: "User not found",
+users.get("/:id", async (req, res, next) => {
+  try {
+    const id = +req.params.id;
+    const user = await getUserById(id);
+    if (!user) throw new Error("User not found");
+    for (const item of user.items) {
+      const url = await getObjectSignedUrl(item.imgName);
+      (
+        item as Item & {
+          category: Category;
+          imgUrl: string;
+        }
+      ).imgUrl = url;
+    }
+    res.render("pages/seller", {
+      user,
+      isAuthenticated: req.oidc.isAuthenticated(),
     });
+  } catch (error) {
+    next(error);
   }
-  for (const item of user.items) {
-    const url = await getObjectSignedUrl(item.imgName);
-    (
-      item as Item & {
-        category: Category;
-        imgUrl: string;
-      }
-    ).imgUrl = url;
-  }
-
-  res.render("pages/seller", { user: user });
 });
 
 export default users;

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create a Post</title>
+    <link href="/styles/styles.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="/images/icons/favicon.svg">
+</head>
+
+<body class="bg-bkg text-input">
+    <article class="mx-auto w-[90%] md:w-[50%] my-5">
+        <%- include('../components/subNavigation.ejs') %>
+            <div class="inline-block">
+                <h1 class="text-primary text-[42px] mb-3">
+                    <%= square.name %>
+                </h1>
+                <h2 class="border border-b-grey border-x-0 border-t-0 text-[35px] mb-3 text-content">
+                    Create a Post
+                </h2>
+            </div>
+
+            <form class="flex flex-col" action="" method="POST" enctype="multipart/form-data">
+                <div class="flex justify-center md:justify-normal">
+                    <div
+                        class="flex justify-center items-center w-[340px] h-[175px] bg-secondary border-grey  border-2 rounded-lg">
+                        <label for="image" class="flex items-center gap-1 h-full">
+                            <img id="preview" class="w-[330px] h-[170px] object-cover rounded-lg hidden" src="#" alt="">
+                            <svg class="w-[13px] h-[11px] mb-1" viewBox="0 0 15 13" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7.7666 1V12" class="stroke-stroke" stroke-width="1.57143"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M1.5332 6.5H13.9999" class="stroke-stroke" stroke-width="1.57143"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <svg class="w-[24px] h-[24px]" viewBox="0 0 32 32" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g filter="url(#filter0_d_513_8148)">
+                                    <mask id="mask0_513_8148" style="mask-type:luminance" maskUnits="userSpaceOnUse"
+                                        x="6" y="2" width="20" height="20">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M6.00049 2H25.9601V21.9498H6.00049V2Z" fill="white" />
+                                    </mask>
+                                    <g mask="url(#mask0_513_8148)">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M11.6505 3.5C9.12949 3.5 7.50049 5.227 7.50049 7.899V16.051C7.50049 18.724 9.12949 20.45 11.6505 20.45H20.3005C22.8275 20.45 24.4605 18.724 24.4605 16.051V7.899C24.4605 5.227 22.8275 3.5 20.3005 3.5H11.6505ZM20.3005 21.95H11.6505C8.27049 21.95 6.00049 19.579 6.00049 16.051V7.899C6.00049 4.371 8.27049 2 11.6505 2H20.3005C23.6855 2 25.9605 4.371 25.9605 7.899V16.051C25.9605 19.579 23.6855 21.95 20.3005 21.95Z"
+                                            class="fill-stroke" />
+                                    </g>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M9.28126 17.1804C9.09526 17.1804 8.91026 17.1124 8.76526 16.9744C8.46426 16.6904 8.45226 16.2144 8.73726 15.9154L10.2653 14.3024C11.0743 13.4434 12.4393 13.4014 13.3023 14.2114L14.2603 15.1834C14.5273 15.4534 14.9613 15.4584 15.2293 15.1944C15.3303 15.0754 17.5083 12.4304 17.5083 12.4304C17.9223 11.9284 18.5063 11.6184 19.1553 11.5544C19.8053 11.4974 20.4363 11.6864 20.9393 12.0994C20.9823 12.1344 21.0213 12.1684 23.2173 14.4234C23.5063 14.7194 23.5013 15.1944 23.2043 15.4834C22.9083 15.7744 22.4323 15.7654 22.1433 15.4694C22.1433 15.4694 20.0943 13.3664 19.9483 13.2244C19.7933 13.0974 19.5443 13.0234 19.2993 13.0474C19.0503 13.0724 18.8263 13.1914 18.6673 13.3844C16.3433 16.2034 16.3153 16.2304 16.2773 16.2674C15.4193 17.1094 14.0343 17.0954 13.1913 16.2354C13.1913 16.2354 12.2613 15.2914 12.2453 15.2724C12.0143 15.0584 11.6023 15.0724 11.3553 15.3334L9.82526 16.9464C9.67726 17.1024 9.47926 17.1804 9.28126 17.1804Z"
+                                        class="fill-stroke" />
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M12.5577 8.12891C12.0047 8.12891 11.5547 8.57891 11.5547 9.13291C11.5547 9.68691 12.0047 10.1379 12.5587 10.1379C13.1127 10.1379 13.5637 9.68691 13.5637 9.13291C13.5637 8.57991 13.1127 8.12991 12.5577 8.12891ZM12.5587 11.6379C11.1777 11.6379 10.0547 10.5139 10.0547 9.13291C10.0547 7.75191 11.1777 6.62891 12.5587 6.62891C13.9407 6.62991 15.0637 7.75391 15.0637 9.13291C15.0637 10.5139 13.9397 11.6379 12.5587 11.6379Z"
+                                        class="fill-stroke" />
+                                </g>
+                                <defs>
+                                    <filter id="filter0_d_513_8148" x="0" y="0" width="32" height="32"
+                                        filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                                        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                                        <feColorMatrix in="SourceAlpha" type="matrix"
+                                            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                                        <feOffset dy="4" />
+                                        <feGaussianBlur stdDeviation="2" />
+                                        <feComposite in2="hardAlpha" operator="out" />
+                                        <feColorMatrix type="matrix"
+                                            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
+                                        <feBlend mode="normal" in2="BackgroundImageFix"
+                                            result="effect1_dropShadow_513_8148" />
+                                        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_513_8148"
+                                            result="shape" />
+                                    </filter>
+                                </defs>
+                            </svg>
+                        </label>
+
+                    </div>
+                </div>
+
+                <input type="file" id="image" name="image" accept="image/png, image/jpeg" class="hidden">
+                <div class="my-5">
+                    <h2 class="text-[23px] text-content">Add Photos</h2>
+                    <p class="text-[16px] text-content">
+                        Be sure to include quality photos. Listings with poorly taken photos
+                        will be reviewed and may be taken down.
+                    </p>
+                </div>
+
+                <label class="mt-5 text-[23px] font-bold text-content" for="postDescription">
+                    Description
+                </label>
+                <textarea class="border-2 p-2 border-darkgrey rounded-md placeholder:text-grey bg-secondary"
+                    name="description" id="listingDescription" rows="6" cols="15" placeholder="..."></textarea>
+
+                <!-- <label class="mt-10 text-[23px] font-bold" for="square">
+                    Square
+                </label> -->
+                <!-- <select class="p-3 border-2 border-darkgrey rounded-md" name="squareId" id="square">
+                    <option value="">--Please choose a square--</option>
+
+                    <option value="1">Home Furniture / Organizer</option>
+                    <option value="2">Cloth / Accessories</option>
+                    <option value="3">Shoes</option>
+                    <option value="4">Collections ( Art / Music)</option>
+                    <option value="5">Kitchen Appliances</option>
+                    <option value="6">Car / Electronics</option>
+                </select> -->
+
+
+                <h1 class="mt-10 sm:text-center text-content">You're All Done!</h1>
+                <div class="flex sm:justify-center">
+                    <button class="bg-primary w-[235px] h-[50px] rounded-xl text-white py-2.5 px-5 mt-2 mr-2 block">
+                        Post
+                    </button>
+                </div>
+            </form>
+    </article>
+
+
+    </article>
+    <script>
+        const imageInput = document.querySelector("#image");
+        const imagePreview = document.querySelector("#preview");
+        const inputIcons = document.querySelectorAll(".input-icon");
+        imageInput.onchange = event => {
+            const [file] = imageInput.files
+            if (file) {
+                imagePreview.src = URL.createObjectURL(file)
+                inputIcons.forEach(icon => {
+                    icon.classList.add("hidden")
+                })
+                imagePreview.classList.remove("hidden")
+            }
+        }
+    </script>
+</body>
+
+</html>

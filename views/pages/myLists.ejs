@@ -4,15 +4,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/styles/styles.css" rel="stylesheet" />
-
-    <title>User lists</title>
+    <link rel="icon" type="image/x-icon" href="/images/icons/favicon.svg" />
+    <title>My listings</title>
   </head>
 
   <body class="bg-bkg text-content">
     <article class="w-[90%] mx-auto md:w-[60%] mb-10">
       <div class="pt-5"><%- include('../components/subNavigation.ejs') %></div>
 
-      <h1 class="font-bold mt-0 mb-2">Your Lists</h1>
+      <h1 class="font-bold mt-0 mb-2">My Listings</h1>
 
       <div class="grid grid-col grid-cols-2 gap-4">
         <% items.forEach(function(item){ %>
@@ -35,5 +35,6 @@
         <% }) %>
       </div>
     </article>
+    <%- include('../components/navigationBar', { user }) %>
   </body>
 </html>

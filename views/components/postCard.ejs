@@ -1,6 +1,4 @@
-<article
-  class="p-8 bg-offwhite dark:bg-[#272727] rounded-md mb-8 drop-shadow-lg"
->
+<article class="p-8 bg-secondary rounded-md mb-8 drop-shadow-lg z-[-1]">
   <div class="flex items-center gap-2 mb-3">
     <img
       class="w-[35px] h-[35px] rounded-full object-cover"
@@ -10,8 +8,8 @@
     <div class="">
       <p class="font-medium"><%= post.user.f_name %></p>
       <p class="font-normal text-sm">
-        <%= new Date(post.date).toLocaleString("en-US", { month: "short", day:
-        "numeric", year: "numeric", }) %>
+        <%= new Date(post.date).toLocaleString("en-US", { month: "short" , day:
+        "numeric" , year: "numeric" , }) %>
       </p>
     </div>
   </div>
@@ -20,11 +18,5 @@
   </div>
   <div>
     <p class="text-md mt-5"><%= post.description %></p>
-    <!-- <div class="flex justify-end gap-1">
-      <div class="flex items-center gap-2">
-        <img src="/images/icons/Comment.svg" alt="" />
-        <span class="text-primary text-sm">100</span>
-      </div>
-    </div> -->
   </div>
 </article>
