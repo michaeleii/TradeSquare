@@ -97,7 +97,10 @@ users.get("/:id", async (req, res, next) => {
         }
       ).imgUrl = url;
     }
-    res.render("pages/seller", { user });
+    res.render("pages/seller", {
+      user,
+      isAuthenticated: req.oidc.isAuthenticated(),
+    });
   } catch (error) {
     next(error);
   }

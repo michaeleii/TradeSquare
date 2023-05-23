@@ -1,67 +1,86 @@
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/styles/styles.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="/images/icons/favicon.svg" />
     <title><%= user.f_name %>'s Profile</title>
-</head>
-<body class="bg-bkg text-content">
+  </head>
+  <body class="bg-bkg text-content">
     <article class="w-[90%] mx-auto md:w-[60%] mb-10">
-       <%- include('../components/subNavigation.ejs') %>
-        
-    <div class="h-full flex flex-col justify-between">
+      <%- include('../components/header.ejs', {isAuthenticated}) %>
+
+      <div class="h-full flex flex-col justify-between">
         <div class="mb-10">
-            <img src="<%= user.profilePic %>" class="rounded-full w-[300px] h-[300px] object-cover mx-auto"
-                alt="" />
+          <img
+            src="<%= user.profilePic %>"
+            class="rounded-full w-[300px] h-[300px] object-cover mx-auto"
+            alt=""
+          />
         </div>
-        <h2 class="mb-2 text-content">
-                <%= user.f_name %> <%= user.l_name %>
-        </h2>
-        <p class="text-content">
-                A little bit about me...
-         </p>
+        <h2 class="mb-2 text-content"><%= user.f_name %> <%= user.l_name %></h2>
+        <p class="text-content">A little bit about me...</p>
 
         <h3 class="mt-5 text-content">Location</h3>
         <div class="mb-2">
-            <p class="text-content">Toronto, Ontario</p>
+          <p class="text-content">Toronto, Ontario</p>
         </div>
 
-        <h3 class="mt-5 text-content">Analytics</h3>
-        <div class="mb-2">
-            <div class="flex">
-                <p class="text-content">Total transactions:&nbsp;</p> 
-                <p class="text-primary">21</p>
-            </div>
-        </div>
+        <h3 class="mt-5 text-content mb-2">Analytics</h3>
 
         <div class="flex items-center gap-2 mb-2">
-              <% for (var i = 1; i <= 5; i++) { %>
-        <% if (i <= Math.floor(user.rating)) { %>
-            <img src="/images/icons/FullStar.svg" class="w-[20px]" alt="Full star" />
-        <% } else if (i === Math.ceil(user.rating) && user.rating % 1 !== 0) { %>
-            <img src="/images/icons/HalfStar.svg" class="w-[20px]" alt="Half star" />
-        <% } else { %>
-            <img src="/images/icons/GreyStar.svg" class="w-[20px]" alt="Empty star" />
-        <% } %>
-    <% } %>
+          <% for (var i = 1; i <= 5; i++) { %> <% if (i <=
+          Math.floor(user.rating)) { %>
+          <img
+            src="/images/icons/FullStar.svg"
+            class="w-[20px]"
+            alt="Full star"
+          />
+          <% } else if (i === Math.ceil(user.rating) && user.rating % 1 !== 0) {
+          %>
+          <img
+            src="/images/icons/HalfStar.svg"
+            class="w-[20px]"
+            alt="Half star"
+          />
+          <% } else { %>
+          <img
+            src="/images/icons/GreyStar.svg"
+            class="w-[20px]"
+            alt="Empty star"
+          />
+          <% } %> <% } %>
         </div>
-        
+
         <p class="text-content text-xs">
-            <%= user.rating %> Stars (20 reviews)
+          <%= user.rating %> Stars (20 reviews)
         </p>
 
         <h3 class="mb-2 mt-10 text-content">Listings</h3>
         <div>
-            <% user.items.forEach(item => { %>
-                <div class="relative">
-                    <img src="<%= item.imgUrl %>" class="mx-auto opacity-50 aspect-video rounded-lg object-cover mb-5" alt="" />
-                    <p class="text-sm absolute top-0 left-0 p-4 text-black text-center"><%= item.category.name %></p>
-                    <p class="absolute  top-5 left-0 p-4 text-black  text-lg font-bold"><%= item.name %></p>
-                </div>
-            <% }) %>  
+          <% user.items.forEach(item => { %>
+          <a href="/items/view/<%= item.id %>">
+            <div class="relative">
+              <img
+                src="<%= item.imgUrl %>"
+                class="mx-auto opacity-50 dark:opacity-100 aspect-video rounded-lg object-cover mb-5"
+                alt=""
+              />
+              <p
+                class="text-sm absolute top-0 left-0 p-4 text-black text-center"
+              >
+                <%= item.category.name %>
+              </p>
+              <p class="absolute top-5 left-0 p-4 text-black text-lg font-bold">
+                <%= item.name %>
+              </p>
+            </div>
+          </a>
+          <% }) %>
         </div>
-    </div>
-</body>
+      </div>
+    </article>
+    <%- include('../components/navigationBar', { user }) %>
+  </body>
+</html>

@@ -16,7 +16,7 @@
 		<%- include('../components/subNavigation.ejs') %>
 			<img class="mx-auto aspect-video rounded-lg object-cover mb-5" src="<%= item.imgUrl %>" alt="Item Img"
 				srcset="" />
-			<h4 class="text-heading mt-8">
+			<h4 class="text-heading mt-5">
 				<%= item.category.name %>
 			</h4>
 			<div class="flex justify-between">
@@ -35,15 +35,16 @@
 					</svg>
 					<% } %>
 			</div>
-
 			<div class="flex gap-5 justify-start mt-5 items-center">
 				<img class="rounded-full w-[60px] h-[60px] object-cover" src="<%= item.user.profilePic %>"
-					alt="Seller Img" srcset="" />
+				alt="Seller Img" srcset="" />
+				<a href="/users/<%= item.user.id %>">
 				<p class="text-content font-bold text-2xl">
 					<%= item.user.f_name %>
 						<%= item.user.l_name %>
-				</p>
-			</div>
+					</p>
+				</a>
+				</div>
 
 			<div class="flex gap-5 justify-start items-center pl-2 my-5">
 				<% for (var i=1; i <=5; i++) { %>
