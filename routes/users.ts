@@ -105,5 +105,31 @@ users.get("/:id", async (req, res, next) => {
     next(error);
   }
 });
+users.get("/:id/rating", async (req, res, next) => {
+  try {
+    const id = +req.params.id;
+    const user = await getUserById(id);
+    if (!user) throw new Error("User not found");
+    res.render("pages/rating", {
+      user,
+      isAuthenticated: req.oidc.isAuthenticated(),
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+users.get("/:id/rating/create", async (req, res, next) => {
+  try {
+    const id = +req.params.id;
+    const user = await getUserById(id);
+    if (!user) throw new Error("User not found");
+    res.render("pages/createReview", {
+      user,
+      isAuthenticated: req.oidc.isAuthenticated(),
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 
 export default users;
