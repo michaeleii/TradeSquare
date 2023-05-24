@@ -101,6 +101,24 @@ users.get("/mailbox", authenticateMessage, async (req, res, next) => {
   }
 });
 
+users.get("/message/:receiverAuth0Id", async (req, res, next) => {
+  try {
+    const user = req.oidc.user
+      ? await getUserByAuth0Id(req.oidc.user.sub)
+      : null;
+    if (!user) throw new Error("Can't send message to invalid user");
+
+    const receiver = await getUserByAuth0Id(req.params.receiverAuth0Id);
+    (user as any).sid = req.oidc.user?.sid;
+    res.render("pages/message.ejs", {
+      user,
+      receiver,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 users.get("/:id", async (req, res, next) => {
   try {
     const id = +req.params.id;
