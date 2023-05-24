@@ -1,7 +1,7 @@
 import express, { NextFunction } from "express";
 import dotenv from "dotenv";
 
-import { getAllItems, sortItemsByLikes } from "./services/item";
+import { getPopularItems } from "./services/item";
 import { checkIfUserExists, getUserByAuth0Id } from "./services/user";
 import { getObjectSignedUrl } from "./s3";
 import { Item, Like, User } from "@prisma/client";
@@ -41,27 +41,28 @@ const PORT = process.env.PORT || 3000;
 
 app.get("/", checkIfUserExists, async (req, res, next) => {
   try {
-    const items = await sortItemsByLikes(req.oidc.user?.sub);
-    if (!items) throw new Error("No items found");
+    const items = await getPopularItems(req.oidc.user?.sub);
+    if (items) {
+      for (const item of items) {
+        const url = await getObjectSignedUrl(item.imgName);
+        (
+          item as Item & {
+            likeCount: number;
+            likes: Like[];
+            user: User;
+            imgUrl: string;
+          }
+        ).imgUrl = url;
+      }
+    }
 
     const sortedCategories = (await getAllSortedCategories()).splice(0, 3);
     const sortedSquares = (await getAllSortedSquares()).splice(0, 3);
 
-    for (const item of items) {
-      const url = await getObjectSignedUrl(item.imgName);
-      (
-        item as Item & {
-          likeCount: number;
-          likes: Like[];
-          user: User;
-          imgUrl: string;
-        }
-      ).imgUrl = url;
-    }
-
     const user = req.oidc.user
       ? await getUserByAuth0Id(req.oidc.user.sub)
       : null;
+
     res.render("pages/index", {
       items,
       sortedCategories,
