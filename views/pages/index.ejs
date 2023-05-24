@@ -74,7 +74,7 @@
 					<div class="flex justify-center md:block">
 						<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 justify-center">
 							
-							<% popularItems.forEach(item => { %>
+							<% items.forEach(item => { %>
 							 <a href="/items/view/<%= item.id %>">
 									<%- include('../components/itemCard', {item}) %>
 									

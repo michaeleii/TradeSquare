@@ -24,9 +24,9 @@ async function getAllItems(currentUserAuth0Id: string) {
   }
 }
 
-async function sortItemsByLikes(currentUserAuth0Id: string) {
+async function getPopularItems(currentUserAuth0Id: string) {
   try {
-    const sortedItems = await prisma.item
+    const popularItems = await prisma.item
       .findMany({
         where: {
           user: {
@@ -46,7 +46,7 @@ async function sortItemsByLikes(currentUserAuth0Id: string) {
       .then((items) => {
         return items.map((item) => ({ ...item, likeCount: item.likes.length }));
       });
-    return sortedItems;
+    return popularItems;
   } catch (error) {
     throw error;
   }
@@ -121,5 +121,11 @@ async function updateItem(itemId: number, formData: Item) {
   }
 }
 
-export { getAllItems, getItemByItemId, createItem, updateItem, deleteItem, sortItemsByLikes };
-
+export {
+  getAllItems,
+  getItemByItemId,
+  createItem,
+  updateItem,
+  deleteItem,
+  getPopularItems,
+};
