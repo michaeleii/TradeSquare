@@ -11,6 +11,9 @@ import { requiresAuth } from "express-openid-connect";
 
 const users = express.Router();
 
+const authenticateMessage = (req: any, res: any, next: any) =>
+  !req.oidc.user ? res.redirect(`/test/featureMessagePage`) : next();
+
 users.get("/profile/:id", requiresAuth(), async (req, res, next) => {
   try {
     const id = +req.params.id;
@@ -75,6 +78,21 @@ users.get("/likes", requiresAuth(), async (req, res, next) => {
     }
     res.render("pages/likes", {
       likedItems,
+      user,
+      isAuthenticated: req.oidc.isAuthenticated(),
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+users.get("/mailbox", authenticateMessage, async (req, res, next) => {
+  try {
+    const user = req.oidc.user
+      ? await getUserByAuth0Id(req.oidc.user.sub)
+      : null;
+    if (!user) throw new Error("User not found");
+    res.render("pages/mailbox", {
       user,
       isAuthenticated: req.oidc.isAuthenticated(),
     });

@@ -7,24 +7,7 @@ import {
 
 const test = express.Router();
 
-const authenticateMessage = (req: any, res: any, next: any) =>
-  !req.oidc.user ? res.redirect(`/test/featureMessagePage`) : next();
-
 // Do test.get(/<component name>/) for each component you want to test
-test.get("/mailbox", authenticateMessage, async (req, res, next) => {
-  try {
-    const user = req.oidc.user
-      ? await getUserByAuth0Id(req.oidc.user.sub)
-      : null;
-    if (!user) throw new Error("User not found");
-    res.render("pages/mailbox", {
-      user,
-      isAuthenticated: req.oidc.isAuthenticated(),
-    });
-  } catch (error) {
-    next(error);
-  }
-});
 
 test.get("/credentials", (req, res) =>
   res.render("pages/credentials", { state: null })
@@ -58,10 +41,6 @@ test.get("/featureLikePage", (req, res) => {
 
 test.get("/preFeatureProfile", (req, res) => {
   res.render("pages/preFeatureProfilePage");
-});
-
-test.get("/categoriesCarousel", (req, res) => {
-  res.render("pages/categoriesCarousel");
 });
 
 test.get("/editprofile/:id", async (req, res) => {
