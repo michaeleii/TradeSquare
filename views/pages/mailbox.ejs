@@ -25,7 +25,7 @@
         <script>
             let mailboxContainer = document.getElementById("mailboxContainer");
             function createReceiverMsgBox(receiverAuth0Id, receiverProfileImg, receiverName) {
-                const msgBox = `<a href="/test/message/${receiverAuth0Id}" class="flex hover:bg-secondary-dark bg-secondary transition-colors ease-in-out duration-300 w-full h-[110px] rounded-lg p-2" >
+                const msgBox = `<a href="/users/message/${receiverAuth0Id}" class="flex hover:bg-secondary-dark bg-secondary transition-colors ease-in-out duration-300 w-full h-[110px] rounded-lg p-2" >
             <img src="${receiverProfileImg}" alt="Empty Mailbox" class="w-[90px] rounded-full object-cover">
             <p class="text-xl font-bold p-4 text-content text-center">${receiverName}</p>
         </a>`
