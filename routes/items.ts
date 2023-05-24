@@ -5,7 +5,6 @@ import {
   getItemByItemId,
   updateItem,
   deleteItem,
-  sortItemsByLikes,
 } from "../services/item";
 import { requiresAuth } from "express-openid-connect";
 
@@ -25,9 +24,7 @@ const items = express.Router();
 
 items.get("/all", async (req, res, next) => {
   try {
-    // const items = await getAllItems(req.oidc.user?.sub);
-    const items = await sortItemsByLikes(req.oidc.user?.sub);
-    // console.log(items)
+    const items = await getAllItems(req.oidc.user?.sub);
 
     if (!items) throw new Error("No items found");
 
