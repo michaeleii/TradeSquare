@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Write Review</title>
+    <link href="/styles/styles.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="/images/icons/favicon.svg" />
+  </head>
+
+  <body class="bg-bkg text-content">
+    <article class="mx-auto w-[90%] md:w-[50%] my-5">
+      <%- include('../components/subNavigation.ejs') %>
+      <div class="inline-block">
+        <h1
+          class="text-primary text-[42px] mb-3 border border-b-grey border-x-0 border-t-0"
+        >
+          <span class="text-content">Reviewing:</span>
+          <%= user.f_name %> <%= user.l_name %>
+        </h1>
+      </div>
+
+      <form class="flex flex-col" action="" method="POST">
+        <label class="mt-10 text-[23px] font-bold" for="rating">Rating</label>
+        <select
+          class="p-3 border-2 border-darkgrey rounded-md bg-secondary"
+          name="rating"
+          id="rating"
+        >
+          <option value="">-- Select a rating --</option>
+          <option value="0.0">0.0 stars</option>
+          <option value="0.5">0.5 stars</option>
+          <option value="1.0">1.0 stars</option>
+          <option value="1.5">1.5 stars</option>
+          <option value="2.0">2.0 stars</option>
+          <option value="2.5">2.5 stars</option>
+          <option value="3.0">3.0 stars</option>
+          <option value="3.5">3.5 stars</option>
+          <option value="4.0">4.0 stars</option>
+          <option value="4.5">4.5 stars</option>
+          <option value="5.0">5.0 stars</option>
+        </select>
+        <label
+          class="mt-5 text-[23px] font-bold text-content"
+          for="postDescription"
+        >
+          Review
+        </label>
+        <textarea
+          class="border-2 p-2 border-darkgrey rounded-md placeholder:text-grey bg-secondary text-content"
+          name="description"
+          id="listingDescription"
+          rows="6"
+          cols="15"
+          placeholder="..."
+        ></textarea>
+
+        <div class="flex sm:justify-center mt-5">
+          <button
+            class="btn-primary h-[50px] w-full md:w-[235px] rounded-xl text-white py-2.5 px-5 mt-2 mr-2 block"
+          >
+            Create
+          </button>
+        </div>
+      </form>
+    </article>
+  </body>
+</html>
