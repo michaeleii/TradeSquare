@@ -42,6 +42,7 @@ async function getPopularItems(currentUserAuth0Id: string) {
             _count: "desc",
           },
         },
+        take: 8,
       })
       .then((items) => {
         return items.map((item) => ({ ...item, likeCount: item.likes.length }));
