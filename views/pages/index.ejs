@@ -66,7 +66,7 @@
 					</section>
 
 					<div class="flex justify-between items-center mb-3">
-						<h2 class="mb-3">Recommended for you</h2>
+						<h2 class="mb-3">Popular Items</h2>
 						<a href="/items/all" class="text-primary hover:text-primary-dark">
 							Show All
 						</a>
@@ -74,11 +74,13 @@
 					<div class="flex justify-center md:block">
 						<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 justify-center">
 							
-							<% for(let i=0; i<8; i++) { %>
-								<a href="/items/view/<%= items[i].id %>">
-									<%- include('../components/itemCard', {item: items[i]}) %>
-										<% } %>
+							<% popularItems.forEach(item => { %>
+							 <a href="/items/view/<%= item.id %>">
+									<%- include('../components/itemCard', {item}) %>
+									
 								</a>
+							<% }) %>
+								
 						</div>
 					</div>
 	</div>
