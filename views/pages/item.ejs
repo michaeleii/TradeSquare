@@ -48,16 +48,16 @@
 
 			<div class="flex gap-5 justify-start items-center pl-2 my-5">
 				<% for (var i=1; i <=5; i++) { %>
-					<% if (i <=Math.floor(item.user.rating)) { %>
+					<% if (i <=Math.floor(item.user.avgRatings)) { %>
 						<img src="/images/icons/FullStar.svg" class="w-[20px]" alt="Full star" />
-						<% } else if (i===Math.ceil(item.user.rating) && item.user.rating % 1 !==0) { %>
+						<% } else if (i===Math.ceil(item.user.avgRatings) && item.user.avgRatings % 1 !==0) { %>
 							<img src="/images/icons/HalfStar.svg" class="w-[20px]" alt="Half star" />
 							<% } else { %>
 								<img src="/images/icons/GreyStar.svg" class="w-[20px]" alt="Empty star" />
 								<% } %>
 									<% } %>
 										<p class="text-xs">
-											<%= item.user.rating %>
+											<%= item.user.avgRatings %>
 										</p>
 			</div>
 

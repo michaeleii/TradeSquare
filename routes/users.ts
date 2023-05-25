@@ -1,5 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import {
+  createReview,
+  getUserReviews,
   getUserByAuth0Id,
   getUserById,
   getUserLikedItems,
@@ -19,9 +21,20 @@ users.get("/profile/:id", requiresAuth(), async (req, res, next) => {
     const id = +req.params.id;
     const user = await getUserById(id);
     if (!user) throw new Error("User not found");
+    const userReviews = await getUserReviews(id);
+    const userAvgRatings =
+      Math.round(
+        (userReviews
+          .map((review) => review.review.rating)
+          .reduce((a, b) => a + b, 0) /
+          userReviews.length) *
+          2
+      ) / 2;
     res.render("pages/profile", {
       user,
       isAuthenticated: req.oidc.isAuthenticated(),
+      userAvgRatings: !userAvgRatings ? 0 : userAvgRatings,
+      numberOfReviews: userReviews.length,
     });
   } catch (error) {
     next(error);
@@ -123,6 +136,16 @@ users.get("/:id", async (req, res, next) => {
   try {
     const id = +req.params.id;
     const user = await getUserById(id);
+    const sellerReviews = await getUserReviews(id);
+    const sellerAvgRatings =
+      Math.round(
+        (sellerReviews
+          .map((review) => review.review.rating)
+          .reduce((a, b) => a + b, 0) /
+          sellerReviews.length) *
+          2
+      ) / 2;
+
     if (!user) throw new Error("User not found");
     for (const item of user.items) {
       const url = await getObjectSignedUrl(item.imgName);
@@ -136,26 +159,33 @@ users.get("/:id", async (req, res, next) => {
     res.render("pages/seller", {
       user,
       isAuthenticated: req.oidc.isAuthenticated(),
+      sellerAvgRatings: !sellerAvgRatings ? 0 : sellerAvgRatings,
+      numberOfReviews: sellerReviews.length,
     });
   } catch (error) {
     next(error);
   }
 });
+
 users.get("/:id/rating", async (req, res, next) => {
   try {
     const id = +req.params.id;
     const user = await getUserById(id);
+    const sellerReviews = await getUserReviews(id);
     if (!user) throw new Error("User not found");
     res.render("pages/rating", {
       user,
       isAuthenticated: req.oidc.isAuthenticated(),
+      sellerReviews,
     });
   } catch (error) {
     next(error);
   }
 });
+
 users
   .route("/:id/rating/create")
+  .all(requiresAuth())
   .get(async (req, res, next) => {
     try {
       const id = +req.params.id;
@@ -169,6 +199,18 @@ users
       next(error);
     }
   })
-  .post(async (req, res, next) => {});
+  .post(async (req, res, next) => {
+    try {
+      const { rating, description } = req.body;
+      const sellerId = +req.params.id;
+      const sessionUserAuth0Id = req.oidc.user?.sub;
+      const sessionUser = await getUserByAuth0Id(sessionUserAuth0Id);
+      if (!sessionUser) throw new Error("User not found");
+      await createReview(+rating, description, sessionUser.id, sellerId);
+      res.redirect(`/users/${sellerId}/rating`);
+    } catch (error) {
+      next(error);
+    }
+  });
 
 export default users;

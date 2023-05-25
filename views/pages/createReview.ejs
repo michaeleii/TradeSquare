@@ -21,7 +21,11 @@
         </h1>
       </div>
 
-      <form class="flex flex-col" action="" method="POST">
+      <form
+        class="flex flex-col"
+        action="/users/<%= user.id %>/rating/create"
+        method="POST"
+      >
         <label class="mt-10 text-[23px] font-bold" for="rating">Rating</label>
         <select
           class="p-3 border-2 border-darkgrey rounded-md bg-secondary"

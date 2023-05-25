@@ -18,43 +18,6 @@
       />
       <h1 class="font-bold mt-0 mb-2 text-content"><%= item.name %></h1>
 
-      <div class="flex gap-5 justify-start mt-5">
-        <img
-          class="rounded-full w-[30px] h-[30px] object-cover"
-          src="<%= item.user.profilePic %>"
-          alt="Seller Img"
-          srcset=""
-        />
-        <p class="text-content font-bold text-2xl">
-          <%= item.user.f_name %> <%= item.user.l_name %>
-        </p>
-      </div>
-
-      <div class="flex gap-5 justify-start items-center pl-2 my-5">
-        <% for (var i = 1; i <= 5; i++) { %> <% if (i <=
-        Math.floor(item.user.rating)) { %>
-        <img
-          src="/images/icons/FullStar.svg"
-          class="w-[20px]"
-          alt="Full star"
-        />
-        <% } else if (i === Math.ceil(item.user.rating) && item.user.rating % 1
-        !== 0) { %>
-        <img
-          src="/images/icons/HalfStar.svg"
-          class="w-[20px]"
-          alt="Half star"
-        />
-        <% } else { %>
-        <img
-          src="/images/icons/GreyStar.svg"
-          class="w-[20px]"
-          alt="Empty star"
-        />
-        <% } %> <% } %>
-        <p class="text-xs text-content"><%= item.user.rating %></p>
-      </div>
-
       <div class="my-5">
         <h2 class="mb-2 text-content">Product Details</h2>
         <p class="text-content"><%= item.description %></p>

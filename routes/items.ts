@@ -8,7 +8,11 @@ import {
 } from "../services/item";
 import { requiresAuth } from "express-openid-connect";
 
-import { checkIfUserLiked, getUserByAuth0Id } from "../services/user";
+import {
+  checkIfUserLiked,
+  getUserByAuth0Id,
+  getUserReviews,
+} from "../services/user";
 
 import multer from "multer";
 import { Category, Item, Like, User } from "@prisma/client";
@@ -25,10 +29,18 @@ const items = express.Router();
 items.get("/all", async (req, res, next) => {
   try {
     const items = await getAllItems(req.oidc.user?.sub);
-
     if (!items) throw new Error("No items found");
 
     for (const item of items) {
+      const sellerReviews = await getUserReviews(item.userId);
+      const sellerAvgRatings =
+        Math.round(
+          (sellerReviews
+            .map((review) => review.review.rating)
+            .reduce((a, b) => a + b, 0) /
+            sellerReviews.length) *
+            2
+        ) / 2;
       const url = await getObjectSignedUrl(item.imgName);
       (
         item as Item & {
@@ -38,6 +50,7 @@ items.get("/all", async (req, res, next) => {
           imgUrl: string;
         }
       ).imgUrl = url;
+      (item as any).user.avgRatings = !sellerAvgRatings ? 0 : sellerAvgRatings;
     }
 
     const user = req.oidc.user
@@ -148,6 +161,15 @@ items.get("/view/:id", async (req, res, next) => {
   try {
     const item = await getItemByItemId(+req.params.id);
     if (!item) throw new Error("Item not found");
+    const sellerReviews = await getUserReviews(item.userId);
+    const sellerAvgRatings =
+      Math.round(
+        (sellerReviews
+          .map((review) => review.review.rating)
+          .reduce((a, b) => a + b, 0) /
+          sellerReviews.length) *
+          2
+      ) / 2;
     const url = await getObjectSignedUrl(item.imgName);
     (
       item as Item & {
@@ -158,6 +180,7 @@ items.get("/view/:id", async (req, res, next) => {
         imgUrl: string;
       }
     ).imgUrl = url;
+    (item as any).user.avgRatings = !sellerAvgRatings ? 0 : sellerAvgRatings;
 
     const user = req.oidc.user
       ? await getUserByAuth0Id(req.oidc.user.sub)

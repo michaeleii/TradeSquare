@@ -12,18 +12,44 @@ datasource db {
 }
 
 model User {
-  id         Int            @id @default(autoincrement())
-  email      String         @unique
-  f_name     String
-  l_name     String
-  profilePic String         @map("profile_pic")
-  auth0Id    String?        @unique @map("auth0_id")
-  rating     Float          @default(0)
-  location   String?        @default("")
-  items      Item[]
-  posts      Post[]
-  likes      Like[]
-  squares    SquaresUsers[]
+  id              Int            @id @default(autoincrement())
+  email           String         @unique
+  f_name          String
+  l_name          String
+  profilePic      String         @map("profile_pic")
+  auth0Id         String?        @unique @map("auth0_id")
+  rating          Float          @default(0)
+  location        String?        @default("")
+  items           Item[]
+  posts           Post[]
+  likes           Like[]
+  squares         SquaresUsers[]
+  givenReviews    Review[]
+  receivedReviews ReviewUser[]
+}
+
+model ReviewUser {
+  id       Int    @id @default(autoincrement())
+  review   Review @relation(fields: [reviewId], references: [id])
+  reviewId Int    @map("review_id")
+  user     User   @relation(fields: [userId], references: [id])
+  userId   Int    @map("user_id")
+
+  @@unique([reviewId, userId])
+  @@unique([reviewId])
+  @@index(reviewId)
+  @@index(userId)
+}
+
+model Review {
+  id         Int         @id @default(autoincrement())
+  review     String
+  rating     Float
+  author     User        @relation(fields: [authorId], references: [id])
+  authorId   Int         @map("author_id")
+  ReviewUser ReviewUser?
+
+  @@index(authorId)
 }
 
 model Item {
