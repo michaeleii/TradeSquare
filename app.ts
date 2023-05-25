@@ -72,8 +72,8 @@ app.get("/", checkIfUserExists, async (req, res, next) => {
       }
     }
 
-    const sortedCategories = (await getAllSortedCategories()).splice(0, 3);
-    const sortedSquares = (await getAllSortedSquares()).splice(0, 3);
+    const sortedCategories = await getAllSortedCategories();
+    const sortedSquares = await getAllSortedSquares();
 
     const user = req.oidc.user
       ? await getUserByAuth0Id(req.oidc.user.sub)

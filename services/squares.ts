@@ -14,6 +14,7 @@ async function getAllSortedSquares() {
   try {
     const squares = await prisma.square.findMany({
       orderBy: { users: { _count: "desc" } },
+      take: 3,
     });
     return squares;
   } catch (error) {

@@ -13,6 +13,7 @@ async function getAllSortedCategories() {
   try {
     const categories = await prisma.category.findMany({
       orderBy: { items: { _count: "desc" } },
+      take: 3,
     });
     return categories;
   } catch (error) {
