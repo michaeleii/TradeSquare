@@ -153,7 +153,7 @@ pubnub.objects.getAllChannelMetadata({}, (status, response) => {
     e.preventDefault();
 
     //=========== set channel metadata ==============
-    pubnub.objects.setChannelMetadata({
+    await pubnub.objects.setChannelMetadata({
       channel: currentChannel,
       data: {
         name: currentChannel,
@@ -169,7 +169,7 @@ pubnub.objects.getAllChannelMetadata({}, (status, response) => {
     });
 
     //=========== add receiver to channel ==============
-    pubnub.objects.setChannelMembers({
+    await pubnub.objects.setChannelMembers({
       channel: currentChannel,
       uuids: [receiverId],
     });

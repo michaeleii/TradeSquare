@@ -50,6 +50,7 @@
                 }, (status, response) => {
                     const { data: receiverChannels } = response;
                     const filteredReceiverChannels = receiverChannels.filter(receiverChannel => receiverChannel.name.includes(userId));
+                    console.log("BROOO", filteredReceiverChannels);
                     filteredReceiverChannels.forEach(receiverChannel => {
                         const userData = receiverChannel.custom;
                         if (userData.userId === userId) {
@@ -87,31 +88,6 @@
             pubnub.addListener(listener);
 
             retrieveAllChannelMetadata();
-
-// remove all channel metadata
-// pubnub.objects.getAllChannelMetadata()
-//   .then(response => {
-//     const channels = response.data;
-//     const channelNames = channels.map(channel => channel.id);
-//     console.log("CHANNEL NAMES", channelNames);
-
-//     channelNames.forEach(channelName => {
-//         pubnub.deleteMessages(
-//         {
-//             channel: channelName,
-//         },
-//         function (status, response) {
-//             console.log(status, response);
-//         });
-
-//       pubnub.objects.removeChannelMetadata({
-//         channel: channelName,
-//       });
-//     });
-//   })
-//   .catch(error => {
-//     console.log('Error retrieving channel metadata:', error);
-//   });
         </script>
 </body>
 

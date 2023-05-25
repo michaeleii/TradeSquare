@@ -2,7 +2,7 @@ import express from "express";
 import { getAllCategories, getItemsByCategoryId } from "../services/categories";
 import { Item, User } from "@prisma/client";
 import { getObjectSignedUrl } from "../s3";
-import { getUserByAuth0Id } from "../services/user";
+import { getUserByAuth0Id, getUserReviews } from "../services/user";
 
 const categories = express.Router();
 
@@ -30,6 +30,15 @@ categories.get("/:id", async (req, res, next) => {
     if (!category) throw new Error("No categories found");
 
     for (const item of category.items) {
+      const sellerReviews = await getUserReviews(item.userId);
+      const sellerAvgRatings =
+        Math.round(
+          (sellerReviews
+            .map((review) => review.review.rating)
+            .reduce((a, b) => a + b, 0) /
+            sellerReviews.length) *
+            2
+        ) / 2;
       const url = await getObjectSignedUrl(item.imgName);
       (
         item as Item & {
@@ -37,6 +46,7 @@ categories.get("/:id", async (req, res, next) => {
           imgUrl: string;
         }
       ).imgUrl = url;
+      (item as any).user.avgRatings = !sellerAvgRatings ? 0 : sellerAvgRatings;
     }
 
     const user = req.oidc.user

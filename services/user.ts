@@ -184,18 +184,70 @@ async function editUserProfile(formData: User, userId: number) {
   try {
     const user = await prisma.user.update({
       where: {
-        id: userId
+        id: userId,
       },
       data: {
         f_name: formData.f_name,
         l_name: formData.l_name,
         location: formData.location,
         // profilePic: formDate.profilePic
-      }
-    })
-    return user
+      },
+    });
+    return user;
   } catch (error) {
-    throw error
+    throw error;
+  }
+}
+
+async function getUserReviews(userId: number) {
+  try {
+    const reviews = await prisma.reviewUser.findMany({
+      where: {
+        userId,
+      },
+      include: {
+        review: {
+          include: {
+            author: true,
+          },
+        },
+      },
+    });
+    return reviews;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function createReview(
+  rating: number,
+  description: string,
+  authorId: number,
+  sellerId: number
+) {
+  try {
+    const review = await prisma.review.create({
+      data: {
+        review: description,
+        rating,
+        author: {
+          connect: { id: authorId },
+        },
+      },
+    });
+
+    await prisma.reviewUser.create({
+      data: {
+        review: {
+          connect: { id: review.id },
+        },
+        user: {
+          connect: { id: sellerId },
+        },
+      },
+    });
+  } catch (error) {
+    throw error;
   }
 }
 
@@ -212,4 +264,6 @@ export {
   joinSquare,
   unjoinSquare,
   editUserProfile,
+  getUserReviews,
+  createReview,
 };

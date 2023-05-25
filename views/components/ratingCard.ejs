@@ -1,11 +1,16 @@
 <div class="bg-secondary flex flex-col gap-4 rounded-lg p-5">
-  <h3>Scott Chen</h3>
+  <h3><%= review.author.f_name %> <%= review.author.l_name %></h3>
   <div class="flex gap-2">
+    <% for (var i = 1; i <= 5; i++) { %> <% if (i <= Math.floor(review.rating))
+    { %>
     <img src="/images/icons/FullStar.svg" class="w-[20px]" alt="Full star" />
-    <img src="/images/icons/FullStar.svg" class="w-[20px]" alt="Full star" />
-    <img src="/images/icons/FullStar.svg" class="w-[20px]" alt="Full star" />
-    <img src="/images/icons/FullStar.svg" class="w-[20px]" alt="Full star" />
+    <% } else if (i === Math.ceil(review.rating) && review.rating % 1 !== 0) {
+    %>
+    <img src="/images/icons/HalfStar.svg" class="w-[20px]" alt="Half star" />
+    <% } else { %>
+    <img src="/images/icons/GreyStar.svg" class="w-[20px]" alt="Empty star" />
+    <% } %> <% } %>
   </div>
-  <p class="text-sm">5 stars</p>
-  <p>This is some rating...</p>
+  <p class="text-sm"><%= review.rating %> stars</p>
+  <p><%= review.review %></p>
 </div>

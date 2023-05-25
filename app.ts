@@ -2,7 +2,11 @@ import express, { NextFunction } from "express";
 import dotenv from "dotenv";
 
 import { getPopularItems } from "./services/item";
-import { checkIfUserExists, getUserByAuth0Id } from "./services/user";
+import {
+  checkIfUserExists,
+  getUserByAuth0Id,
+  getUserReviews,
+} from "./services/user";
 import { getObjectSignedUrl } from "./s3";
 import { Item, Like, User } from "@prisma/client";
 import { auth } from "express-openid-connect";
@@ -44,6 +48,15 @@ app.get("/", checkIfUserExists, async (req, res, next) => {
     const items = await getPopularItems(req.oidc.user?.sub);
     if (items) {
       for (const item of items) {
+        const sellerReviews = await getUserReviews(item.userId);
+        const sellerAvgRatings =
+          Math.round(
+            (sellerReviews
+              .map((review) => review.review.rating)
+              .reduce((a, b) => a + b, 0) /
+              sellerReviews.length) *
+              2
+          ) / 2;
         const url = await getObjectSignedUrl(item.imgName);
         (
           item as Item & {
@@ -53,6 +66,9 @@ app.get("/", checkIfUserExists, async (req, res, next) => {
             imgUrl: string;
           }
         ).imgUrl = url;
+        (item as any).user.avgRatings = !sellerAvgRatings
+          ? 0
+          : sellerAvgRatings;
       }
     }
 

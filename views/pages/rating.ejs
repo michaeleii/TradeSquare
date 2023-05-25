@@ -13,17 +13,20 @@
       <%- include('../components/header.ejs', {isAuthenticated}) %>
       <div class="flex flex-col md:flex-row justify-between mb-3 items-center">
         <h1><%= user.f_name %>'s Ratings</h1>
+        <% if (isAuthenticated) { %>
         <a
           href="rating/create"
           class="btn-primary rounded-lg w-full md:w-fit text-center cursor-pointer"
         >
           Write a Review
         </a>
+        <% } %>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        <% for( let i = 0; i < 9; i++ ) { %> <%-
-        include('../components/ratingCard.ejs') %> <% } %>
+        <% sellerReviews.forEach(reviewInfo => { %> <%-
+        include('../components/ratingCard.ejs', {review: reviewInfo.review}) %>
+        <% }) %>
       </div>
     </article>
     <%- include("../components/navigationBar", {user}) %>
