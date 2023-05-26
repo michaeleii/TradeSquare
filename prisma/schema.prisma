@@ -97,7 +97,7 @@ model Post {
   id          Int      @id @default(autoincrement())
   imageName   String
   date        DateTime @default(now())
-  description String   @db.VarChar(255)
+  description String   @db.VarChar(2000)
   square      Square?  @relation(fields: [squareId], references: [id])
   squareId    Int?
   user        User?    @relation(fields: [userId], references: [id])
